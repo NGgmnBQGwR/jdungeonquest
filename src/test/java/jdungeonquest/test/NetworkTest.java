@@ -50,7 +50,7 @@ public class NetworkTest {
         
         client.run();
         client.registerOnServer();
-
+        while(!client.isRegistered){}
         boolean resultClient = client.isRegistered;
         assertEquals(true, resultClient);
     }
