@@ -15,6 +15,6 @@ public class GiveGold implements Effect {
     public void doAction(Game game) {
         int currentGold = game.GetPlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold);
         game.changePlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold, currentGold + amount);
-        game.broadCast("Player " + game.getCurrentPlayer() + " recieved bonus of " + new Integer(amount).toString() + " gold!");
+        game.broadCast("Player " + game.getCurrentPlayer().getName() + " recieved " + new Integer(amount).toString() + " gold!");
     }
 }

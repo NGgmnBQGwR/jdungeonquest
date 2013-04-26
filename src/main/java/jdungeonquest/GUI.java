@@ -1,12 +1,18 @@
 package jdungeonquest;
 
+import jdungeonquest.network.NetworkClient;
+import jdungeonquest.network.NetworkServer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class GUI extends JFrame {
 
@@ -15,10 +21,14 @@ class GUI extends JFrame {
     JPanel serverPanel;
     JPanel clientPanel;
 
+    Logger logger = LoggerFactory.getLogger(GUI.class);
+
+    
     GUI(Game g) {
         super();
         game = g;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        logger.info("GUI created");
     }
 
     void showClient() {
