@@ -57,6 +57,9 @@ public class NetworkClient implements Runnable {
 
     public void registerOnServer() {
         this.connectToServer();
+        if(!client.isConnected()){
+            return;
+        }
         RegistrationRequest message = new RegistrationRequest(getClientName());
         int a = this.client.sendTCP(message);
         logger.debug("Sent message with return code " + a);
