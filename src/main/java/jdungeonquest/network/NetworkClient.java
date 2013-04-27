@@ -57,6 +57,11 @@ public class NetworkClient implements Runnable {
             }
 
             @Override
+            public void disconnected(Connection connection) {
+                logger.debug("Disconnected");
+            }
+
+            @Override
             public void received(Connection c, Object o) {
                 logger.debug("Got " + o);
                 if (o instanceof RegistrationRequest) {
