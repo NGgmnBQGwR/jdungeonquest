@@ -17,7 +17,7 @@ public class GUI extends JFrame {
     JPanel serverPanel;
     Logger logger = LoggerFactory.getLogger(GUI.class);
 
-    NetworkClient client = new NetworkClient();
+    NetworkClient client;
     LobbyGUI lobbyGUI = new LobbyGUI(this, client);
     ServerGUI serverGUI = new ServerGUI(this);
     JComponent recentPanel;
