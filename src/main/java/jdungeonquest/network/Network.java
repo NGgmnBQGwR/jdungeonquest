@@ -1,7 +1,5 @@
-package jdungeonquest;
+package jdungeonquest.network;
 
-import jdungeonquest.network.Message;
-import jdungeonquest.network.RegistrationRequest;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 import jdungeonquest.enums.NetworkMessageType;
