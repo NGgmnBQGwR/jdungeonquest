@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import jdungeonquest.network.NetworkClient;
 import net.miginfocom.swing.MigLayout;
 
-class ClientGUI extends JPanel{
+class LobbyGUI extends JPanel{
     GUI parent;
     
     NetworkClient client;
@@ -24,7 +24,7 @@ class ClientGUI extends JPanel{
     //GameMap map;
     //JTextArea textArea;
     
-    ClientGUI(GUI parent, NetworkClient client){
+    LobbyGUI(GUI parent, NetworkClient client){
         this.parent = parent;
         this.client = client;
         
