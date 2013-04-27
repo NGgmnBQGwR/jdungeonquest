@@ -56,8 +56,8 @@ class ServerGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int port = Integer.valueOf(portTextField.getText());
-                server = new NetworkServer();
-                server.start();
+                server = new NetworkServer(port);
+                server.run();
                 infoLabel.setText("Server started on port " + port);
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);

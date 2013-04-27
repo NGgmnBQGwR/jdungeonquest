@@ -26,7 +26,8 @@ public class NetworkServer implements Runnable {
         this.serverPort = port;
     }
 
-    public void start() {
+    @Override
+    public void run() {
         server.addListener(new Listener() {
             @Override
             public void connected(Connection connection) {
@@ -40,7 +41,7 @@ public class NetworkServer implements Runnable {
 
             @Override
             public void received(Connection connection, Object object) {
-                logger.debug("Recieved package: ");
+                logger.debug("Recieved package: " + object);
                 if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
@@ -67,12 +68,6 @@ public class NetworkServer implements Runnable {
     public void stop() {
         server.stop();
         logger.debug("Server stopped");
-    }
-
-    @Override
-    public void run() {
-        start();
-        logger.debug("Server started via thread on port " + this.serverPort);
     }
 
     public Game getGame() {
