@@ -1,30 +1,25 @@
-package jdungeonquest;
+package jdungeonquest.gui;
 
-import jdungeonquest.network.NetworkClient;
-import jdungeonquest.network.NetworkServer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jdungeonquest.Game;
 import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class GUI extends JFrame {
+public class GUI extends JFrame {
 
     Game game;
     JPanel mainMenuPanel;
     JPanel serverPanel;
     JPanel clientPanel;
-
     Logger logger = LoggerFactory.getLogger(GUI.class);
 
-    
-    GUI(Game g) {
+    public GUI(Game g) {
         super();
         game = g;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +31,7 @@ class GUI extends JFrame {
         clientPanel = new JPanel(layout);
 
         JLabel clientTest = new JLabel("client test");
-        
+
         JButton goBackButton = new JButton("Back");
         goBackButton.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +68,7 @@ class GUI extends JFrame {
         pack();
     }
 
-    void showMainMenu() {
+    public void showMainMenu() {
 
         MigLayout layout = new MigLayout("fill", "[]", "[fill, grow]");
         mainMenuPanel = new JPanel(layout);
