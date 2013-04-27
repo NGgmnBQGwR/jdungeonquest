@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdungeonquest.Game;
-import jdungeonquest.Network;
+import jdungeonquest.network.Network;
 import jdungeonquest.network.NetworkClient;
 import jdungeonquest.network.NetworkServer;
 import jdungeonquest.network.RegistrationRequest;
@@ -28,7 +28,6 @@ public class NetworkTest {
     @Test
     public void NetworkClientConnectionSuccess() throws IOException{
         
-        Game game = new Game();
         final String clientName = "TestClient1";
         
         NetworkClient client = new NetworkClient(clientName);
@@ -54,4 +53,26 @@ public class NetworkTest {
         boolean resultClient = client.isRegistered;
         assertEquals(true, resultClient);
     }
+    
+    @Test
+    public void NetworkRegistrationSuccess() throws InterruptedException{
+        final String clientName = "TestClient1";
+        final int port = 3335;
+        
+        Game game = new Game();
+        NetworkClient client = new NetworkClient(clientName, "127.0.0.1", port);
+        NetworkServer server = new NetworkServer(game, port);
+        
+        server.run();
+        client.run();
+        
+        client.registerOnServer();
+        
+        Thread.sleep(1000);
+        
+        assertEquals(true, server.getGame().isPlayerRegistered(clientName));
+    }
+    
+    
+    
 }
