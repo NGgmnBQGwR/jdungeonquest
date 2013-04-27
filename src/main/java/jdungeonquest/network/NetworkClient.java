@@ -29,12 +29,14 @@ public class NetworkClient implements Runnable {
     public NetworkClient(String name) {
         this();
         this.clientName = name;
+        logger.debug("NetworkClient " + this.clientName + " " + this.serverIP + ":" + this.serverPort);
     }
 
     public NetworkClient(String name, String ip) {
         this();
         this.clientName = name;
         this.serverIP = ip;
+        logger.debug("NetworkClient " + this.clientName + " " + this.serverIP + ":" + this.serverPort);
     }
 
     public NetworkClient(String name, String ip, int port) {
@@ -42,6 +44,7 @@ public class NetworkClient implements Runnable {
         this.clientName = name;
         this.serverIP = ip;
         this.serverPort = port;
+        logger.debug("NetworkClient " + this.clientName + " " + this.serverIP + ":" + this.serverPort);
     }
 
     private void connectToServer() {
@@ -54,7 +57,7 @@ public class NetworkClient implements Runnable {
 
     public void registerOnServer() {
         this.connectToServer();
-        RegistrationRequest message = new RegistrationRequest(clientName);
+        RegistrationRequest message = new RegistrationRequest(getClientName());
         int a = this.client.sendTCP(message);
         logger.debug("Sent message with return code " + a);
     }
@@ -71,7 +74,7 @@ public class NetworkClient implements Runnable {
             public void received(Connection c, Object o) {
                 logger.debug("Got " + o);
                 if (o instanceof RegistrationRequest) {
-                    if (((RegistrationRequest) o).getName().equals(clientName)) {
+                    if (((RegistrationRequest) o).getName().equals(getClientName())) {
                         isRegistered = true;
                     }
                 }
@@ -79,5 +82,16 @@ public class NetworkClient implements Runnable {
         });
 
         client.start();
+    }
+
+    public void stop(){
+        client.stop();
+    }
+    
+    /**
+     * @return the clientName
+     */
+    public String getClientName() {
+        return clientName;
     }
 }
