@@ -3,6 +3,7 @@ package jdungeonquest.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.network.NetworkClient;
@@ -19,6 +20,7 @@ public class GUI extends JFrame {
     NetworkClient client = new NetworkClient();
     LobbyGUI lobbyGUI = new LobbyGUI(this, client);
     ServerGUI serverGUI = new ServerGUI(this);
+    JComponent recentPanel;
     //ClientGUI clientGUI;
     
     public GUI() {
@@ -28,23 +30,27 @@ public class GUI extends JFrame {
     }
 
     void showClient() {
-        remove(mainMenuPanel);
+        remove(recentPanel);
+        recentPanel = lobbyGUI;
         add(lobbyGUI);
         pack();
     }
 
     void showServer() {
-        remove(mainMenuPanel);
+        remove(recentPanel);
+        recentPanel = serverGUI;
         add(serverGUI);
         pack();
     }
 
     public void showMainMenu() {
-        remove(lobbyGUI);
-        remove(serverGUI);
+        if(recentPanel != null){
+            remove(recentPanel);
+        }
 
         MigLayout layout = new MigLayout("fill", "[]", "[fill, grow]");
         mainMenuPanel = new JPanel(layout);
+        recentPanel = mainMenuPanel;
 
         JButton serverButton = new JButton("Server");
         JButton clientButton = new JButton("Client");
@@ -52,7 +58,6 @@ public class GUI extends JFrame {
         serverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remove(mainMenuPanel);
                 showServer();
             }
         });
@@ -60,7 +65,6 @@ public class GUI extends JFrame {
         clientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remove(mainMenuPanel);
                 showClient();
             }
         });
