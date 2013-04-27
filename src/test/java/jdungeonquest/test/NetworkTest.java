@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdungeonquest.Game;
+import jdungeonquest.gui.GUI;
 import jdungeonquest.network.Network;
 import jdungeonquest.network.NetworkClient;
 import jdungeonquest.network.NetworkServer;
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for NetworkClient and NetworkServer.
@@ -29,8 +31,11 @@ public class NetworkTest {
     public void NetworkClientConnectionSuccess() throws IOException{
         
         final String clientName = "TestClient1";
+        final int port = 3335;
         
-        NetworkClient client = new NetworkClient(clientName);
+        GUI guiMock = mock(GUI.class);
+        
+        NetworkClient client = new NetworkClient(clientName, "127.0.0.1", port, guiMock);
         
         Server server = new Server();
         Network.registerClasses(server);
@@ -44,14 +49,18 @@ public class NetworkTest {
                 }
             }
         });
-        server.bind(3334);
+        server.bind(port);
         server.start();
         
         client.run();
         client.registerOnServer();
         while(!client.isRegistered){}
         boolean resultClient = client.isRegistered;
+        
         assertEquals(true, resultClient);
+        
+        client.stop();
+        server.stop();
     }
     
     @Test
@@ -59,7 +68,9 @@ public class NetworkTest {
         final String clientName = "TestClient1";
         final int port = 3335;
         
-        NetworkClient client = new NetworkClient(clientName, "127.0.0.1", port);
+        GUI guiMock = mock(GUI.class);
+        
+        NetworkClient client = new NetworkClient(clientName, "127.0.0.1", port, guiMock);
         NetworkServer server = new NetworkServer(port);
         
         server.run();
@@ -70,6 +81,9 @@ public class NetworkTest {
         Thread.sleep(100);
         
         assertEquals(true, server.getGame().isPlayerRegistered(clientName));
+        
+        client.stop();
+        server.stop();
     }
     
     
