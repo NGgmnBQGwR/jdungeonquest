@@ -5,7 +5,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.util.logging.Level;
-import jdungeonquest.Network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +28,20 @@ public class NetworkClient implements Runnable {
 
     public NetworkClient(String name) {
         this();
-
         this.clientName = name;
+    }
+
+    public NetworkClient(String name, String ip) {
+        this();
+        this.clientName = name;
+        this.serverIP = ip;
+    }
+
+    public NetworkClient(String name, String ip, int port) {
+        this();
+        this.clientName = name;
+        this.serverIP = ip;
+        this.serverPort = port;
     }
 
     private void connectToServer() {

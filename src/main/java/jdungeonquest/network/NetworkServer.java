@@ -5,7 +5,6 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import jdungeonquest.Game;
-import jdungeonquest.Network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +22,11 @@ public class NetworkServer implements Runnable {
         this.serverPort = 3334;
     }
 
+    public NetworkServer(Game game, int port) {
+        this(game);
+        this.serverPort = port;
+    }    
+    
     @Override
     public void run() {
         server.addListener(new Listener() {
