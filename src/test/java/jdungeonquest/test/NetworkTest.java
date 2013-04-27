@@ -59,16 +59,15 @@ public class NetworkTest {
         final String clientName = "TestClient1";
         final int port = 3335;
         
-        Game game = new Game();
         NetworkClient client = new NetworkClient(clientName, "127.0.0.1", port);
-        NetworkServer server = new NetworkServer(game, port);
+        NetworkServer server = new NetworkServer(port);
         
         server.run();
         client.run();
         
         client.registerOnServer();
         
-        Thread.sleep(1000);
+        Thread.sleep(100);
         
         assertEquals(true, server.getGame().isPlayerRegistered(clientName));
     }

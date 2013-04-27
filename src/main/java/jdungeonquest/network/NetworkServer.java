@@ -10,20 +10,19 @@ import org.slf4j.LoggerFactory;
 
 public class NetworkServer implements Runnable {
 
-    private Game game = null;
+    private Game game = new Game();
     private Server server = null;
     Logger logger = LoggerFactory.getLogger(NetworkServer.class);
     private int serverPort = 3334;
+    public static final int DEFAULT_PORT = 4446;
 
-    public NetworkServer(Game game) {
-        server = new Server();
-        Network.registerClasses(server);
-        this.game = game;
-        this.serverPort = 3334;
+    public NetworkServer() {
+        this(DEFAULT_PORT);
     }
 
-    public NetworkServer(Game game, int port) {
-        this(game);
+    public NetworkServer(int port) {
+        server = new Server();
+        Network.registerClasses(server);
         this.serverPort = port;
     }    
     

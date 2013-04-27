@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 public class GUI extends JFrame {
 
-    Game game;
     JPanel mainMenuPanel;
     JPanel serverPanel;
     Logger logger = LoggerFactory.getLogger(GUI.class);
@@ -24,9 +23,8 @@ public class GUI extends JFrame {
     //ServerGUI ServerGUI;
     //LobbyGUI LobbyGUI;
     
-    public GUI(Game g) {
+    public GUI() {
         super("JDungeonQuest Main Menu");
-        game = g;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logger.info("GUI created");
     }
