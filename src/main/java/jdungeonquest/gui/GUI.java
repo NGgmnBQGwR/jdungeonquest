@@ -19,8 +19,8 @@ public class GUI extends JFrame {
     Logger logger = LoggerFactory.getLogger(GUI.class);
 
     NetworkClient client = new NetworkClient();
-    ClientGUI clientGUI = new ClientGUI(this, client);
-    //ServerGUI ServerGUI;
+    LobbyGUI clientGUI = new LobbyGUI(this, client);
+    ServerGUI serverGUI = new ServerGUI(this);
     //LobbyGUI LobbyGUI;
     
     public GUI() {
@@ -36,28 +36,14 @@ public class GUI extends JFrame {
     }
 
     void showServer() {
-        MigLayout layout = new MigLayout("fill", "[]", "[fill, grow][fill, grow]");
-        serverPanel = new JPanel(layout);
-
-        JLabel serverTest = new JLabel("server test");
-
-        JButton goBackButton = new JButton("Back");
-        goBackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                remove(serverPanel);
-                showMainMenu();
-            }
-        });
-
-        serverPanel.add(serverTest);
-        serverPanel.add(goBackButton);
-        add(serverPanel);
+        remove(mainMenuPanel);
+        add(serverGUI);
         pack();
     }
 
     public void showMainMenu() {
         remove(clientGUI);
+        remove(serverGUI);
 
         MigLayout layout = new MigLayout("fill", "[]", "[fill, grow]");
         mainMenuPanel = new JPanel(layout);
