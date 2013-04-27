@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jdungeonquest.Game;
 import jdungeonquest.network.NetworkClient;
 import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
@@ -19,9 +17,9 @@ public class GUI extends JFrame {
     Logger logger = LoggerFactory.getLogger(GUI.class);
 
     NetworkClient client = new NetworkClient();
-    LobbyGUI clientGUI = new LobbyGUI(this, client);
+    LobbyGUI lobbyGUI = new LobbyGUI(this, client);
     ServerGUI serverGUI = new ServerGUI(this);
-    //LobbyGUI LobbyGUI;
+    //ClientGUI clientGUI;
     
     public GUI() {
         super("JDungeonQuest Main Menu");
@@ -31,7 +29,7 @@ public class GUI extends JFrame {
 
     void showClient() {
         remove(mainMenuPanel);
-        add(clientGUI);
+        add(lobbyGUI);
         pack();
     }
 
@@ -42,7 +40,7 @@ public class GUI extends JFrame {
     }
 
     public void showMainMenu() {
-        remove(clientGUI);
+        remove(lobbyGUI);
         remove(serverGUI);
 
         MigLayout layout = new MigLayout("fill", "[]", "[fill, grow]");
