@@ -24,10 +24,9 @@ public class NetworkServer implements Runnable {
         server = new Server();
         Network.registerClasses(server);
         this.serverPort = port;
-    }    
-    
-    @Override
-    public void run() {
+    }
+
+    public void start() {
         server.addListener(new Listener() {
             @Override
             public void connected(Connection connection) {
@@ -62,6 +61,18 @@ public class NetworkServer implements Runnable {
             logger.error("Exception" + ex);
         }
         server.start();
+        logger.debug("Server started on port " + this.serverPort);
+    }
+
+    public void stop() {
+        server.stop();
+        logger.debug("Server stopped");
+    }
+
+    @Override
+    public void run() {
+        start();
+        logger.debug("Server started via thread on port " + this.serverPort);
     }
 
     public Game getGame() {
