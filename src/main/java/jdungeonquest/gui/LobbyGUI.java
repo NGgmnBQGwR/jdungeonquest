@@ -8,19 +8,15 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import jdungeonquest.network.NetworkClient;
 import net.miginfocom.swing.MigLayout;
 
 class LobbyGUI extends JPanel{
     GUI parent;
     
-    //UserData data;
-    //ChatBox chat;
-    //GameMap map;
-    //JTextArea textArea;
     JList messageList;
     JList playerList;
     JTextField textField;
@@ -50,7 +46,10 @@ class LobbyGUI extends JPanel{
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parent.showMainMenu();
+                if(JOptionPane.showConfirmDialog(null, "You are going to be disconnected from the server. Return to main menu?") == 0){
+                    parent.getClient().stop();
+                    parent.showMainMenu();
+                }
             }
         });
         
@@ -62,13 +61,27 @@ class LobbyGUI extends JPanel{
             }
         });
         
+        nameTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addPlayerButton.doClick();
+            }
+        });
+        
         sendButton = new JButton("Send");
-        sendButton.setEnabled(false);
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField.getText();
+                textField.setText("");
                 parent.getClient().sendChatMessage(text);
+            }
+        });
+        
+        textField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendButton.doClick();
             }
         });
         
@@ -80,7 +93,6 @@ class LobbyGUI extends JPanel{
         playerList = new JList();
         playerList.setModel(new DefaultListModel());
         playerList.ensureIndexIsVisible(((DefaultListModel) playerList.getModel()).size() - 1);
-
         
         add(nameLabel, "grow");
         add(nameTextField, "grow");

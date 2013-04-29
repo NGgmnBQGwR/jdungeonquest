@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jdungeonquest.network.NetworkClient;
@@ -52,11 +53,20 @@ public class ConnectGUI extends JPanel {
             }
         });
 
+        JButton goBackButton = new JButton("Back");
+        goBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.showMainMenu();
+            }
+        });
+        
         add(infoLabel, "grow, span");
         add(ipLabel);
         add(ipTextField, "wrap");
         add(portLabel);
         add(portTextField, "wrap");
         add(connectButton, "grow, span");
+        add(goBackButton, "grow, span");
     }
 }
