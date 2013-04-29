@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdungeonquest.Game;
+import jdungeonquest.enums.ClientState;
 import jdungeonquest.gui.GUI;
 import jdungeonquest.network.Network;
 import jdungeonquest.network.NetworkClient;
@@ -54,10 +55,9 @@ public class NetworkTest {
         
         client.run();
         client.registerOnServer();
-        while(!client.isRegistered){}
-        boolean resultClient = client.isRegistered;
+        while(client.getClientState() != ClientState.REGISTERED){}
         
-        assertEquals(true, resultClient);
+        assertEquals(ClientState.REGISTERED, client.getClientState());
         
         client.stop();
         server.stop();
