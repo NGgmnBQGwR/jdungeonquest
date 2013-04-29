@@ -41,7 +41,7 @@ public class GUI extends JFrame {
         logger.info("GUI created");
     }
 
-    void showClient() {
+    void showLobby() {
         remove(recentPanel);
         recentPanel = lobbyGUI;
         add(lobbyGUI);
@@ -65,7 +65,7 @@ public class GUI extends JFrame {
         recentPanel = mainMenuPanel;
 
         JButton serverButton = new JButton("Server");
-        JButton clientButton = new JButton("Client");
+        JButton lobbyButton = new JButton("Client");
 
         serverButton.addActionListener(new ActionListener() {
             @Override
@@ -74,15 +74,15 @@ public class GUI extends JFrame {
             }
         });
 
-        clientButton.addActionListener(new ActionListener() {
+        lobbyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showClient();
+                showLobby();
             }
         });
 
         mainMenuPanel.add(serverButton, "grow");
-        mainMenuPanel.add(clientButton, "grow");
+        mainMenuPanel.add(lobbyButton, "grow");
 
         add(mainMenuPanel);
         pack();
