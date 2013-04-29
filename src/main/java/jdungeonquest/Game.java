@@ -60,6 +60,14 @@ public class Game {
         return false;
     }
 
+    public String[] getPlayerList() {
+        String[] playerList = new String[ players.size() ];
+        for(int i=0; i<players.size(); i++){
+            playerList[i] = players.get(i).getName();
+        }
+        return playerList;
+    }
+
     private static class PlayerAttributeEnum {
     }
 }
