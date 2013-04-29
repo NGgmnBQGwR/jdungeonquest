@@ -17,44 +17,47 @@ public class NetworkClient implements Runnable {
     private Client client;
     private int serverPort;
     private String serverIP;
-    private String clientName;
     private GUI gui;
     private ClientState state = ClientState.NOT_CONNECTED;
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
 
-    public NetworkClient(String name, String ip, int port, GUI gui) {
+    public NetworkClient(String ip, int port, GUI gui) {
         client = new Client();
         Network.registerClasses(client);
         Log.set(Log.LEVEL_DEBUG);
         
-        this.clientName = name;
         this.serverIP = ip;
         this.serverPort = port;
         this.gui = gui;
-        logger.debug("NetworkClient " + this.clientName + " " + this.serverIP + ":" + this.serverPort);
+        logger.debug("NetworkClient " + this.serverIP + ":" + this.serverPort);
     }
 
-    private void connectToServer() {
+    public void connectToServer() {
         try {
             client.connect(5000, this.serverIP, this.serverPort);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void registerOnServer() {
-        this.connectToServer();
-        if(!client.isConnected()){
+        if (!client.isConnected()) {
             return;
         }
-        sendMessage(new RegistrationRequest(getClientName()));
+        sendMessage("he");
+    }
+    
+    public void registerOnServer(String name) {
+        sendMessage(new RegistrationRequest(name));
     }
 
     public void sendMessage(Message msg) {
         int a = this.client.sendTCP(msg);
         logger.debug("Sent message " + msg + ", the size is " + a + " bytes.");
     }
-
+    
+    public void sendMessage(String msg) {
+        int a = this.client.sendTCP(msg);
+        logger.debug("Sent string " + msg + ", the size is " + a + " bytes.");
+    }
+    
     private void changeState(ClientState newState) {
         logger.debug("Changing game state from " + state + " to " + newState);
         state = newState;
@@ -100,7 +103,7 @@ public class NetworkClient implements Runnable {
                     switch (((Message) object).msgType) {
                         
                         case RegistrationRequest:
-                            if (state == ClientState.NOT_CONNECTED && ((RegistrationRequest) object).getName().equals(getClientName())) {
+                            if (true) { //TODO: find a way to correctly check names for the Message.name in them
                                 gui.playerRegistered(true);
                             } else {
                                 client.close();
@@ -129,13 +132,6 @@ public class NetworkClient implements Runnable {
     public void stop(){
         client.stop();
     }
-    
-    /**
-     * @return the clientName
-     */
-    public String getClientName() {
-        return clientName;
-    }
 
     public ClientState getClientState() {
         return state;
@@ -143,8 +139,8 @@ public class NetworkClient implements Runnable {
 
     public void sendChatMessage(String text) {
         logger.debug("Sending ChatMessage: " + text);
-        ChatMessage msg = new ChatMessage(text, getClientName());
+        ChatMessage msg = new ChatMessage(text, "none");
         sendMessage(msg);
-        gui.addChatMessage(text, getClientName());
+        gui.addChatMessage(text, "none");
     }
 }

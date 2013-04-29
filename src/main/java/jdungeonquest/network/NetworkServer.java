@@ -5,6 +5,10 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jdungeonquest.Game;
 import static jdungeonquest.enums.NetworkMessageType.ChatMessage;
 import org.slf4j.Logger;
@@ -18,6 +22,8 @@ public class NetworkServer implements Runnable {
     private int serverPort = 3334;
     public static final int DEFAULT_PORT = 4446;
 
+    private Map<Integer, List<String>> clientPlayersMap = new HashMap<>();
+    
     public NetworkServer() {
         this(DEFAULT_PORT);
         Log.set(Log.LEVEL_DEBUG);
