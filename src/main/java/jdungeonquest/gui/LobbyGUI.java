@@ -93,7 +93,7 @@ class LobbyGUI extends JPanel{
                     if(parent.client != null){
                         parent.client.stop();
                     }
-                    parent.client = new NetworkClient(nameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()));
+                    parent.client = new NetworkClient(nameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()), parent.parent);
                     parent.client.run();
                     parent.client.registerOnServer();
                 }
