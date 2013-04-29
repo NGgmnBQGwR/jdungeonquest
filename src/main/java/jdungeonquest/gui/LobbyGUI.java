@@ -17,32 +17,38 @@ import net.miginfocom.swing.MigLayout;
 class LobbyGUI extends JPanel{
     GUI parent;
     
-    NetworkClient client;
     //UserData data;
     //ChatBox chat;
     //GameMap map;
     //JTextArea textArea;
     JList messageList;
     JList playerList;
-    ConnectPanel connectPanel;
     JTextField textField;
+    ConnectPanel connectPanel;
+    JButton sendButton;
+    
+    NetworkClient getClient(){
+        return parent.client;
+    }
     
     LobbyGUI(GUI parent, NetworkClient client){
         this.parent = parent;
-        this.client = client;
         
         initGUI();
     }
 
+    void addPlayer(String name){
+        ((DefaultListModel)playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
+    }
+    
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[][]", "[][]");
+        MigLayout layout = new MigLayout("fill", "", "[][]");
         this.setLayout(layout);
 
         connectPanel = new ConnectPanel(this);
         textField = new JTextField("");
 
         JButton goBackButton = new JButton("Back");
-        JButton sendButton = new JButton("Send");
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,11 +70,19 @@ class LobbyGUI extends JPanel{
         messageList.setModel(new DefaultListModel());
         messageList.ensureIndexIsVisible(((DefaultListModel) messageList.getModel()).size() - 1);
         
+        JLabel playersLabel = new JLabel("Player list");
+        playerList = new JList();
+        playerList.setModel(new DefaultListModel());
+        playerList.ensureIndexIsVisible(((DefaultListModel) playerList.getModel()).size() - 1);
+
+        
         add(connectPanel, "growx, span, wrap");
         add(textField, "growx, push");
         add(sendButton, "w 70!, wrap");
-        add(new JScrollPane(messageList), "grow, span");
-        add(goBackButton, "growx, span");
+        add(playersLabel);
+        add(new JScrollPane(messageList), "grow, spany 2, wrap");
+        add(new JScrollPane(playerList));
+        add(goBackButton, "newline, growx, span");
     }
 
     void addChatMessage(String msg, String author) {
@@ -77,13 +91,22 @@ class LobbyGUI extends JPanel{
         ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
     }
 
-    private static class ConnectPanel extends JPanel {
+    class ConnectPanel extends JPanel {
 
         LobbyGUI parent;
         JTextField nameTextField;
         JTextField portTextField;
         JTextField ipTextField;
+        public JLabel infoLabel;
 
+        NetworkClient getClient(){
+            return parent.parent.client;
+        }
+        
+        void setClient(NetworkClient client){
+            parent.parent.client = client;
+        }
+        
         public ConnectPanel(final LobbyGUI p) {
             this.parent = p;
 
@@ -99,18 +122,18 @@ class LobbyGUI extends JPanel{
             JLabel nameLabel = new JLabel("Player name:");
             nameTextField = new JTextField("GenericPlayer");
 
-            JLabel infoLabel = new JLabel("Not connected to the server");
+            infoLabel = new JLabel("Not connected to the server");
 
             JButton connectButton = new JButton("Connect");
             connectButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(parent.client != null){
-                        parent.client.stop();
+                    if(getClient() != null){
+                        getClient().stop();
                     }
-                    parent.client = new NetworkClient(nameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()), parent.parent);
-                    parent.client.run();
-                    parent.client.registerOnServer();
+                    NetworkClient client = new NetworkClient(nameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()), parent.parent);
+                    setClient(client);
+                    client.run();
                     client.registerOnServer();
                 }
             });
@@ -121,6 +144,8 @@ class LobbyGUI extends JPanel{
             add(portLabel);
             add(portTextField, "wrap");
             add(connectButton, "grow, span");
+            add(nameLabel, "grow");
+            add(nameTextField, "grow, wrap");
         }
     }
 }
