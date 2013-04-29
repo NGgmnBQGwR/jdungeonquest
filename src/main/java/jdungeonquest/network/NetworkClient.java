@@ -70,6 +70,18 @@ public class NetworkClient implements Runnable {
 
             @Override
             public void disconnected(Connection connection) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            logger.debug("Reconnecting.");
+                            client.reconnect();
+                        } catch (IOException ex) {
+                            logger.debug(ex.toString());
+                        }
+                    }
+                }.start();
+
                 gui.playerRegistered(false);
                 logger.debug("Disconnected");
             }
