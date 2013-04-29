@@ -5,6 +5,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import jdungeonquest.enums.ClientState;
 import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
@@ -19,6 +21,8 @@ public class NetworkClient implements Runnable {
     private String serverIP;
     private GUI gui;
     private ClientState state = ClientState.NOT_CONNECTED;
+    //list of players connected to this client
+    List<PlayerData> players = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
 
     public NetworkClient(String ip, int port, GUI gui) {
@@ -73,19 +77,21 @@ public class NetworkClient implements Runnable {
 
             @Override
             public void disconnected(Connection connection) {
+                changeState(ClientState.NOT_CONNECTED);
                 new Thread() {
                     @Override
                     public void run() {
                         try {
                             logger.debug("Reconnecting.");
                             client.reconnect();
+                            //send name of all players on this client
+                            //client.sendTCP(new PlayerList(players));
                         } catch (IOException ex) {
                             logger.debug(ex.toString());
                         }
                     }
                 }.start();
 
-                gui.playerRegistered(false);
                 logger.debug("Disconnected");
             }
 
@@ -103,11 +109,11 @@ public class NetworkClient implements Runnable {
                     switch (((Message) object).msgType) {
                         
                         case RegistrationRequest:
-                            if (true) { //TODO: find a way to correctly check names for the Message.name in them
-                                gui.playerRegistered(true);
+                            String playerName = ((RegistrationRequest)object).getName();
+                            if (havePlayer(playerName)) {
+                                gui.playerRegistered(true, playerName);
                             } else {
-                                client.close();
-                                gui.playerRegistered(false);
+                                gui.playerRegistered(false, playerName);
                             }
                             break;
                             
@@ -124,11 +130,21 @@ public class NetworkClient implements Runnable {
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
             }
+
         });
 
         client.start();
     }
 
+    private boolean havePlayer(String playerName) {
+        for(PlayerData p : players){
+            if(p.getName().equals(playerName)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void stop(){
         client.stop();
     }
@@ -142,5 +158,24 @@ public class NetworkClient implements Runnable {
         ChatMessage msg = new ChatMessage(text, "none");
         sendMessage(msg);
         gui.addChatMessage(text, "none");
+    }
+    
+    public void addPlayer(String name){
+        sendMessage(new RegistrationRequest(name));
+    }
+
+    private static class PlayerData {
+
+        String name;
+        
+        public PlayerData() {
+        }
+        
+        public void setName(String name){
+            this.name = name;
+        }
+        public String getName(){
+            return name;
+        }        
     }
 }

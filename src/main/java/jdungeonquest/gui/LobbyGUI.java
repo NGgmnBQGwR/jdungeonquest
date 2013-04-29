@@ -30,12 +30,12 @@ class LobbyGUI extends JPanel{
         initGUI();
     }
 
-    void addPlayer(String name){
-        ((DefaultListModel)playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
-    }
-    
+    void addPlayer(String name) {
+        ((DefaultListModel) playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
+    }    
+
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[grow 25][grow 25][grow 50]", "[grow 0][grow 0][grow 100][grow 0]");
+        MigLayout layout = new MigLayout("fill", "[grow 25][grow 25][grow 50]", "[grow 0][grow 0][grow 0][grow 100][grow 0]");
         this.setLayout(layout);
 
         textField = new JTextField("");
@@ -57,7 +57,7 @@ class LobbyGUI extends JPanel{
         addPlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addPlayer(nameTextField.getText());
+                parent.getClient().addPlayer(nameTextField.getText());
             }
         });
         
@@ -104,7 +104,7 @@ class LobbyGUI extends JPanel{
         add(playersLabel);
         add(new JScrollPane(messageList), "grow, spanx, spany 2, wrap");
         
-        add(new JScrollPane(playerList));
+        add(new JScrollPane(playerList), "grow");
         add(goBackButton, "newline, grow, span");
     }
 

@@ -19,16 +19,13 @@ public class GUI extends JFrame {
         return client;
     }
     
-    public void playerRegistered(boolean b) {
-//        logger.debug("playerRegistered " + b);
-//        if(b){
-//            connectGUI.infoLabel.setText("Registered on server.");
-//            lobbyGUI.sendButton.setEnabled(true);
-//            lobbyGUI.addPlayer(client.getClientName());
-//        }else{
-//            connectGUI.infoLabel.setText("Not connected.");
-//            lobbyGUI.sendButton.setEnabled(false);
-//        }
+    public void playerRegistered(boolean b, String newPlayer) {
+        logger.debug("playerRegistered " + b);
+        if(b){
+            lobbyGUI.addPlayer(newPlayer);
+        }else{
+            //lobbyGUI.infoLabel.setText("Can't add " + newPlayer);
+        }
     }
 
     JPanel mainMenuPanel;

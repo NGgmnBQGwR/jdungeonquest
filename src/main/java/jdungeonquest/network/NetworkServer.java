@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class NetworkServer implements Runnable {
             @Override
             public void disconnected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " disconnected");
-                broadcast("Player " + connection.toString() + " has quit.");
+                broadcast("Client " + connection.toString() + " has quit.");
                 broadcast(new PlayerList(game.getPlayerList()));
             }
 
@@ -67,6 +68,7 @@ public class NetworkServer implements Runnable {
                             boolean result = game.registerPlayer(name);
                             if(result){
                                 connection.sendTCP(object);
+                                attachPlayerToClient(connection.getID(), name);
                                 broadcast("Player " + name + " joined.");
                                 broadcast(new PlayerList(game.getPlayerList()));
                             }else{
@@ -80,6 +82,11 @@ public class NetworkServer implements Runnable {
                             server.sendToAllExceptTCP(connection.getID(), msg);
                             break;
                             
+                        case PlayerList:
+                            //in case player has disconnected - need to correct the entry in the clientPlayerMap
+                            //connection.sendTCP("lo");
+                            break;
+                            
                         default:
                             break;
                     }
@@ -88,6 +95,7 @@ public class NetworkServer implements Runnable {
                     logger.info("Recieved unkown package: " + object);
                 }
             }
+
         });
         try {
             server.bind(this.serverPort);
@@ -97,7 +105,28 @@ public class NetworkServer implements Runnable {
         server.start();
         logger.debug("Server started on port " + this.serverPort);
     }
+    
+    private void attachPlayerToClient(int id, String name) {
+        if(clientPlayersMap.containsKey(id)){
+            List<String> players = clientPlayersMap.get(id);
+            players.add(name);
+        }else{
+            clientPlayersMap.put(id, new ArrayList<>(Arrays.asList(new String[]{name})));
+        }
+        logger.debug("Added " + name);
+        logger.debug("List of players for Client " + id + " : " + clientPlayersMap.get(id));
+    }
 
+    private void detachPlayerFromClient(int id, String name) {
+        if (clientPlayersMap.containsKey(id)) {
+            List<String> players = clientPlayersMap.get(id);
+            players.remove(name);
+            clientPlayersMap.put(id, players);
+        }
+        logger.debug("Removed " + name);
+        logger.debug("List of players for Client " + id + " : " + clientPlayersMap.get(id));
+    }
+    
     public void stop() {
         server.stop();
         logger.debug("Server stopped");

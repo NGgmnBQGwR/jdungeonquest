@@ -40,12 +40,9 @@ public class Game {
     }
 
     public boolean registerPlayer(String playerName) {
-        for (Player p : players) {
-            if (playerName.equals(p.getName())) {
-                return false;
-            }
+        if(isPlayerRegistered(playerName)){
+            return false;
         }
-
         Player newPlayer = new Player(playerName);
         players.add(newPlayer);
         return true;
