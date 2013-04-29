@@ -47,7 +47,7 @@ public class NetworkServer implements Runnable {
             @Override
             public void received(Connection connection, Object object) {
                 logger.debug(connection.getID() + " " + connection.toString() + " Recieved package: " + object);
-                if (object instanceof Message) {
+                if (object instanceof String) {
                     String test = (String) object;
                     if (test.equals("he")) {
                         clientPlayersMap.put(connection.getID(), new ArrayList<String>());

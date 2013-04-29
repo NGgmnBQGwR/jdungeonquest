@@ -15,16 +15,20 @@ import org.slf4j.LoggerFactory;
 
 public class GUI extends JFrame {
 
+     NetworkClient getClient() {
+        return client;
+    }
+    
     public void playerRegistered(boolean b) {
-        logger.debug("playerRegistered " + b);
-        if(b){
-            lobbyGUI.connectPanel.infoLabel.setText("Registered on server.");
-            lobbyGUI.sendButton.setEnabled(true);
-            lobbyGUI.addPlayer(client.getClientName());
-        }else{
-            lobbyGUI.connectPanel.infoLabel.setText("Not connected.");
-            lobbyGUI.sendButton.setEnabled(false);
-        }
+//        logger.debug("playerRegistered " + b);
+//        if(b){
+//            connectGUI.infoLabel.setText("Registered on server.");
+//            lobbyGUI.sendButton.setEnabled(true);
+//            lobbyGUI.addPlayer(client.getClientName());
+//        }else{
+//            connectGUI.infoLabel.setText("Not connected.");
+//            lobbyGUI.sendButton.setEnabled(false);
+//        }
     }
 
     JPanel mainMenuPanel;
@@ -32,7 +36,8 @@ public class GUI extends JFrame {
     Logger logger = LoggerFactory.getLogger(GUI.class);
 
     NetworkClient client;
-    LobbyGUI lobbyGUI = new LobbyGUI(this, client);
+    ConnectGUI connectGUI = new ConnectGUI(this);
+    LobbyGUI lobbyGUI = new LobbyGUI(this);
     ServerGUI serverGUI = new ServerGUI(this);
     JComponent recentPanel;
     //ClientGUI clientGUI;
@@ -43,13 +48,20 @@ public class GUI extends JFrame {
         logger.info("GUI created");
     }
 
-    void showLobby() {
+    void showConnect() {
+        remove(recentPanel);
+        recentPanel = connectGUI;
+        add(connectGUI);
+        pack();
+    }
+
+    public void showLobby() {
         remove(recentPanel);
         recentPanel = lobbyGUI;
         add(lobbyGUI);
         pack();
     }
-
+    
     void showServer() {
         remove(recentPanel);
         recentPanel = serverGUI;
@@ -79,7 +91,7 @@ public class GUI extends JFrame {
         lobbyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showLobby();
+                showConnect();
             }
         });
 

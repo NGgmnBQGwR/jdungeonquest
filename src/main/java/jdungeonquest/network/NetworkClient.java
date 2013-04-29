@@ -94,6 +94,7 @@ public class NetworkClient implements Runnable {
                     if(obj.equals("lo")){
                         logger.debug("Confirmed connection with a server.");
                         changeState(ClientState.IN_LOBBY);
+                        gui.showLobby();
                     }
                 }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {

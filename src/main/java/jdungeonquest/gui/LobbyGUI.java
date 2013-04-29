@@ -24,14 +24,11 @@ class LobbyGUI extends JPanel{
     JList messageList;
     JList playerList;
     JTextField textField;
-    ConnectPanel connectPanel;
     JButton sendButton;
-    
-    NetworkClient getClient(){
-        return parent.client;
-    }
-    
-    LobbyGUI(GUI parent, NetworkClient client){
+    JButton addPlayerButton;
+    JTextField nameTextField;
+
+    LobbyGUI(GUI parent){
         this.parent = parent;
         
         initGUI();
@@ -42,17 +39,26 @@ class LobbyGUI extends JPanel{
     }
     
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "", "[][]");
+        MigLayout layout = new MigLayout("fill", "[grow 25][grow 25][grow 50]", "[grow 0][grow 0][grow 100][grow 0]");
         this.setLayout(layout);
 
-        connectPanel = new ConnectPanel(this);
         textField = new JTextField("");
-
+        JLabel nameLabel = new JLabel("Player name:");
+        nameTextField = new JTextField("GenericPlayer");
+        
         JButton goBackButton = new JButton("Back");
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 parent.showMainMenu();
+            }
+        });
+        
+        addPlayerButton = new JButton("Add Player");
+        addPlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addPlayer(nameTextField.getText());
             }
         });
         
@@ -62,7 +68,7 @@ class LobbyGUI extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField.getText();
-                getClient().sendChatMessage(text);
+                parent.getClient().sendChatMessage(text);
             }
         });
         
@@ -76,76 +82,23 @@ class LobbyGUI extends JPanel{
         playerList.ensureIndexIsVisible(((DefaultListModel) playerList.getModel()).size() - 1);
 
         
-        add(connectPanel, "growx, span, wrap");
-        add(textField, "growx, push");
+        add(nameLabel, "grow");
+        add(nameTextField, "grow");
+        add(addPlayerButton, "grow, wrap");
+        
+        add(textField, "grow, push");
         add(sendButton, "w 70!, wrap");
+        
         add(playersLabel);
-        add(new JScrollPane(messageList), "grow, spany 2, wrap");
+        add(new JScrollPane(messageList), "grow, spanx, spany 2, wrap");
+        
         add(new JScrollPane(playerList));
-        add(goBackButton, "newline, growx, span");
+        add(goBackButton, "newline, grow, span");
     }
 
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
         String text = time + author + ":" + msg;
         ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
-    }
-
-    class ConnectPanel extends JPanel {
-
-        LobbyGUI parent;
-        JTextField nameTextField;
-        JTextField portTextField;
-        JTextField ipTextField;
-        public JLabel infoLabel;
-
-        NetworkClient getClient(){
-            return parent.parent.client;
-        }
-        
-        void setClient(NetworkClient client){
-            parent.parent.client = client;
-        }
-        
-        public ConnectPanel(final LobbyGUI p) {
-            this.parent = p;
-
-            MigLayout layout = new MigLayout("fill", "[][]", "[][]");
-            setLayout(layout);
-
-            JLabel ipLabel = new JLabel("Server address:");
-            ipTextField = new JTextField("127.0.0.1");
-
-            JLabel portLabel = new JLabel("Server port:");
-            portTextField = new JTextField("4445");
-
-            JLabel nameLabel = new JLabel("Player name:");
-            nameTextField = new JTextField("GenericPlayer");
-
-            infoLabel = new JLabel("Not connected to the server");
-
-            JButton connectButton = new JButton("Connect");
-            connectButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(getClient() != null){
-                        getClient().stop();
-                    }
-                    NetworkClient client = new NetworkClient(nameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()), parent.parent);
-                    setClient(client);
-                    client.run();
-                    client.registerOnServer();
-                }
-            });
-
-            add(infoLabel, "grow, span");
-            add(ipLabel);
-            add(ipTextField, "wrap");
-            add(portLabel);
-            add(portTextField, "wrap");
-            add(connectButton, "grow, span");
-            add(nameLabel, "grow");
-            add(nameTextField, "grow, wrap");
-        }
     }
 }
