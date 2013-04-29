@@ -68,6 +68,7 @@ public class NetworkClient implements Runnable {
 
             @Override
             public void disconnected(Connection connection) {
+                gui.playerRegistered(false);
                 logger.debug("Disconnected");
             }
 

@@ -13,6 +13,18 @@ import org.slf4j.LoggerFactory;
 
 public class GUI extends JFrame {
 
+    public void playerRegistered(boolean b) {
+        logger.debug("playerRegistered " + b);
+        if(b){
+            lobbyGUI.connectPanel.infoLabel.setText("Registered on server.");
+            lobbyGUI.sendButton.setEnabled(true);
+            lobbyGUI.addPlayer(client.getClientName());
+        }else{
+            lobbyGUI.connectPanel.infoLabel.setText("Not connected.");
+            lobbyGUI.sendButton.setEnabled(false);
+        }
+    }
+
     JPanel mainMenuPanel;
     JPanel serverPanel;
     Logger logger = LoggerFactory.getLogger(GUI.class);
