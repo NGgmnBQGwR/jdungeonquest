@@ -6,6 +6,9 @@ public class ChatMessage extends Message{
     String message;
     String author;
 
+    ChatMessage() {
+    }
+
     ChatMessage(String text, String clientName) {
         msgType = NetworkMessageType.ChatMessage;
         message = text;

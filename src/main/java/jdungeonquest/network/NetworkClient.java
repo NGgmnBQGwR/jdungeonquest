@@ -5,6 +5,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.util.logging.Level;
+import jdungeonquest.enums.ClientState;
+import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
 import jdungeonquest.gui.GUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ public class NetworkClient implements Runnable {
     private String serverIP;
     private String clientName;
     private GUI gui;
-    public boolean isRegistered = false;
+    private ClientState state = ClientState.NOT_REGISTERED;
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
 
     public NetworkClient(String name, String ip, int port, GUI gui) {
@@ -43,9 +45,17 @@ public class NetworkClient implements Runnable {
         if(!client.isConnected()){
             return;
         }
-        RegistrationRequest message = new RegistrationRequest(getClientName());
-        int a = this.client.sendTCP(message);
-        logger.debug("Sent message with return code " + a);
+        sendMessage(new RegistrationRequest(getClientName()));
+    }
+
+    public void sendMessage(Message msg) {
+        int a = this.client.sendTCP(msg);
+        logger.debug("Sent message " + msg + ", the size is " + a + " bytes.");
+    }
+
+    private void changeState(ClientState newState) {
+        logger.debug("Changing game state from " + state + " to " + newState);
+        state = newState;
     }
 
     @Override
@@ -62,12 +72,28 @@ public class NetworkClient implements Runnable {
             }
 
             @Override
-            public void received(Connection c, Object o) {
-                logger.debug("Got " + o);
-                if (o instanceof RegistrationRequest) {
-                    if (((RegistrationRequest) o).getName().equals(getClientName())) {
-                        isRegistered = true;
+            public void received(Connection c, Object object) {
+                logger.debug("Recieved package: " + object);
+                if (object instanceof Message) {
+                    switch (((Message) object).msgType) {
+                        
+                        case RegistrationRequest:
+                            if (state == ClientState.NOT_REGISTERED && ((RegistrationRequest) object).getName().equals(getClientName())) {
+                                changeState(ClientState.REGISTERED);
+                                gui.playerRegistered(true);
+                            } else {
+                                client.close();
+                                changeState(ClientState.NOT_REGISTERED);
+                                gui.playerRegistered(false);
+                            }
+                            break;
+                            
+                        case ChatMessage:
+                            ChatMessage msg = (ChatMessage)object;
+                            gui.addChatMessage(msg.message, msg.author);
+                            break;
                     }
+                } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
             }
         });
@@ -84,5 +110,16 @@ public class NetworkClient implements Runnable {
      */
     public String getClientName() {
         return clientName;
+    }
+
+    public ClientState getClientState() {
+        return state;
+    }
+
+    public void sendChatMessage(String text) {
+        logger.debug("Sending ChatMessage: " + text);
+        ChatMessage msg = new ChatMessage(text, getClientName());
+        sendMessage(msg);
+        gui.addChatMessage(text, getClientName());
     }
 }

@@ -76,4 +76,12 @@ public class GUI extends JFrame {
         pack();
         setVisible(true);
     }
+
+    public void addChatMessage(String text, String author) {
+        if(recentPanel == lobbyGUI){
+            lobbyGUI.addChatMessage(text, author);
+        }else{
+            logger.debug("Tried to call a not implemented yet addChatMessage()");
+        }
+    }
 }

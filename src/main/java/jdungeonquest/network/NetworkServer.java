@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import jdungeonquest.Game;
+import static jdungeonquest.enums.NetworkMessageType.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,12 +46,25 @@ public class NetworkServer implements Runnable {
                 if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
-                            logger.debug("Registering client " + connection.getID() + " with name " + ((RegistrationRequest) object).playerName);
-                            game.registerPlayer(((RegistrationRequest) object).playerName);
+                            String name = ((RegistrationRequest) object).playerName;
+                            logger.debug("Registering client " + connection.getID() + " with name " + name);
+                            boolean result = game.registerPlayer(name);
+                            if(result){
+                                connection.sendTCP(object);
+                                connection.setName(name);
+                            }else{
+                                connection.sendTCP(new RegistrationRequest(""));
+                            }
                             break;
+
+                        case ChatMessage:
+                            server.sendToAllExceptTCP(connection.getID(), object);
+                            break;
+                            
                         default:
                             break;
                     }
+                } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive){
                 } else {
                     logger.info("Recieved unkown package: " + object);
                 }

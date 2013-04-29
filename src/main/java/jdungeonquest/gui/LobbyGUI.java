@@ -50,7 +50,16 @@ class LobbyGUI extends JPanel{
             }
         });
         
-        String time = new SimpleDateFormat("[HH:mm:ss]").format(new Date());
+        sendButton = new JButton("Send");
+        sendButton.setEnabled(false);
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textField.getText();
+                getClient().sendChatMessage(text);
+            }
+        });
+        
         messageList = new JList();
         messageList.setModel(new DefaultListModel());
         messageList.ensureIndexIsVisible(((DefaultListModel) messageList.getModel()).size() - 1);
@@ -60,6 +69,12 @@ class LobbyGUI extends JPanel{
         add(sendButton, "w 70!, wrap");
         add(new JScrollPane(messageList), "grow, span");
         add(goBackButton, "growx, span");
+    }
+
+    void addChatMessage(String msg, String author) {
+        String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
+        String text = time + author + ":" + msg;
+        ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
     }
 
     private static class ConnectPanel extends JPanel {

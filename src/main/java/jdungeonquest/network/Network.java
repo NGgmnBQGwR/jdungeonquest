@@ -10,6 +10,8 @@ public class Network {
         Kryo kryo = endPoint.getKryo();
         
         kryo.register(Message.class);
+        kryo.register(ChatMessage.class);
+        
         kryo.register(NetworkMessageType.class);
         kryo.register(RegistrationRequest.class);
         kryo.register(String.class);
