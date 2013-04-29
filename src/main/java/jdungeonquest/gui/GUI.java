@@ -2,11 +2,13 @@ package jdungeonquest.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.network.NetworkClient;
+import jdungeonquest.network.PlayerList;
 import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,6 +96,16 @@ public class GUI extends JFrame {
             lobbyGUI.addChatMessage(text, author);
         }else{
             logger.debug("Tried to call a not implemented yet addChatMessage()");
+        }
+    }
+
+    public void updatePlayerList(PlayerList p) {
+        if (recentPanel == lobbyGUI) {
+            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
+            for (String player : p.players) {
+                lobbyGUI.addPlayer(player);
+            }
+        } else {
         }
     }
 }

@@ -2,5 +2,6 @@ package jdungeonquest.enums;
 
 public enum NetworkMessageType {
     RegistrationRequest,
-    ChatMessage;
+    ChatMessage,
+    PlayerList;
 }

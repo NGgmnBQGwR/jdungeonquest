@@ -95,6 +95,11 @@ public class NetworkClient implements Runnable {
                             ChatMessage msg = (ChatMessage)object;
                             gui.addChatMessage(msg.message, msg.author);
                             break;
+                            
+                        case PlayerList:
+                            PlayerList p = (PlayerList)object;
+                            gui.updatePlayerList(p);
+                            break;
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }

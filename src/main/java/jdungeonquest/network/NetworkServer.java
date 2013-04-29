@@ -40,6 +40,8 @@ public class NetworkServer implements Runnable {
             @Override
             public void disconnected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " disconnected");
+                broadcast("Player " + connection.toString() + " has quit.");
+                broadcast(new PlayerList(game.getPlayerList()));
             }
 
             @Override
@@ -49,11 +51,12 @@ public class NetworkServer implements Runnable {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
                             String name = ((RegistrationRequest) object).playerName;
-                            logger.debug("Registering client " + connection.getID() + " with name " + name);
+                            logger.debug("Registering player " + name);
                             boolean result = game.registerPlayer(name);
                             if(result){
                                 connection.sendTCP(object);
-                                connection.setName(name);
+                                broadcast("Player " + name + " joined.");
+                                broadcast(new PlayerList(game.getPlayerList()));
                             }else{
                                 connection.sendTCP(new RegistrationRequest(""));
                             }
@@ -91,4 +94,12 @@ public class NetworkServer implements Runnable {
     public Game getGame() {
         return game;
     }
+
+    private void broadcast(String text) {
+        server.sendToAllTCP(new ChatMessage(text, "Server"));
+    }
+
+    private void broadcast(PlayerList playerList) {
+        server.sendToAllTCP(playerList);
+    }    
 }

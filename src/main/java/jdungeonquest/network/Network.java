@@ -11,9 +11,11 @@ public class Network {
         
         kryo.register(Message.class);
         kryo.register(ChatMessage.class);
+        kryo.register(PlayerList.class);
         
         kryo.register(NetworkMessageType.class);
         kryo.register(RegistrationRequest.class);
         kryo.register(String.class);
+        kryo.register(String[].class);
     }
 }
