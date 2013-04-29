@@ -19,7 +19,7 @@ public class NetworkClient implements Runnable {
     private String serverIP;
     private String clientName;
     private GUI gui;
-    private ClientState state = ClientState.NOT_REGISTERED;
+    private ClientState state = ClientState.NOT_CONNECTED;
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
 
     public NetworkClient(String name, String ip, int port, GUI gui) {
@@ -77,16 +77,20 @@ public class NetworkClient implements Runnable {
             @Override
             public void received(Connection c, Object object) {
                 logger.debug("Recieved package: " + object);
-                if (object instanceof Message) {
+                if (object instanceof String) {
+                    String obj = (String)object;
+                    if(obj.equals("lo")){
+                        logger.debug("Confirmed connection with a server.");
+                        changeState(ClientState.IN_LOBBY);
+                    }
+                }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         
                         case RegistrationRequest:
-                            if (state == ClientState.NOT_REGISTERED && ((RegistrationRequest) object).getName().equals(getClientName())) {
-                                changeState(ClientState.REGISTERED);
+                            if (state == ClientState.NOT_CONNECTED && ((RegistrationRequest) object).getName().equals(getClientName())) {
                                 gui.playerRegistered(true);
                             } else {
                                 client.close();
-                                changeState(ClientState.NOT_REGISTERED);
                                 gui.playerRegistered(false);
                             }
                             break;

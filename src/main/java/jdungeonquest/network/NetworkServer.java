@@ -48,6 +48,12 @@ public class NetworkServer implements Runnable {
             public void received(Connection connection, Object object) {
                 logger.debug(connection.getID() + " " + connection.toString() + " Recieved package: " + object);
                 if (object instanceof Message) {
+                    String test = (String) object;
+                    if (test.equals("he")) {
+                        clientPlayersMap.put(connection.getID(), new ArrayList<String>());
+                        connection.sendTCP(new String("lo"));
+                    }
+                }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
                             String name = ((RegistrationRequest) object).playerName;
