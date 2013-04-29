@@ -3,6 +3,7 @@ package jdungeonquest.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
 import java.util.logging.Level;
 import jdungeonquest.enums.ClientState;
@@ -24,6 +25,7 @@ public class NetworkClient implements Runnable {
     public NetworkClient(String name, String ip, int port, GUI gui) {
         client = new Client();
         Network.registerClasses(client);
+        Log.set(Log.LEVEL_DEBUG);
         
         this.clientName = name;
         this.serverIP = ip;

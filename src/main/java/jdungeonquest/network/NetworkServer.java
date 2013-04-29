@@ -3,6 +3,7 @@ package jdungeonquest.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
 import jdungeonquest.Game;
 import static jdungeonquest.enums.NetworkMessageType.ChatMessage;
@@ -19,6 +20,7 @@ public class NetworkServer implements Runnable {
 
     public NetworkServer() {
         this(DEFAULT_PORT);
+        Log.set(Log.LEVEL_DEBUG);
     }
 
     public NetworkServer(int port) {
@@ -42,7 +44,7 @@ public class NetworkServer implements Runnable {
 
             @Override
             public void received(Connection connection, Object object) {
-                logger.debug("Recieved package: " + object);
+                logger.debug(connection.getID() + " " + connection.toString() + " Recieved package: " + object);
                 if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
@@ -58,7 +60,9 @@ public class NetworkServer implements Runnable {
                             break;
 
                         case ChatMessage:
-                            server.sendToAllExceptTCP(connection.getID(), object);
+                            ChatMessage msg = (ChatMessage)object;
+                            logger.debug(msg.author + ":" + msg.message);
+                            server.sendToAllExceptTCP(connection.getID(), msg);
                             break;
                             
                         default:
