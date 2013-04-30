@@ -84,8 +84,12 @@ public class NetworkClient implements Runnable {
                         try {
                             logger.debug("Reconnecting.");
                             client.reconnect();
-                            //send name of all players on this client
-                            //client.sendTCP(new PlayerList(players));
+
+                            String[] playerList = new String[players.size()];
+                            for (int i = 0; i < players.size(); i++) {
+                                playerList[i] = players.get(i).getName();
+                            }
+                            sendMessage(new PlayerList(playerList));
                         } catch (IOException ex) {
                             logger.debug(ex.toString());
                         }
