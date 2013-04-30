@@ -48,6 +48,9 @@ public class NetworkServer implements Runnable {
             public void disconnected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " disconnected");
                 broadcast("Client " + connection.toString() + " has quit.");
+                for(String player : clientPlayersMap.get(connection.getID())){
+                    //game.removePlayer(player);
+                }
                 broadcast(new PlayerList(game.getPlayerList()));
             }
 
@@ -63,17 +66,7 @@ public class NetworkServer implements Runnable {
                 }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         case RegistrationRequest:
-                            String name = ((RegistrationRequest) object).playerName;
-                            logger.debug("Registering player " + name);
-                            boolean result = game.registerPlayer(name);
-                            if(result){
-                                connection.sendTCP(object);
-                                attachPlayerToClient(connection.getID(), name);
-                                broadcast("Player " + name + " joined.");
-                                broadcast(new PlayerList(game.getPlayerList()));
-                            }else{
-                                connection.sendTCP(new RegistrationRequest(""));
-                            }
+                            registerPlayer(connection, ((RegistrationRequest) object).playerName);
                             break;
 
                         case ChatMessage:
@@ -105,7 +98,20 @@ public class NetworkServer implements Runnable {
         server.start();
         logger.debug("Server started on port " + this.serverPort);
     }
-    
+
+    private void registerPlayer(Connection conn, String playerName) {
+        logger.debug("Registering player " + playerName);
+        boolean result = game.registerPlayer(playerName);
+        if (result) {
+            conn.sendTCP(new RegistrationRequest(playerName));
+            attachPlayerToClient(conn.getID(), playerName);
+            broadcast("Player " + playerName + " joined.");
+            broadcast(new PlayerList(game.getPlayerList()));
+        } else {
+            conn.sendTCP(new RegistrationRequest(""));
+        }
+    }
+
     private void attachPlayerToClient(int id, String name) {
         if(clientPlayersMap.containsKey(id)){
             List<String> players = clientPlayersMap.get(id);
