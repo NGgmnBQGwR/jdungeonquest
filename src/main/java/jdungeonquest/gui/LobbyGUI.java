@@ -3,9 +3,12 @@ package jdungeonquest.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -18,12 +21,12 @@ class LobbyGUI extends JPanel{
     GUI parent;
     
     JList messageList;
-    JList playerList;
     JTextField textField;
     JButton sendButton;
     JButton addPlayerButton;
-    JTextField nameTextField;
-
+    List<HeroPanel> heroPanels = new ArrayList();
+    JPanel heroHolder = new JPanel();
+    
     LobbyGUI(GUI parent){
         this.parent = parent;
         
@@ -31,16 +34,14 @@ class LobbyGUI extends JPanel{
     }
 
     void addPlayer(String name) {
-        ((DefaultListModel) playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
+//        ((DefaultListModel) playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
     }    
 
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[grow 25][grow 25][grow 50]", "[grow 0][grow 0][grow 0][grow 100][grow 0]");
+        MigLayout layout = new MigLayout("fill", "[grow 25][grow 75]", "[grow 0][grow 50]");
         this.setLayout(layout);
 
         textField = new JTextField("");
-        JLabel nameLabel = new JLabel("Player name:");
-        nameTextField = new JTextField("GenericPlayer");
         
         JButton goBackButton = new JButton("Back");
         goBackButton.addActionListener(new ActionListener() {
@@ -50,21 +51,6 @@ class LobbyGUI extends JPanel{
                     parent.getClient().stop();
                     parent.showMainMenu();
                 }
-            }
-        });
-        
-        addPlayerButton = new JButton("Add Player");
-        addPlayerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parent.getClient().addPlayer(nameTextField.getText());
-            }
-        });
-        
-        nameTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addPlayerButton.doClick();
             }
         });
         
@@ -90,27 +76,95 @@ class LobbyGUI extends JPanel{
         messageList.ensureIndexIsVisible(((DefaultListModel) messageList.getModel()).size() - 1);
         
         JLabel playersLabel = new JLabel("Player list");
-        playerList = new JList();
-        playerList.setModel(new DefaultListModel());
-        playerList.ensureIndexIsVisible(((DefaultListModel) playerList.getModel()).size() - 1);
-        
-        add(nameLabel, "grow");
-        add(nameTextField, "grow");
-        add(addPlayerButton, "grow, wrap");
         
         add(textField, "grow, push");
         add(sendButton, "w 70!, wrap");
         
+//        add(heroPanels[0]);
         add(playersLabel);
-        add(new JScrollPane(messageList), "grow, spanx, spany 2, wrap");
+        add(new JScrollPane(messageList), "grow, spany 2, wrap");
+        heroHolder.setLayout(new MigLayout("", "[]"));
+        heroHolder.add(new HeroPanel(this),"wrap");
+        heroHolder.add(new HeroPanel(this),"wrap");
+        heroHolder.add(new HeroPanel(this),"wrap");
+        heroHolder.add(new HeroPanel(this),"wrap");
+        add(heroHolder);
         
-        add(new JScrollPane(playerList), "grow");
+        for(HeroPanel p: heroPanels){
+            add(p);
+        }
+        
+//        add(new JScrollPane(playerList), "grow");
         add(goBackButton, "newline, grow, span");
+        
     }
 
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
         String text = time + author + ":" + msg;
         ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
+    }
+
+    private static class HeroPanel extends JPanel {
+
+        JLabel nameLabel = new JLabel("");
+        JTextField nameField = new JTextField("Hero");
+        JComboBox heroComboBox = new JComboBox(new String[]{"A","B","C","D"});
+        JButton addHero = new JButton("Add hero");
+        JButton removeHero = new JButton("Remove hero");
+        LobbyGUI parent;
+        
+        public HeroPanel(LobbyGUI parent) {
+            this.parent = parent;
+
+            initGUI();            
+        }
+        
+        private void initGUI(){
+            MigLayout layout = new MigLayout("fill", "[][][]", "[grow 0]");
+            setLayout(layout);
+            
+            addHero.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setHero();
+                }
+            });
+            
+            removeHero.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeHero();
+                }
+            });
+            
+            add(nameField);
+            add(heroComboBox);
+            add(addHero);
+        }
+        
+        private void setHero(){
+            remove(nameField);
+            remove(heroComboBox);
+            remove(addHero);
+            
+            nameLabel.setText(nameField.getText());
+            
+            add(nameLabel, "spanx 1");
+            add(removeHero);
+            revalidate();
+            repaint();
+        }
+        
+        private void removeHero(){
+            remove(nameLabel);
+            remove(removeHero);
+            
+            add(nameField);
+            add(heroComboBox);
+            add(addHero);
+            revalidate();
+            repaint();
+        }
     }
 }

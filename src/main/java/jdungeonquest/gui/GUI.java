@@ -110,7 +110,7 @@ public class GUI extends JFrame {
 
     public void updatePlayerList(PlayerList p) {
         if (recentPanel == lobbyGUI) {
-            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
+//            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
             for (String player : p.players) {
                 lobbyGUI.addPlayer(player);
             }
