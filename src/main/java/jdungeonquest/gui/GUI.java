@@ -23,8 +23,8 @@ public class GUI extends JFrame {
     ConnectGUI connectGUI = new ConnectGUI(this);
     LobbyGUI lobbyGUI = new LobbyGUI(this);
     ServerGUI serverGUI = new ServerGUI(this);
+    ClientGUI clientGUI = new ClientGUI(this);
     JComponent recentPanel;
-    //ClientGUI clientGUI;
     
     public GUI() {
         super("JDungeonQuest Main Menu");
@@ -32,6 +32,10 @@ public class GUI extends JFrame {
         logger.info("GUI created");
     }
 
+     NetworkClient getClient() {
+        return client;
+    }    
+    
     void showConnect() {
         remove(recentPanel);
         recentPanel = connectGUI;
@@ -50,6 +54,13 @@ public class GUI extends JFrame {
         remove(recentPanel);
         recentPanel = serverGUI;
         add(serverGUI);
+        pack();
+    }
+    
+    public void showClient() {
+        remove(recentPanel);
+        recentPanel = clientGUI;
+        add(clientGUI);
         pack();
     }
 
