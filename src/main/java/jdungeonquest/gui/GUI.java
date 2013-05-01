@@ -18,13 +18,28 @@ public class GUI extends JFrame {
      NetworkClient getClient() {
         return client;
     }
-    
-    public void playerRegistered(boolean b, String newPlayer) {
-        logger.debug("playerRegistered " + b);
-        if(b){
-            lobbyGUI.addPlayer(newPlayer);
+
+     /**
+      * Updates the player list to show current players.
+      * Distinguishing between local/remote players is done here.
+      * @param p 
+      */
+    public void updatePlayerList(PlayerList p) {
+//            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
+        lobbyGUI.removeRemotePlayers();
+        for (String player : p.players) {
+            if(!getClient().havePlayer(player)){ //ignore local players
+                playerRegistered(false, player);
+            }
+        }
+    }   
+     
+    public void playerRegistered(boolean localPlayer, String newPlayer) {
+        logger.debug("playerRegistered " + (localPlayer?"local ":"remote ") + newPlayer);
+        if(localPlayer){
+            lobbyGUI.addLocalPlayer(newPlayer);
         }else{
-            //lobbyGUI.infoLabel.setText("Can't add " + newPlayer);
+            lobbyGUI.addRemotePlayer(newPlayer);
         }
     }
 
@@ -105,16 +120,6 @@ public class GUI extends JFrame {
             lobbyGUI.addChatMessage(text, author);
         }else{
             logger.debug("Tried to call a not implemented yet addChatMessage()");
-        }
-    }
-
-    public void updatePlayerList(PlayerList p) {
-        if (recentPanel == lobbyGUI) {
-//            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
-            for (String player : p.players) {
-                lobbyGUI.addPlayer(player);
-            }
-        } else {
         }
     }
 }

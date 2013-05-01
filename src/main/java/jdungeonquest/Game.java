@@ -40,6 +40,9 @@ public class Game {
     }
 
     public boolean registerPlayer(String playerName) {
+        if(playerName.equals("")){
+            return false;
+        }
         if(isPlayerRegistered(playerName)){
             return false;
         }
@@ -63,8 +66,5 @@ public class Game {
             playerList[i] = players.get(i).getName();
         }
         return playerList;
-    }
-
-    private static class PlayerAttributeEnum {
     }
 }

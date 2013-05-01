@@ -112,20 +112,27 @@ public class NetworkClient implements Runnable {
                 }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
                         
+                        //Received registration request answer from the server
                         case RegistrationRequest:
                             String playerName = ((RegistrationRequest)object).getName();
-                            if (havePlayer(playerName)) {
+                            if (!playerName.equals("")) {
+                                //Server added this player to the Game, notify the GUI and add him to local players
+                                PlayerData p = new PlayerData();
+                                p.setName(playerName);
+                                players.add(p);
                                 gui.playerRegistered(true, playerName);
                             } else {
-                                gui.playerRegistered(false, playerName);
+                                //Notify GUI that player registration failed
                             }
                             break;
                             
+                        //Received chat message from the server
                         case ChatMessage:
                             ChatMessage msg = (ChatMessage)object;
                             gui.addChatMessage(msg.message, msg.author);
                             break;
                             
+                        //Received player list with all players (including local) from the server
                         case PlayerList:
                             PlayerList p = (PlayerList)object;
                             gui.updatePlayerList(p);
@@ -140,7 +147,7 @@ public class NetworkClient implements Runnable {
         client.start();
     }
 
-    private boolean havePlayer(String playerName) {
+    public boolean havePlayer(String playerName) {
         for(PlayerData p : players){
             if(p.getName().equals(playerName)){
                 return true;
@@ -166,6 +173,10 @@ public class NetworkClient implements Runnable {
     
     public void addPlayer(String name){
         sendMessage(new RegistrationRequest(name));
+    }
+
+    public void removePlayer(String text) {
+//        sendMessage(new UnregisterRequest(name));
     }
 
     private static class PlayerData {

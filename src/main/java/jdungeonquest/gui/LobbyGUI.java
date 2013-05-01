@@ -1,5 +1,6 @@
 package jdungeonquest.gui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -26,16 +27,12 @@ class LobbyGUI extends JPanel{
     JButton addPlayerButton;
     List<HeroPanel> heroPanels = new ArrayList();
     JPanel heroHolder = new JPanel();
-    
+
     LobbyGUI(GUI parent){
         this.parent = parent;
         
         initGUI();
     }
-
-    void addPlayer(String name) {
-//        ((DefaultListModel) playerList.getModel()).add(((DefaultListModel) playerList.getModel()).size(), name);
-    }    
 
     private void initGUI() {
         MigLayout layout = new MigLayout("fill", "[grow 25][grow 75]", "[grow 0][grow 50]");
@@ -80,20 +77,12 @@ class LobbyGUI extends JPanel{
         add(textField, "grow, push");
         add(sendButton, "w 70!, wrap");
         
-//        add(heroPanels[0]);
         add(playersLabel);
         add(new JScrollPane(messageList), "grow, spany 2, wrap");
         heroHolder.setLayout(new MigLayout("", "[]"));
-        heroHolder.add(new HeroPanel(this),"wrap");
-        heroHolder.add(new HeroPanel(this),"wrap");
-        heroHolder.add(new HeroPanel(this),"wrap");
-        heroHolder.add(new HeroPanel(this),"wrap");
+        heroHolder.add( new HeroPanel(this),"wrap" );
         add(heroHolder);
-        
-        for(HeroPanel p: heroPanels){
-            add(p);
-        }
-        
+       
 //        add(new JScrollPane(playerList), "grow");
         add(goBackButton, "newline, grow, span");
         
@@ -105,6 +94,39 @@ class LobbyGUI extends JPanel{
         ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
     }
 
+    void addLocalPlayer(String newPlayer) {
+        for(Component c : heroHolder.getComponents()){
+            if(c instanceof HeroPanel){
+                if( ((HeroPanel)c).nameField.getText().equals(newPlayer)){
+                    ((HeroPanel)c).setHero();
+                }
+            }
+        }
+        
+        HeroPanel h = new HeroPanel(this);
+        heroHolder.add(h, "wrap");
+
+        parent.pack();
+    }
+
+    void addRemotePlayer(String newPlayer) {
+        JLabel l = new JLabel(newPlayer);
+        heroHolder.add(l, "wrap");
+
+        parent.pack();
+    }
+
+    void removeRemotePlayers() {
+        for(Component c : heroHolder.getComponents()){
+            if(c instanceof JLabel){
+                heroHolder.remove(c);
+            }
+        }
+    }
+
+    /**
+     * Panel used for adding and removing local players
+     */
     private static class HeroPanel extends JPanel {
 
         JLabel nameLabel = new JLabel("");
@@ -127,14 +149,17 @@ class LobbyGUI extends JPanel{
             addHero.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setHero();
+                    if(nameField.getText().equals("")){
+                        return;
+                    }
+                    parent.parent.getClient().addPlayer(nameField.getText());
                 }
             });
             
             removeHero.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    removeHero();
+                    parent.parent.getClient().removePlayer(nameField.getText());
                 }
             });
             
