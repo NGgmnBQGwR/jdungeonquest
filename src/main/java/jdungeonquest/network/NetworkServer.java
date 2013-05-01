@@ -62,6 +62,7 @@ public class NetworkServer implements Runnable {
                     if (test.equals("he")) {
                         clientPlayersMap.put(connection.getID(), new ArrayList<String>());
                         connection.sendTCP(new String("lo"));
+                        connection.sendTCP(new PlayerList(game.getPlayerList()));
                     }
                 }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
@@ -75,8 +76,11 @@ public class NetworkServer implements Runnable {
                             server.sendToAllExceptTCP(connection.getID(), msg);
                             break;
                             
+                        //We recieve this only when client has disconnected
+                        //here we need to correct the entry in the clientPlayerMap
+                        //according to the players that were registered on that client
                         case PlayerList:
-                            //in case player has disconnected - need to correct the entry in the clientPlayerMap
+                            //confirm connection with the server if client is valid
                             //connection.sendTCP("lo");
                             break;
                             
@@ -143,10 +147,12 @@ public class NetworkServer implements Runnable {
     }
 
     private void broadcast(String text) {
+        logger.debug("Broadcasting text:" + text);
         server.sendToAllTCP(new ChatMessage(text, "Server"));
     }
 
     private void broadcast(PlayerList playerList) {
+        logger.debug("Broadcasting playerList:" + playerList);
         server.sendToAllTCP(playerList);
     }    
 }
