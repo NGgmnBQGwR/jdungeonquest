@@ -73,6 +73,8 @@ public class NetworkServer implements Runnable {
                             registerPlayer(connection, r.playerName, r.playerClass);
                             break;
 
+                        //We got a chat message from one of the players, so
+                        //we need to broadcast it to everyone else for them to see.
                         case ChatMessage:
                             ChatMessage msg = (ChatMessage)object;
                             logger.debug(msg.author + ":" + msg.message);
@@ -87,7 +89,15 @@ public class NetworkServer implements Runnable {
                             //connection.sendTCP("lo");
                             break;
                             
+                        //We got a client wanting to remove a local player.
+                        //Check if it can be done by him and send result of it.
+                        case UnregisterRequest:
+                            UnregisterRequest u = ((UnregisterRequest) object);
+                            unregisterPlayer(connection, u.playerName);
+                            break;
+                            
                         default:
+                            logger.debug("Unhandled message found: " + object);
                             break;
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive){
@@ -115,6 +125,20 @@ public class NetworkServer implements Runnable {
         } else {
             conn.sendTCP(new RegistrationRequest("", ""));
         }
+        logger.debug("Registering player " + playerName + " - " + result);
+    }
+
+    private void unregisterPlayer(Connection conn, String playerName) {
+        boolean result = game.unregisterPlayer(playerName);
+        if (result) {
+            conn.sendTCP(new UnregisterRequest(playerName));
+            detachPlayerFromClient(conn.getID(), playerName);
+            broadcast("Player " + playerName + " has left.");
+            broadcast(new PlayerList(game.getPlayerList()));
+        } else {
+            conn.sendTCP(new UnregisterRequest(""));
+        }
+        logger.debug("Unregistering player " + playerName + " " + result);
     } 
     
     private void attachPlayerToClient(int id, String name) {

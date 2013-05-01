@@ -43,6 +43,11 @@ public class GUI extends JFrame {
         }
     }
 
+
+    public void playerUnregistered(String playerName) {
+        lobbyGUI.removeLocalPlayer(playerName);
+    }    
+    
     JPanel mainMenuPanel;
     JPanel serverPanel;
     Logger logger = LoggerFactory.getLogger(GUI.class);

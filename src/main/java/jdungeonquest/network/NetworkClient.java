@@ -6,10 +6,12 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import jdungeonquest.enums.ClientState;
 import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
+import static jdungeonquest.enums.NetworkMessageType.UnregisterRequest;
 import jdungeonquest.gui.GUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,6 +128,26 @@ public class NetworkClient implements Runnable {
                             }
                             break;
                             
+                        //Received confirmation of removing local player
+                        case UnregisterRequest:
+                            String playerNameU = ((UnregisterRequest)object).getName();
+                            if (!playerNameU.equals("")) {
+                                //Server removed this player from the game, notify the GUI and remove him from local players
+                                
+                                Iterator<PlayerData> iter = players.iterator();
+                                while (iter.hasNext()) {
+                                    PlayerData pdi = iter.next();
+                                    if (pdi.getName().equals(playerNameU)) {
+                                        iter.remove();
+                                    }
+                                }
+
+                                gui.playerUnregistered(playerNameU);
+                            } else {
+                                //Notify GUI that player removal failed
+                            }                            
+                            break;
+                            
                         //Received chat message from the server
                         case ChatMessage:
                             ChatMessage msg = (ChatMessage)object;
@@ -166,7 +188,7 @@ public class NetworkClient implements Runnable {
 
     public void sendChatMessage(String text) {
         logger.debug("Sending ChatMessage: " + text);
-        ChatMessage msg = new ChatMessage(text, "none");
+        ChatMessage msg = new ChatMessage(text, "");
         sendMessage(msg);
         gui.addChatMessage(text, "none");
     }
