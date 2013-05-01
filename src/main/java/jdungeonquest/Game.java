@@ -1,7 +1,10 @@
 package jdungeonquest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import jdungeonquest.enums.PlayerAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,13 @@ public class Game {
     List<Player> players = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(Game.class);
 
+    Map<String, Boolean> playerClasses = new HashMap();
+    
     public Game(){
-        
+        playerClasses.put("A", false);
+        playerClasses.put("B", false);
+        playerClasses.put("C", false);
+        playerClasses.put("D", false);
     }
     
     public void broadCast(String message) {
@@ -39,17 +47,45 @@ public class Game {
         //return null;
     }
 
-    public boolean registerPlayer(String playerName) {
+    public boolean registerPlayer(String playerName, String playerClass) {
         if(playerName.equals("")){
             return false;
         }
         if(isPlayerRegistered(playerName)){
             return false;
         }
-        Player newPlayer = new Player(playerName);
+//        if(playerClasses.get(playerClass)){
+//            return false;
+//        }
+        
+        Player newPlayer = new Player();
+        newPlayer.setName(playerName);
+        newPlayer.setClassname(playerClass);
+        
         players.add(newPlayer);
+        playerClasses.put(playerClass, true);
+        
+        logger.debug("Game registered player " + playerName + " with class " + playerClass);
         return true;
     }
+    
+    public boolean unregisterPlayer(String playerName) {
+        if(playerName.equals("")){
+            return false;
+        }
+        if(!isPlayerRegistered(playerName)){
+            return false;
+        }
+        Iterator<Player> iter = players.iterator();
+        while(iter.hasNext()){
+            Player p = iter.next();
+            if(p.getName().equals(playerName)){
+                iter.remove();                
+            }
+        }
+        logger.debug("Game unregistered player " + playerName);
+        return true;
+    }    
 
     public boolean isPlayerRegistered(String playerName) {
         for (Player p : players) {

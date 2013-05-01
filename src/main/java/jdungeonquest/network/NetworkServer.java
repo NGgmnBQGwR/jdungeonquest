@@ -66,8 +66,11 @@ public class NetworkServer implements Runnable {
                     }
                 }else if (object instanceof Message) {
                     switch (((Message) object).msgType) {
+                        //We got a client wanting to register a new player.
+                        //Check if it can be done and send him result of it.
                         case RegistrationRequest:
-                            registerPlayer(connection, ((RegistrationRequest) object).playerName);
+                            RegistrationRequest r = ((RegistrationRequest) object);
+                            registerPlayer(connection, r.playerName, r.playerClass);
                             break;
 
                         case ChatMessage:
@@ -92,7 +95,6 @@ public class NetworkServer implements Runnable {
                     logger.info("Recieved unkown package: " + object);
                 }
             }
-
         });
         try {
             server.bind(this.serverPort);
@@ -103,19 +105,18 @@ public class NetworkServer implements Runnable {
         logger.debug("Server started on port " + this.serverPort);
     }
 
-    private void registerPlayer(Connection conn, String playerName) {
-        logger.debug("Registering player " + playerName);
-        boolean result = game.registerPlayer(playerName);
+    private void registerPlayer(Connection conn, String playerName, String playerClass) {
+        boolean result = game.registerPlayer(playerName, playerClass);
         if (result) {
-            conn.sendTCP(new RegistrationRequest(playerName));
+            conn.sendTCP(new RegistrationRequest(playerName, playerClass));
             attachPlayerToClient(conn.getID(), playerName);
             broadcast("Player " + playerName + " joined.");
             broadcast(new PlayerList(game.getPlayerList()));
         } else {
-            conn.sendTCP(new RegistrationRequest(""));
+            conn.sendTCP(new RegistrationRequest("", ""));
         }
-    }
-
+    } 
+    
     private void attachPlayerToClient(int id, String name) {
         if(clientPlayersMap.containsKey(id)){
             List<String> players = clientPlayersMap.get(id);
@@ -132,8 +133,8 @@ public class NetworkServer implements Runnable {
             List<String> players = clientPlayersMap.get(id);
             players.remove(name);
             clientPlayersMap.put(id, players);
+            logger.debug("Removed " + name);
         }
-        logger.debug("Removed " + name);
         logger.debug("List of players for Client " + id + " : " + clientPlayersMap.get(id));
     }
     

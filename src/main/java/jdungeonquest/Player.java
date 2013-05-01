@@ -7,6 +7,7 @@ package jdungeonquest;
 public class Player {
 
     private String name;
+    private String classname;
     private int gold;
     private int hp;
 
@@ -23,5 +24,19 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return the classname
+     */
+    public String getClassname() {
+        return classname;
+    }
+
+    /**
+     * @param classname the classname to set
+     */
+    public void setClassname(String classname) {
+        this.classname = classname;
     }
 }

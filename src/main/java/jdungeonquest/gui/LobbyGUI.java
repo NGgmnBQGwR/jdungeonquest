@@ -152,7 +152,7 @@ class LobbyGUI extends JPanel{
                     if(nameField.getText().equals("")){
                         return;
                     }
-                    parent.parent.getClient().addPlayer(nameField.getText());
+                    parent.parent.getClient().addPlayer(nameField.getText(), (String)heroComboBox.getSelectedItem());
                 }
             });
             

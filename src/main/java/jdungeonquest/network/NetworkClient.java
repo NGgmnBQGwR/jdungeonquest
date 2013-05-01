@@ -48,8 +48,8 @@ public class NetworkClient implements Runnable {
         sendMessage("he");
     }
     
-    public void registerOnServer(String name) {
-        sendMessage(new RegistrationRequest(name));
+    public void registerOnServer(String name, String classname) {
+        sendMessage(new RegistrationRequest(name, classname));
     }
 
     public void sendMessage(Message msg) {
@@ -171,12 +171,12 @@ public class NetworkClient implements Runnable {
         gui.addChatMessage(text, "none");
     }
     
-    public void addPlayer(String name){
-        sendMessage(new RegistrationRequest(name));
+    public void addPlayer(String name, String classname){
+        sendMessage(new RegistrationRequest(name, classname));
     }
 
-    public void removePlayer(String text) {
-//        sendMessage(new UnregisterRequest(name));
+    public void removePlayer(String name) {
+        sendMessage(new UnregisterRequest(name));
     }
 
     private static class PlayerData {
