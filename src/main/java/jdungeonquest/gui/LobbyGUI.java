@@ -1,6 +1,7 @@
 package jdungeonquest.gui;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import net.miginfocom.swing.MigLayout;
 
 class LobbyGUI extends JPanel{
@@ -24,9 +26,11 @@ class LobbyGUI extends JPanel{
     JList messageList;
     JTextField textField;
     JButton sendButton;
+    JToggleButton readyButton;
     JButton addPlayerButton;
     List<HeroPanel> heroPanels = new ArrayList();
     JPanel heroHolder = new JPanel();
+    boolean readyFlag = false;
 
     LobbyGUI(GUI parent){
         this.parent = parent;
@@ -34,6 +38,16 @@ class LobbyGUI extends JPanel{
         initGUI();
     }
 
+    private void enableComponents(Container container, boolean enable) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            component.setEnabled(enable);
+            if (component instanceof Container) {
+                enableComponents((Container)component, enable);
+            }
+        }
+    }
+    
     private void initGUI() {
         MigLayout layout = new MigLayout("fill", "[grow 25][grow 75]", "[grow 0][grow 50]");
         this.setLayout(layout);
@@ -51,6 +65,21 @@ class LobbyGUI extends JPanel{
             }
         });
         
+        readyButton = new JToggleButton("Ready");
+        readyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                readyFlag = !readyFlag;
+                if(readyFlag){
+                    enableComponents(heroHolder, false);
+                    parent.getClient().toggleReadyStatus();
+                }else{
+                    enableComponents(heroHolder, true);
+                    parent.getClient().toggleReadyStatus();
+                }
+            }
+        });
+
         sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +104,8 @@ class LobbyGUI extends JPanel{
         JLabel playersLabel = new JLabel("Player list");
         
         add(textField, "grow, push");
-        add(sendButton, "w 70!, wrap");
+        add(sendButton, "w 70!");
+        add(readyButton, "wrap");
         
         add(playersLabel);
         add(new JScrollPane(messageList), "grow, spany 2, wrap");

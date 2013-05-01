@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jdungeonquest.Game;
+import jdungeonquest.enums.NetworkMessageType;
 import static jdungeonquest.enums.NetworkMessageType.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,6 +97,11 @@ public class NetworkServer implements Runnable {
                             unregisterPlayer(connection, u.playerName);
                             break;
                             
+                        //One of the clients is ready to start the game
+                        case ClientReady:
+                            toggleClientReadyStatus(connection.getID());
+                            break;
+                            
                         default:
                             logger.debug("Unhandled message found: " + object);
                             break;
@@ -105,6 +111,7 @@ public class NetworkServer implements Runnable {
                     logger.info("Recieved unkown package: " + object);
                 }
             }
+
         });
         try {
             server.bind(this.serverPort);
@@ -113,6 +120,17 @@ public class NetworkServer implements Runnable {
         }
         server.start();
         logger.debug("Server started on port " + this.serverPort);
+    }
+
+    private void toggleClientReadyStatus(int id) {
+        for(String playerName : clientPlayersMap.get(id)){
+            logger.debug("Changing ready status of " + playerName + " from Client " + id);
+            game.toggleReadyPlayer(playerName);
+        }
+        if( game.isEveryoneReady() ){
+            logger.debug("Everyone is ready. Starting game.");
+            server.sendToAllTCP(new Message(NetworkMessageType.StartGame));
+        }
     }
 
     private void registerPlayer(Connection conn, String playerName, String playerClass) {

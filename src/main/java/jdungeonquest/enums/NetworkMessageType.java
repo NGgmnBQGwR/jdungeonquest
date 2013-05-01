@@ -4,5 +4,7 @@ public enum NetworkMessageType {
     RegistrationRequest,
     ChatMessage,
     PlayerList,
-    UnregisterRequest;
+    UnregisterRequest,
+    ClientReady,
+    StartGame;
 }

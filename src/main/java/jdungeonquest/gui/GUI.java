@@ -14,39 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GUI extends JFrame {
-
-     NetworkClient getClient() {
-        return client;
-    }
-
-     /**
-      * Updates the player list to show current players.
-      * Distinguishing between local/remote players is done here.
-      * @param p 
-      */
-    public void updatePlayerList(PlayerList p) {
-//            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
-        lobbyGUI.removeRemotePlayers();
-        for (String player : p.players) {
-            if(!getClient().havePlayer(player)){ //ignore local players
-                playerRegistered(false, player);
-            }
-        }
-    }   
-     
-    public void playerRegistered(boolean localPlayer, String newPlayer) {
-        logger.debug("playerRegistered " + (localPlayer?"local ":"remote ") + newPlayer);
-        if(localPlayer){
-            lobbyGUI.addLocalPlayer(newPlayer);
-        }else{
-            lobbyGUI.addRemotePlayer(newPlayer);
-        }
-    }
-
-
-    public void playerUnregistered(String playerName) {
-        lobbyGUI.removeLocalPlayer(playerName);
-    }    
     
     JPanel mainMenuPanel;
     JPanel serverPanel;
@@ -120,6 +87,36 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
+    
+     /**
+      * Updates the player list to show current players.
+      * Distinguishing between local/remote players is done here.
+      * @param p 
+      */
+    public void updatePlayerList(PlayerList p) {
+//            ((DefaultListModel) lobbyGUI.playerList.getModel()).clear();
+        lobbyGUI.removeRemotePlayers();
+        for (String player : p.players) {
+            if(!getClient().havePlayer(player)){ //ignore local players
+                playerRegistered(false, player);
+            }
+        }
+    }   
+     
+    public void playerRegistered(boolean localPlayer, String newPlayer) {
+        logger.debug("playerRegistered " + (localPlayer?"local ":"remote ") + newPlayer);
+        if(localPlayer){
+            lobbyGUI.addLocalPlayer(newPlayer);
+        }else{
+            lobbyGUI.addRemotePlayer(newPlayer);
+        }
+    }
+
+
+    public void playerUnregistered(String playerName) {
+        lobbyGUI.removeLocalPlayer(playerName);
+    }    
+    
     public void addChatMessage(String text, String author) {
         if(recentPanel == lobbyGUI){
             lobbyGUI.addChatMessage(text, author);

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import jdungeonquest.enums.ClientState;
+import jdungeonquest.enums.NetworkMessageType;
 import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
 import static jdungeonquest.enums.NetworkMessageType.UnregisterRequest;
 import jdungeonquest.gui.GUI;
@@ -159,6 +160,12 @@ public class NetworkClient implements Runnable {
                             PlayerList p = (PlayerList)object;
                             gui.updatePlayerList(p);
                             break;
+                            
+                        //Every player is ready, and server declared game start
+                        case StartGame:
+                            gui.showClient();
+                            changeState(ClientState.IN_GAME);
+                            break;
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
@@ -199,6 +206,10 @@ public class NetworkClient implements Runnable {
 
     public void removePlayer(String name) {
         sendMessage(new UnregisterRequest(name));
+    }
+
+    public void toggleReadyStatus() {
+        sendMessage(new Message(NetworkMessageType.ClientReady));
     }
 
     private static class PlayerData {

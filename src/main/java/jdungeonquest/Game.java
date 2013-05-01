@@ -13,16 +13,16 @@ public class Game {
 
     List<Player> players = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(Game.class);
-
     Map<String, Boolean> playerClasses = new HashMap();
-    
-    public Game(){
+    Map<String, Boolean> playerReadyStatus = new HashMap();
+
+    public Game() {
         playerClasses.put("A", false);
         playerClasses.put("B", false);
         playerClasses.put("C", false);
         playerClasses.put("D", false);
     }
-    
+
     public void broadCast(String message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -47,6 +47,16 @@ public class Game {
         //return null;
     }
 
+    public boolean toggleReadyPlayer(String playerName) {
+        boolean value = !(playerReadyStatus.get(playerName));
+        playerReadyStatus.put(playerName, value);
+        logger.debug("Player " + playerName + " ready status:" + value);
+        if (false) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean registerPlayer(String playerName, String playerClass) {
         if(playerName.equals("")){
             return false;
@@ -64,7 +74,9 @@ public class Game {
         
         players.add(newPlayer);
         playerClasses.put(playerClass, true);
-        
+
+        playerReadyStatus.put(playerName, false);
+
         logger.debug("Game registered player " + playerName + " with class " + playerClass);
         return true;
     }
@@ -81,11 +93,12 @@ public class Game {
             Player p = iter.next();
             if(p.getName().equals(playerName)){
                 iter.remove();                
+                playerReadyStatus.remove(playerName);
             }
         }
         logger.debug("Game unregistered player " + playerName);
         return true;
-    }    
+    }
 
     public boolean isPlayerRegistered(String playerName) {
         for (Player p : players) {
@@ -97,10 +110,24 @@ public class Game {
     }
 
     public String[] getPlayerList() {
-        String[] playerList = new String[ players.size() ];
-        for(int i=0; i<players.size(); i++){
+        String[] playerList = new String[players.size()];
+        for (int i = 0; i < players.size(); i++) {
             playerList[i] = players.get(i).getName();
         }
         return playerList;
+    }
+
+    public boolean isEveryoneReady() {
+        assert (playerReadyStatus.size() == players.size());
+        
+        if(playerReadyStatus.isEmpty()){
+            return false;
+        }
+        for (Boolean status : playerReadyStatus.values()) {
+            if (!status) {
+                return false;
+            }
+        }
+        return true;
     }
 }
