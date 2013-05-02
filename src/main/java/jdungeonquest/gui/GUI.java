@@ -131,6 +131,8 @@ public class GUI extends JFrame {
     public void addChatMessage(String text, String author) {
         if(recentPanel == lobbyGUI){
             lobbyGUI.addChatMessage(text, author);
+        }else if(recentPanel == clientGUI){
+            clientGUI.addChatMessage(text, author);
         }else{
             logger.debug("Tried to call a not implemented yet addChatMessage()");
         }
