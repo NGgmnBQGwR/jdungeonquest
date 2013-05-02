@@ -7,6 +7,10 @@ public class GiveGold implements Effect {
 
     private int amount;
 
+    public GiveGold(){
+        
+    }
+    
     public GiveGold(int amount) {
         this.amount = amount;
     }
@@ -14,7 +18,26 @@ public class GiveGold implements Effect {
     @Override
     public void doAction(Game game) {
         int currentGold = game.GetPlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold);
-        game.changePlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold, currentGold + amount);
-        game.broadCast("Player " + game.getCurrentPlayer().getName() + " recieved " + new Integer(amount).toString() + " gold!");
+        game.changePlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold, currentGold + getAmount());
+        game.broadCast("Player " + game.getCurrentPlayer().getName() + " recieved " + new Integer(getAmount()).toString() + " gold!");
+    }
+
+    @Override
+    public String toString() {
+        return "GiveGold " + getAmount();
+    }
+
+    /**
+     * @return the amount
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * @param amount the amount to set
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

@@ -1,5 +1,13 @@
 package jdungeonquest.enums;
 
 public enum DeckType {
-    Door;
+    Dragon,
+    Door,
+    Corpse,
+    Crypt,
+    Trap,
+    Search,
+    Room,
+    Treasure,
+    Monster;
 }
