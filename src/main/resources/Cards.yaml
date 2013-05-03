@@ -1,0 +1,52 @@
+#Dragon
+- !!jdungeonquest.Card
+ description: Dragon Awakens
+ deckType: Dragon
+ effects: []
+
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+- !!jdungeonquest.Card
+ description: Dragon Sleeps
+ deckType: Dragon
+ effects: []
+
+#   - !!jdungeonquest.effectss.GiveGold {amount: 1}
+#   - !!jdungeonquest.effectss.GiveGold {amount: 2}
+#Door
+#Corpse
+#Crypt
+#Trap
+#Search
+#Room
+#Treasure
+#Monster
+
+#- !!jdungeonquest.Card
+# description: Card1
+# deckType: Trap
+# effects:
+#   - !!jdungeonquest.effectss.GiveGold {amount: 1}
+#   - !!jdungeonquest.effectss.GiveGold {amount: 2}
