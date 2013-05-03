@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jdungeonquest.Card;
+import jdungeonquest.CardHolder;
+import jdungeonquest.Deck;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.effects.GiveGold;
 import jdungeonquest.enums.DeckType;
@@ -99,4 +101,21 @@ public class CardDeckTest {
         assertEquals(0, cards.get(1).getEffects().size());
         assertEquals(1, cards.get(2).getEffects().size());
     }
+    
+    @Test
+    public void CardHolderInitializedSuccessfully(){
+        CardHolder holder = new CardHolder();
+        holder.initializeCards();
+        
+        assertEquals(8, holder.dragonDeck.size());
+        assertEquals(0, holder.doorDeck.size());
+        assertEquals(0, holder.corpseDeck.size());
+        assertEquals(0, holder.cryptDeck.size());
+        assertEquals(0, holder.trapDeck.size());
+        assertEquals(0, holder.searchDeck.size());
+        assertEquals(0, holder.roomDeck.size());
+        assertEquals(0, holder.treasureDeck.size());
+        assertEquals(0, holder.monsterDeck.size());
+    }    
+    
 }
