@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.Tile;
+import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NetworkClient;
 import jdungeonquest.network.PlaceTile;
 import jdungeonquest.network.PlayerList;
@@ -149,5 +150,18 @@ public class GUI extends JFrame {
         logger.debug("Placing tile " + tile + " at " + x + ":" + y);
         Tile t = clientGUI.tileHolder.takeSpecificTile(tile);
         clientGUI.map.setTile(x, y, t);
+        clientGUI.repaint();
+    }
+
+    public void initPlayersOnMap(){
+        for(String pn : getClient().getPlayerNames()){
+            clientGUI.playerPosition.put(pn, new int[]{0 ,0} );
+        }
+    }
+    
+    public void movePlayer(MovePlayer movePlayer) {
+        clientGUI.playerPosition.put(movePlayer.getPlayer(), new int[]{ movePlayer.getX(), movePlayer.getY() });
+        logger.debug("Current player positions: " + clientGUI.playerPosition);
+        clientGUI.repaint();
     }
 }
