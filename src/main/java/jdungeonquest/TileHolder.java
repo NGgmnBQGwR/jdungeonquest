@@ -19,7 +19,7 @@ public class TileHolder {
     final static String startingTileYaml =
             "!!jdungeonquest.Tile\n"
             + "entryDirection: RIGHT\n"
-            + "imagePath: /tiles/01.png\n"
+            + "imagePath: /tiles/start.png\n"
             + "isSearchable: false\n"
             + "walls: [WALL, WALL, WALL, WALL]\n";
     
