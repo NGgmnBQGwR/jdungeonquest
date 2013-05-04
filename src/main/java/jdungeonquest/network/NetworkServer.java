@@ -130,6 +130,8 @@ public class NetworkServer implements Runnable {
         if( game.isEveryoneReady() ){
             logger.debug("Everyone is ready. Starting game.");
             server.sendToAllTCP(new Message(NetworkMessageType.StartGame));
+            game.startGame();
+            processMessageQueue();
         }
     }
 
@@ -198,4 +200,15 @@ public class NetworkServer implements Runnable {
         logger.debug("Broadcasting playerList:" + playerList);
         server.sendToAllTCP(playerList);
     }    
+
+    private void processMessageQueue() {
+        if(game.messageQueue.isEmpty()){
+            return;
+        }
+        for(Message m : game.messageQueue){
+            logger.debug("Sending all message " + m);
+            server.sendToAllTCP(m);
+        }
+        game.messageQueue.clear();
+    }
 }

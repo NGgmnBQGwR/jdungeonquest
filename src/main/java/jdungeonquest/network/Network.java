@@ -16,6 +16,9 @@ public class Network {
         kryo.register(NetworkMessageType.class);
         kryo.register(RegistrationRequest.class);
         kryo.register(UnregisterRequest.class);
+        kryo.register(PlaceTile.class);
+        kryo.register(MovePlayer.class);
+        
         kryo.register(String.class);
         kryo.register(String[].class);
     }

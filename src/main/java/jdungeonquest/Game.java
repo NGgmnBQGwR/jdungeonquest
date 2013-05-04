@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import jdungeonquest.enums.PlayerAttributes;
+import jdungeonquest.network.Message;
+import jdungeonquest.network.PlaceTile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,23 +17,27 @@ public class Game {
     Logger logger = LoggerFactory.getLogger(Game.class);
     Map<String, Boolean> playerClasses = new HashMap();
     Map<String, Boolean> playerReadyStatus = new HashMap();
+    Player currentPlayer;
+    GameMap map;
 
+    TileHolder tileHolder;
+    CardHolder cardHolder;
+    
+    public List<Message> messageQueue;
+    
     public Game() {
         playerClasses.put("A", false);
         playerClasses.put("B", false);
         playerClasses.put("C", false);
         playerClasses.put("D", false);
+        
+        tileHolder = new TileHolder();
+        cardHolder = new CardHolder();
+        
+        messageQueue = new ArrayList<>();
+        map = new GameMap();
     }
 
-    public void broadCast(String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * This internal method broadcasts command to change gold to all connected
-     * GUIs.
-     *
-     */
     public void changePlayerAttribute(Player player, PlayerAttributes attribute, int amount) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -42,9 +48,8 @@ public class Game {
 
     // SUBJECT TO CHANGE
     // <code>getCurrentPlayer</code> --- возвращает, нарпимер, текстовое имя игрока или некий внутренний id
-    public Player getCurrentPlayer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        //return null;
+    public String getCurrentPlayer() {
+        return currentPlayer.getName();
     }
 
     public boolean toggleReadyPlayer(String playerName) {
@@ -129,5 +134,35 @@ public class Game {
             }
         }
         return true;
+    }
+
+    public void startGame() {
+        placeStartingTiles();
+    }
+
+    private void placeStartingTiles() {
+        switch(players.size()){
+            case 0: endGame(); break;
+            case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile);
+            case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile);
+            case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile);
+            case 1: placeTile(0, 0, tileHolder.startingTile); break;
+            default: break; //only 4 players are supported right now
+        }
+    }
+
+    private void placeTile(int x, int y, Tile tile) {
+        int tileNumber = tileHolder.getTileNumber(tile);
+        map.setTile(x, y, tile);
+        addMessage( new PlaceTile(x, y, tileNumber));
+    }
+
+    private void addMessage(Message m) {
+        logger.debug("Adding message to queue: " + m);
+        messageQueue.add(m);
+    }
+
+    private void endGame() {
+        System.exit(1);
     }
 }

@@ -166,6 +166,12 @@ public class NetworkClient implements Runnable {
                             gui.showClient();
                             changeState(ClientState.IN_GAME);
                             break;
+                            
+                        case PlaceTile:
+                            PlaceTile placeTile = (PlaceTile)object;
+                            gui.placeTile(placeTile);
+                            break;
+                            
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
@@ -212,7 +218,7 @@ public class NetworkClient implements Runnable {
         sendMessage(new Message(NetworkMessageType.ClientReady));
     }
 
-    private static class PlayerData {
+    class PlayerData {
 
         String name;
         
