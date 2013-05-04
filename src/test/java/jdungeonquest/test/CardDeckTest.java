@@ -10,9 +10,13 @@ import java.util.List;
 import jdungeonquest.Card;
 import jdungeonquest.CardHolder;
 import jdungeonquest.Deck;
+import jdungeonquest.Tile;
+import jdungeonquest.TileHolder;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.effects.GiveGold;
 import jdungeonquest.enums.DeckType;
+import jdungeonquest.enums.EntryDirection;
+import jdungeonquest.enums.RoomWallType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -105,7 +109,6 @@ public class CardDeckTest {
     @Test
     public void CardHolderInitializedSuccessfully(){
         CardHolder holder = new CardHolder();
-        holder.initializeCards();
         
         assertEquals(8, holder.dragonDeck.size());
         assertEquals(0, holder.doorDeck.size());
@@ -116,6 +119,30 @@ public class CardDeckTest {
         assertEquals(0, holder.roomDeck.size());
         assertEquals(0, holder.treasureDeck.size());
         assertEquals(0, holder.monsterDeck.size());
-    }    
+    }
+    
+    @Test
+    public void TileHolderInitializedSuccessfully(){
+        TileHolder holder = new TileHolder();
+        Yaml yaml = new Yaml();
+        Tile zero = new Tile();
+        zero.setImagePath("/tiles/01.png");
+        zero.setWalls( new ArrayList<> (Arrays.asList (new RoomWallType [] {RoomWallType.WALL, RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL}) ));
+        zero.setIsSearchable(false);
+        zero.setEntryDirection(EntryDirection.LEFT);
+        
+        
+//        Tile test = (Tile)yaml.load("!!jdungeonquest.Tile\n" +
+//"entryDirection: LEFT\n" +
+//"imagePath: /tiles/01.png\n" +
+//"isSearchable: false\n" +
+//"walls: [WALL, WALL, EXIT, WALL]\n");
+////"walls: [!!jdungeonquest.enums.RoomWallType 'WALL', !!jdungeonquest.enums.RoomWallType 'WALL',\n" +
+////"  !!jdungeonquest.enums.RoomWallType 'WALL', !!jdungeonquest.enums.RoomWallType 'WALL']\n");
+//        System.out.println(test);
+//        System.out.println(test.getWalls());
+////        System.out.println(yaml.dump(zero));
+        
+    }
     
 }
