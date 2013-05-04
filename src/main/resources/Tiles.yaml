@@ -1,0 +1,5 @@
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ imagePath: /tiles/crossroads.png
+ isSearchable: true
+ walls: [EXIT, EXIT, EXIT, EXIT]
