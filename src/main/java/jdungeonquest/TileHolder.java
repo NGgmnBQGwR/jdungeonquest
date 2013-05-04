@@ -54,10 +54,10 @@ public class TileHolder {
         tileMap.put(-1, startingTile);
         
         int currentTile = 0;
-//        for (Tile tile : allTiles) {
-//            tileMap.put(currentTile, tile);
-//            currentTile++;
-//        }
+        for (Tile tile : allTiles) {
+            tileMap.put(currentTile, tile);
+            currentTile++;
+        }
     }
 
     int getTileNumber(Tile tile) {
