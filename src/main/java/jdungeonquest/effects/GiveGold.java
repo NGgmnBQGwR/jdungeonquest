@@ -17,9 +17,8 @@ public class GiveGold implements Effect {
 
     @Override
     public void doAction(Game game) {
-        int currentGold = game.GetPlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold);
-        game.changePlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold, currentGold + getAmount());
-        game.broadCast("Player " + game.getCurrentPlayer().getName() + " recieved " + new Integer(getAmount()).toString() + " gold!");
+//        int currentGold = game.GetPlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold);
+//        game.changePlayerAttribute(game.getCurrentPlayer(), PlayerAttributes.Gold, currentGold + getAmount());
     }
 
     @Override

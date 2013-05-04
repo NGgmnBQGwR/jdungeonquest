@@ -9,7 +9,7 @@ public class Card {
 
     private String description;
     private DeckType deckType;
-    private List<Effect> effects = new ArrayList<Effect>();
+    private List<Effect> effects;
 
     public Card() {
 

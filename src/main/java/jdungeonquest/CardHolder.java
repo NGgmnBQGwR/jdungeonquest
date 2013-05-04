@@ -22,7 +22,11 @@ public class CardHolder {
     
     Map<Integer, Card> cardsMap = new HashMap<Integer, Card>();
     
-    public void initializeCards(){
+    public CardHolder(){
+        initializeCards();
+    }
+    
+    private void initializeCards(){
         Yaml yaml = new Yaml();
         List<Card> allCards;
         allCards = (ArrayList<Card>) yaml.load(CardHolder.class.getResourceAsStream("/Cards.yaml"));
