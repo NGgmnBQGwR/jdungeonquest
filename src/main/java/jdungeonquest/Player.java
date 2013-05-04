@@ -10,8 +10,7 @@ public class Player {
     private String classname;
     private int gold;
     private int hp;
-    private int x;
-    private int y;
+    private Position position = new Position();
 
     public Player() {
     }
@@ -40,5 +39,19 @@ public class Player {
      */
     public void setClassname(String classname) {
         this.classname = classname;
+    }
+
+    /**
+     * @return the position
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

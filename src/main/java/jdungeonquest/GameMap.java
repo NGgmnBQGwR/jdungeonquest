@@ -30,11 +30,11 @@ public class GameMap {
         }
     }
     
-    public boolean isAdjacent(int x1, int y1, int x2, int y2){
+    public boolean isAdjacent(Position p1, Position p2){
         return false;        
     }
 
-    public boolean canMoveTo(int x1, int y1, int x2, int y2){
+    public boolean canMoveTo(Position p1, Position p2){
         return false;
     }
     
