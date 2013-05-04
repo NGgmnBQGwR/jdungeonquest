@@ -203,7 +203,11 @@ public class NetworkClient implements Runnable {
         logger.debug("Sending ChatMessage: " + text);
         ChatMessage msg = new ChatMessage(text, "");
         sendMessage(msg);
-        gui.addChatMessage(text, "none");
+        String author = "";
+        for(PlayerData pd : players){
+            author += pd.getName() + ", ";
+        }
+        gui.addChatMessage(text, author);
     }
     
     public void addPlayer(String name, String classname){
