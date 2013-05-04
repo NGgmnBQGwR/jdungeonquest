@@ -40,19 +40,28 @@ public class ClientGUI extends JPanel{
     GameMap map;
     TileHolder tileHolder;
     Map<String, int[]> playerPosition;
+    JButton endTurnButton;
     
     ClientGUI(GUI parent){
         this.parent = parent;
         map = new GameMap();
         tileHolder = new TileHolder();
         playerPosition = new HashMap<>();
-        playerPosition.put("TestPlayer", new int[]{0,0});
+        
         initGUI();
     }
 
     private void initGUI() {
         MigLayout layout = new MigLayout("fill", "[grow][grow]", "[grow][grow]");
         this.setLayout(layout);
+        
+        endTurnButton = new JButton("End turn");
+        endTurnButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    parent.getClient().endTurn();
+                }
+            });
         
         chatPanel = new ChatPanel(this);
         mapPanel = new MapPanel(map);
@@ -66,10 +75,13 @@ public class ClientGUI extends JPanel{
         
         add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow 60");
         add(chatPanel);
+        add(endTurnButton);
     }
 
     void processMouseClick(int x, int y){
-        
+        int tx = x / 200;
+        int ty = y / 200;
+        parent.getClient().moveTo(tx, ty);
     }
     
     void addChatMessage(String msg, String author) {
