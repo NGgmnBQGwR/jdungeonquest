@@ -10,6 +10,8 @@ public class Player {
     private String classname;
     private int gold;
     private int hp;
+    private int x;
+    private int y;
 
     public Player() {
     }
