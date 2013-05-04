@@ -7,7 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import jdungeonquest.Tile;
 import jdungeonquest.network.NetworkClient;
+import jdungeonquest.network.PlaceTile;
 import jdungeonquest.network.PlayerList;
 import net.miginfocom.swing.MigLayout;
 import org.slf4j.Logger;
@@ -93,6 +95,7 @@ public class GUI extends JFrame {
         mainMenuPanel.add(serverButton, "grow");
         mainMenuPanel.add(lobbyButton, "grow");
 
+//        add(clientGUI);
         add(mainMenuPanel);
         pack();
         setVisible(true);
@@ -136,5 +139,15 @@ public class GUI extends JFrame {
         }else{
             logger.debug("Tried to call a not implemented yet addChatMessage()");
         }
+    }
+
+    public void placeTile(PlaceTile placeTile) {
+        final int tile = placeTile.tile;
+        final int x = placeTile.x;
+        final int y = placeTile.y;
+        
+        logger.debug("Placing tile " + tile + " at " + x + ":" + y);
+        Tile t = clientGUI.tileHolder.takeSpecificTile(tile);
+        clientGUI.map.setTile(x, y, t);
     }
 }
