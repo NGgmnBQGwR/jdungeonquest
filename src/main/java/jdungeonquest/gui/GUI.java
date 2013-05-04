@@ -152,12 +152,6 @@ public class GUI extends JFrame {
         clientGUI.map.setTile(x, y, t);
         clientGUI.repaint();
     }
-
-    public void initPlayersOnMap(){
-        for(String pn : getClient().getPlayerNames()){
-            clientGUI.playerPosition.put(pn, new int[]{0 ,0} );
-        }
-    }
     
     public void movePlayer(MovePlayer movePlayer) {
         clientGUI.playerPosition.put(movePlayer.getPlayer(), new int[]{ movePlayer.getX(), movePlayer.getY() });
