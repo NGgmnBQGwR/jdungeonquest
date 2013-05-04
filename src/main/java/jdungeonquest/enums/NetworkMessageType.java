@@ -6,5 +6,7 @@ public enum NetworkMessageType {
     PlayerList,
     UnregisterRequest,
     ClientReady,
-    StartGame;
+    StartGame,
+    PlaceTile,
+    MovePlayer;
 }
