@@ -9,7 +9,7 @@ public class ChatMessage extends Message{
     ChatMessage() {
     }
 
-    ChatMessage(String text, String clientName) {
+    public ChatMessage(String text, String clientName) {
         msgType = NetworkMessageType.ChatMessage;
         message = text;
         author = clientName;
