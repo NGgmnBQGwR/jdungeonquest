@@ -102,6 +102,14 @@ public class NetworkServer implements Runnable {
                             toggleClientReadyStatus(connection.getID());
                             break;
                             
+                        case PlaceTile:
+                            PlaceTile placeTile = (PlaceTile) object;
+                            for(String cplayer : clientPlayersMap.get(connection.getID())){
+                                game.processPlayerMove(placeTile, cplayer);
+                            }
+                            processMessageQueue();
+                            break;
+                            
                         default:
                             logger.debug("Unhandled message found: " + object);
                             break;
@@ -110,6 +118,7 @@ public class NetworkServer implements Runnable {
                 } else {
                     logger.info("Recieved unkown package: " + object);
                 }
+//            processMessageQueue();
             }
 
         });

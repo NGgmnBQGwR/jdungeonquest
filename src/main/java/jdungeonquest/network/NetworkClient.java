@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import jdungeonquest.enums.ClientState;
 import jdungeonquest.enums.NetworkMessageType;
+import static jdungeonquest.enums.NetworkMessageType.MovePlayer;
 import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
 import static jdungeonquest.enums.NetworkMessageType.UnregisterRequest;
 import jdungeonquest.gui.GUI;
@@ -70,6 +71,14 @@ public class NetworkClient implements Runnable {
         state = newState;
     }
 
+    public List<String> getPlayerNames(){
+        List<String> names = new ArrayList<>();
+        for(PlayerData pd : players){
+            names.add(pd.getName());
+        }
+        return names;
+    }
+    
     @Override
     public void run() {
         client.addListener(new Listener() {
@@ -172,6 +181,11 @@ public class NetworkClient implements Runnable {
                             gui.placeTile(placeTile);
                             break;
                             
+                        case MovePlayer:
+                            MovePlayer movePlayer = (MovePlayer)object;
+                            gui.movePlayer(movePlayer);
+                            break;                            
+                            
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
@@ -220,6 +234,14 @@ public class NetworkClient implements Runnable {
 
     public void toggleReadyStatus() {
         sendMessage(new Message(NetworkMessageType.ClientReady));
+    }
+
+    public void endTurn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void moveTo(int x, int y) {
+        sendMessage(new PlaceTile(x, y, 0));
     }
 
     class PlayerData {

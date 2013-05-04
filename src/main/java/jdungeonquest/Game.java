@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import jdungeonquest.enums.PlayerAttributes;
+import jdungeonquest.network.ChatMessage;
 import jdungeonquest.network.Message;
+import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.PlaceTile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,8 @@ public class Game {
 
     TileHolder tileHolder;
     CardHolder cardHolder;
+    
+    private int turn = 0;
     
     public List<Message> messageQueue;
     
@@ -56,10 +60,11 @@ public class Game {
         boolean value = !(playerReadyStatus.get(playerName));
         playerReadyStatus.put(playerName, value);
         logger.debug("Player " + playerName + " ready status:" + value);
-        if (false) {
-            return true;
-        }
-        return false;
+//        if ( isEveryoneReady() ) {
+//            return true;
+//        }
+//        return false;
+        return true;
     }
 
     public boolean registerPlayer(String playerName, String playerClass) {
@@ -137,16 +142,24 @@ public class Game {
     }
 
     public void startGame() {
-        placeStartingTiles();
+        setUp();
+    
+        addMessage(new ChatMessage("Turn: " + turn, "Game"));
+        for (Player player : players) {
+            setCurrentPlayer(player);
+        }
+
+        turn++;
     }
 
-    private void placeStartingTiles() {
+    private void setUp() {
         switch(players.size()){
             case 0: endGame(); break;
             case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile);
             case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile);
             case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile);
-            case 1: placeTile(0, 0, tileHolder.startingTile); break;
+            case 1: placeTile(0, 0, tileHolder.startingTile);
+                    movePlayer(0, 0, players.get(0)); break;
             default: break; //only 4 players are supported right now
         }
     }
@@ -157,6 +170,11 @@ public class Game {
         addMessage( new PlaceTile(x, y, tileNumber));
     }
 
+    private void movePlayer(int x, int y, Player player) {
+        player.setPosition( new Position(x,y));
+        addMessage( new MovePlayer(x, y, player.getName()));
+    }
+
     private void addMessage(Message m) {
         logger.debug("Adding message to queue: " + m);
         messageQueue.add(m);
@@ -165,4 +183,38 @@ public class Game {
     private void endGame() {
         System.exit(1);
     }
+
+    private void setCurrentPlayer(Player player) {
+        logger.debug("Current player: " + player.getName());
+//        addMessage(new );
+    }
+
+    public void processPlayerMove(PlaceTile placeTile, String playerName) {
+        Player player = null;
+        for(Player p : players){
+            if(playerName.equals(p.getName())){
+                player = p;
+                break;
+            }
+        }
+        if(player == null){
+            return;
+        }
+        //this is a hack until movement/turn sequence is complete
+        Tile tile = tileHolder.takeSpecificTile(0);
+        int tileNumber = tileHolder.getTileNumber(tile);
+        
+        Position to = new Position(placeTile.x, placeTile.y);
+        logger.debug("Processing move of " + playerName + " from " + player.getPosition() + " to " + to);
+        //check that it is this player's turn
+        //check that he haven't moved this turn yet
+        //check that there is nothing on that tile yet
+        //check that there is no one in that tile
+        //check that tile is adjacent
+        //check that you can enter that tile from current one
+        addMessage(new PlaceTile(placeTile.x, placeTile.y, tileNumber));
+        addMessage(new MovePlayer(placeTile.x, placeTile.y, playerName));
+        player.setPosition(to);
+    }
+
 }
