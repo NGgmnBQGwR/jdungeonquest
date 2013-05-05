@@ -15,6 +15,35 @@ public class Position {
         this.y = y;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        if(! (o instanceof Position) ){
+            return false;
+        }
+        Position other = (Position)o;
+        if( other.x != this.x){
+            return false;
+        }
+        if( other.y != this.y){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + this.x;
+        hash = 53 * hash + this.y;
+        return hash;
+    }
+    
     /**
      * @return the x
      */
