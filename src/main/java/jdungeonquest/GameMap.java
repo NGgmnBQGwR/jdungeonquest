@@ -7,7 +7,7 @@ public class GameMap {
     private Tile[][] tiles =  new Tile[10][13];
     
     public GameMap(){
-        fillWithDummyTiles();
+        
     }
    
     public void setTile(int x, int y, Tile tile) {
@@ -22,20 +22,24 @@ public class GameMap {
         return tiles;
     }
     
-    private void fillWithDummyTiles() {
-        for (int x = 0; x < GameMap.MAX_X; x++) {
-            for (int y = 0; y < GameMap.MAX_Y; y++) {
-                setTile(x, y, new Tile());
-            }
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return 
+     */
+    boolean isFree(int x, int y) {
+        if (tiles[x][y] == null) {
+            return true;
         }
+        return false;
     }
-    
+
     public boolean isAdjacent(Position p1, Position p2){
         return false;        
     }
-
+    
     public boolean canMoveTo(Position p1, Position p2){
         return false;
     }
-    
 }

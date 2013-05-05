@@ -41,12 +41,19 @@ public class ClientGUI extends JPanel{
     TileHolder tileHolder;
     Map<String, int[]> playerPosition;
     JButton endTurnButton;
-    
+    public static BufferedImage blankTileImage;
+
     ClientGUI(GUI parent){
         this.parent = parent;
         map = new GameMap();
         tileHolder = new TileHolder();
         playerPosition = new HashMap<>();
+        
+        try {
+            blankTileImage = ImageIO.read(getClass().getResourceAsStream("/tiles/empty.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(ClientGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         initGUI();
     }
@@ -146,7 +153,14 @@ public class ClientGUI extends JPanel{
                 for (int y = 0; y < GameMap.MAX_Y; y++) {
 //                    BufferedImage tileImage = null;
                     Tile tile = map.getTile(x, y);
-                    g.drawImage(tile.getImage(), x * step_x, y * step_y, this);
+                    BufferedImage image = null;
+                    if(tile == null){
+                        image = blankTileImage;
+                    }
+                    else{
+                        image = tile.getImage();
+                    }
+                    g.drawImage(image, x * step_x, y * step_y, this);
                 }
             }
             

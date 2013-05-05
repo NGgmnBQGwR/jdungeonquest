@@ -207,8 +207,15 @@ public class Game {
         Position to = new Position(placeTile.x, placeTile.y);
         logger.debug("Processing move of " + playerName + " from " + player.getPosition() + " to " + to);
         //check that it is this player's turn
+        //disabled because currentPlayer cannot be relied upon yet
+//        if(currentPlayer.getName() != playerName){
+//            return;
+//        }
         //check that he haven't moved this turn yet
         //check that there is nothing on that tile yet
+        if(!map.isFree(placeTile.x, placeTile.y)){
+            return;
+        }
         //check that there is no one in that tile
         //check that tile is adjacent
         //check that you can enter that tile from current one
