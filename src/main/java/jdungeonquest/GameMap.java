@@ -42,4 +42,15 @@ public class GameMap {
     public boolean canMoveTo(Position p1, Position p2){
         return false;
     }
+
+    /**
+     * Placed tile in tilePos, while rotating it so that it faces playerPos.
+     * @param position
+     * @param to
+     * @param tile
+     * @return number of rotations needed to tile
+     */
+    int placeTile(Position playerPos, Position tilePos, Tile tile) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
