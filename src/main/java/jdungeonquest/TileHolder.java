@@ -1,11 +1,13 @@
 package jdungeonquest;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.imageio.ImageIO;
 import org.yaml.snakeyaml.Yaml;
 
 public class TileHolder {
@@ -68,4 +70,13 @@ public class TileHolder {
         }
         return -1;
     }
+
+    public int getSize() {
+        return allTiles.size();
+    }
+
+    public int getTotalSize() {
+        return allTiles.size() + usedTiles.size();
+    }
+
 }
