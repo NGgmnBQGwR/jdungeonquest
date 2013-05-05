@@ -241,7 +241,9 @@ public class NetworkClient implements Runnable {
     }
 
     public void moveTo(int x, int y) {
-        sendMessage(new PlaceTile(x, y, 0));
+        //Client sends 0 as rotation because he doesn't know which tile
+        //is going to be placed, nor its number
+        sendMessage(new PlaceTile(x, y, 0, 0));
     }
 
     class PlayerData {

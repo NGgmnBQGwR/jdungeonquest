@@ -155,19 +155,19 @@ public class Game {
     private void setUp() {
         switch(players.size()){
             case 0: endGame(); break;
-            case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile);
-            case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile);
-            case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile);
-            case 1: placeTile(0, 0, tileHolder.startingTile);
+            case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
+            case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
+            case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile, 0);
+            case 1: placeTile(0, 0, tileHolder.startingTile, 0);
                     movePlayer(0, 0, players.get(0)); break;
             default: break; //only 4 players are supported right now
         }
     }
 
-    private void placeTile(int x, int y, Tile tile) {
+    private void placeTile(int x, int y, Tile tile, int rotation) {
         int tileNumber = tileHolder.getTileNumber(tile);
         map.setTile(x, y, tile);
-        addMessage( new PlaceTile(x, y, tileNumber));
+        addMessage( new PlaceTile(x, y, tileNumber, rotation));
     }
 
     private void movePlayer(int x, int y, Player player) {
@@ -218,8 +218,17 @@ public class Game {
         }
         //check that there is no one in that tile
         //check that tile is adjacent
+        if(!map.isAdjacent(new Position(placeTile.x, placeTile.y), to)){
+            return;
+        }
         //check that you can enter that tile from current one
-        addMessage(new PlaceTile(placeTile.x, placeTile.y, tileNumber));
+        if(!map.canMoveTo(new Position(placeTile.x, placeTile.y), to)){
+            return;
+        }
+        //actually place tile on the map
+        int tileRotation = map.placeTile(new Position(placeTile.x, placeTile.y), to, tile);
+       
+        addMessage(new PlaceTile(placeTile.x, placeTile.y, tileNumber, tileRotation));
         addMessage(new MovePlayer(placeTile.x, placeTile.y, playerName));
         player.setPosition(to);
     }
