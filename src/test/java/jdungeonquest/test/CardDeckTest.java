@@ -121,12 +121,4 @@ public class CardDeckTest {
         assertEquals(0, holder.treasureDeck.size());
         assertEquals(0, holder.monsterDeck.size());
     }
-    
-    @Test
-    public void TileHolderInitializedSuccessfully(){
-        TileHolder holder = new TileHolder();
-
-        assertTrue(holder.getTotalSize() > 0);
-        assertTrue(holder.getSize() > 0);
-    }
 }
