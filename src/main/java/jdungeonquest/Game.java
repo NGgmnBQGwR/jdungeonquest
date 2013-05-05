@@ -204,8 +204,9 @@ public class Game {
         Tile tile = tileHolder.takeSpecificTile(0);
         int tileNumber = tileHolder.getTileNumber(tile);
         
+        Position from = player.getPosition();
         Position to = new Position(placeTile.x, placeTile.y);
-        logger.debug("Processing move of " + playerName + " from " + player.getPosition() + " to " + to);
+        logger.debug("Processing move of " + playerName + " from " + from + " to " + to);
         //check that it is this player's turn
         //disabled because currentPlayer cannot be relied upon yet
 //        if(currentPlayer.getName() != playerName){
@@ -218,15 +219,15 @@ public class Game {
         }
         //check that there is no one in that tile
         //check that tile is adjacent
-        if(!map.isAdjacent(new Position(placeTile.x, placeTile.y), to)){
+        if(!map.isAdjacent(from, to)){
             return;
         }
         //check that you can enter that tile from current one
-        if(!map.canMoveTo(new Position(placeTile.x, placeTile.y), to)){
+        if(!map.canMoveTo(from, to)){
             return;
         }
         //actually place tile on the map
-        int tileRotation = map.placeTile(new Position(placeTile.x, placeTile.y), to, tile);
+        int tileRotation = map.placeTile(from, to, tile);
        
         addMessage(new PlaceTile(placeTile.x, placeTile.y, tileNumber, tileRotation));
         addMessage(new MovePlayer(placeTile.x, placeTile.y, playerName));
