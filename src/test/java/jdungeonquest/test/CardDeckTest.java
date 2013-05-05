@@ -23,6 +23,7 @@ import org.junit.runners.JUnit4;
 import org.yaml.snakeyaml.Yaml;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -124,25 +125,8 @@ public class CardDeckTest {
     @Test
     public void TileHolderInitializedSuccessfully(){
         TileHolder holder = new TileHolder();
-        Yaml yaml = new Yaml();
-        Tile zero = new Tile();
-        zero.setImagePath("/tiles/01.png");
-        zero.setWalls( new ArrayList<> (Arrays.asList (new RoomWallType [] {RoomWallType.WALL, RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL}) ));
-        zero.setIsSearchable(false);
-        zero.setEntryDirection(EntryDirection.LEFT);
-        
-        
-//        Tile test = (Tile)yaml.load("!!jdungeonquest.Tile\n" +
-//"entryDirection: LEFT\n" +
-//"imagePath: /tiles/01.png\n" +
-//"isSearchable: false\n" +
-//"walls: [WALL, WALL, EXIT, WALL]\n");
-////"walls: [!!jdungeonquest.enums.RoomWallType 'WALL', !!jdungeonquest.enums.RoomWallType 'WALL',\n" +
-////"  !!jdungeonquest.enums.RoomWallType 'WALL', !!jdungeonquest.enums.RoomWallType 'WALL']\n");
-//        System.out.println(test);
-//        System.out.println(test.getWalls());
-////        System.out.println(yaml.dump(zero));
-        
+
+        assertTrue(holder.getTotalSize() > 0);
+        assertTrue(holder.getSize() > 0);
     }
-    
 }
