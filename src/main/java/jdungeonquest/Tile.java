@@ -1,5 +1,7 @@
 package jdungeonquest;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +11,6 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
-import jdungeonquest.enums.RoomType;
 
 public class Tile {
 //    RoomType roomType;
@@ -18,6 +19,7 @@ public class Tile {
     private EntryDirection entryDirection;
     private List<RoomWallType> walls;
     private boolean isSearchable;
+    int rotate;
 
     public Tile(){
         imagePath = "/tiles/empty.png";
@@ -25,6 +27,7 @@ public class Tile {
         isSearchable = true;
         entryDirection = EntryDirection.UP;
         walls = new ArrayList<>( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) );
+        rotate = 0;
     }
 
     @Override
@@ -48,10 +51,65 @@ public class Tile {
         if(!this.imagePath.equals(other.getImagePath())){
             return false;
         }
+        if(!this.isSearchable == other.isSearchable){
+            return false;
+        }
+            
+        
         if(!this.getWalls().equals(other.getWalls())){
             return false;        
         }
         return true;
+    }
+    
+    private static BufferedImage rotateImage(BufferedImage img) {
+        int w = img.getWidth();
+        int h = img.getHeight();
+
+        BufferedImage rot = new BufferedImage(h, w, BufferedImage.TYPE_INT_RGB);
+
+        double theta = -Math.PI / 2;
+        AffineTransform xform = AffineTransform.getRotateInstance(theta, w / 2, h / 2);
+        Graphics2D g = (Graphics2D) rot.createGraphics();
+        g.drawImage(img, xform, null);
+        g.dispose();
+
+        return rot;
+    }
+    
+    /**
+     * Rotate the tile counter-clockwise.
+     * Rotates walls and entry point as following: U-L-D-R-U
+     * @param turn 
+     */
+    public void rotate(int turn){
+        this.rotate = turn;
+        
+        rotateCounterClockwise(turn);
+    }
+    
+    private void rotateCounterClockwise(int turn){
+        switch(this.entryDirection){
+            case UP: entryDirection = EntryDirection.LEFT; break;
+            case LEFT: entryDirection = EntryDirection.DOWN; break;
+            case DOWN: entryDirection = EntryDirection.RIGHT; break;
+            case RIGHT: entryDirection = EntryDirection.UP; break;
+        }
+        
+        RoomWallType firstWall = walls.get(0);
+        walls.remove(0);
+        walls.add(firstWall);
+        
+        image = rotateImage(image);
+        
+        turn--;
+        if(turn > 0){
+            this.rotateCounterClockwise(turn - 1);
+        }        
+    }
+    
+    public int getRotate(){
+        return rotate;
     }
     
     /**
