@@ -29,6 +29,20 @@ public class TileTest {
         TileHolder tileHolder = new TileHolder();
         tileHolder.shuffle();
     }
+
+    @Test
+    public void TileRotate0(){
+        Tile t1 = new Tile();
+        t1.setEntryDirection(EntryDirection.UP);
+        t1.setImagePath("/tiles/empty.png");
+        t1.setIsSearchable(true);
+        t1.setWalls( new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) ));
+        
+        t1.rotate(0);
+        
+        assertEquals(EntryDirection.UP, t1.getEntryDirection());
+        assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) , t1.getWalls());
+    }
     
     @Test
     public void TileRotate1(){
