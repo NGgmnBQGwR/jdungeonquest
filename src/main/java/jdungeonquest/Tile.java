@@ -92,7 +92,6 @@ public class Tile {
         if(turn == 0){
             return;
         }
-        turn--;
         switch(this.entryDirection){
             case UP: entryDirection = EntryDirection.LEFT; break;
             case LEFT: entryDirection = EntryDirection.DOWN; break;
@@ -106,7 +105,7 @@ public class Tile {
         
         image = rotateImage(image);
         
-        this.rotateCounterClockwise(turn - 1);
+        this.rotateCounterClockwise(turn -1 );
     }
     
     public int getRotate(){
