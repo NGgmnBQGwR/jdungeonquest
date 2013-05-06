@@ -33,7 +33,7 @@ public class TileHolder {
         Tile t = allTiles.get(0);
         usedTiles.add(t);
         allTiles.remove(0);
-        return t;
+        return new Tile(t);
     }
 
     public void shuffle() {
@@ -45,7 +45,7 @@ public class TileHolder {
     }
 
     public Tile takeSpecificTile(int a){
-        return tileMap.get(a);
+        return new Tile(tileMap.get(a));
     }
     
     private void initializeTiles() {

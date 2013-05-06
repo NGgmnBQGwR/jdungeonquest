@@ -210,4 +210,15 @@ public class TileTest {
         assertEquals(3, map.placeTile( new Position(3,3), new Position(4,3), corridor));
         assertEquals(0, map.placeTile( new Position(4,3), new Position(5,3), deadEnd));
     }
+    
+    @Test
+    public void TileCopyConstructor(){
+        Tile t1 = new Tile();
+        Tile t2 = new Tile(t1);
+        
+        assertTrue(t1.getImage() != t2.getImage());
+        assertTrue(t1.getWalls()!= t2.getWalls());
+        assertTrue(t1.getImagePath()!= t2.getImagePath());
+        assertTrue(t1 != t2);
+    }
 }

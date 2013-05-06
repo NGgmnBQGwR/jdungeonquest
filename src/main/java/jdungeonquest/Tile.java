@@ -23,11 +23,20 @@ public class Tile {
 
     public Tile(){
         imagePath = "/tiles/empty.png";
-        refreshImage();
         isSearchable = true;
         entryDirection = EntryDirection.UP;
         walls = new ArrayList<>( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) );
         rotate = 0;
+        refreshImage();
+    }
+    
+    public Tile(Tile another){
+        this.isSearchable = another.isSearchable; //boolean
+        this.entryDirection = another.entryDirection; //enum
+        this.rotate = another.rotate; //int
+        this.imagePath = new String(another.imagePath);
+        this.walls = new ArrayList(another.walls);
+        this.refreshImage();
     }
 
     @Override
