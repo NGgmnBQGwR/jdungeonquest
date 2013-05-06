@@ -149,6 +149,7 @@ public class GUI extends JFrame {
         
         logger.debug("Placing tile " + tile + " at " + x + ":" + y);
         Tile t = clientGUI.tileHolder.takeSpecificTile(tile);
+        t.rotate(placeTile.rotate);
         clientGUI.map.setTile(x, y, t);
         clientGUI.repaint();
     }
