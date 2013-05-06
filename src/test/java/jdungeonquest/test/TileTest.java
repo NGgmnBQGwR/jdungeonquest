@@ -122,6 +122,38 @@ public class TileTest {
     }
     
     @Test
+    public void MapCanMoveFrom(){
+        GameMap map = new GameMap();
+        
+        Tile crossroads = new Tile();
+        Tile noway = new Tile();
+        Tile corridor = new Tile();
+        
+        crossroads.setWalls( Arrays.asList( new RoomWallType[]{RoomWallType.EXIT,RoomWallType.EXIT,RoomWallType.EXIT,RoomWallType.EXIT} ) );
+        noway.setWalls( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) );
+        corridor.setWalls( Arrays.asList( new RoomWallType[]{RoomWallType.EXIT,RoomWallType.WALL,RoomWallType.EXIT,RoomWallType.WALL} ) );
+        
+        map.setTile(1, 1, crossroads);
+        map.setTile(3, 3, noway);
+        map.setTile(5, 5, corridor);
+
+        assertEquals(true, map.canMoveFrom(new Position(1,1), new Position(0,1)));
+        assertEquals(true, map.canMoveFrom(new Position(1,1), new Position(1,0)));
+        assertEquals(true, map.canMoveFrom(new Position(1,1), new Position(1,2)));
+        assertEquals(true, map.canMoveFrom(new Position(1,1), new Position(2,1)));
+        
+        assertEquals(false, map.canMoveFrom(new Position(3,3), new Position(2,3)));
+        assertEquals(false, map.canMoveFrom(new Position(3,3), new Position(3,2)));
+        assertEquals(false, map.canMoveFrom(new Position(3,3), new Position(3,4)));
+        assertEquals(false, map.canMoveFrom(new Position(3,3), new Position(4,3)));
+
+        assertEquals(true, map.canMoveFrom(new Position(5,5), new Position(5,4)));
+        assertEquals(true, map.canMoveFrom(new Position(5,5), new Position(5,6)));
+        assertEquals(false, map.canMoveFrom(new Position(5,5), new Position(4,5)));
+        assertEquals(false, map.canMoveFrom(new Position(5,5), new Position(6,5)));
+    }
+
+    @Test
     public void MapCanMoveTo(){
         GameMap map = new GameMap();
         
@@ -137,22 +169,22 @@ public class TileTest {
         map.setTile(3, 3, noway);
         map.setTile(5, 5, corridor);
 
-        assertEquals(true, map.canMoveTo(new Position(1,1), new Position(0,1)));
-        assertEquals(true, map.canMoveTo(new Position(1,1), new Position(1,0)));
-        assertEquals(true, map.canMoveTo(new Position(1,1), new Position(1,2)));
-        assertEquals(true, map.canMoveTo(new Position(1,1), new Position(2,1)));
+        assertEquals(true, map.canMoveTo(new Position(0,1), new Position(1,1)));
+        assertEquals(true, map.canMoveTo(new Position(2,1), new Position(1,1)));
+        assertEquals(true, map.canMoveTo(new Position(1,0), new Position(1,1)));
+        assertEquals(true, map.canMoveTo(new Position(1,2), new Position(1,1)));
         
-        assertEquals(false, map.canMoveTo(new Position(3,3), new Position(2,3)));
-        assertEquals(false, map.canMoveTo(new Position(3,3), new Position(3,2)));
-        assertEquals(false, map.canMoveTo(new Position(3,3), new Position(3,4)));
-        assertEquals(false, map.canMoveTo(new Position(3,3), new Position(4,3)));
-
-        assertEquals(true, map.canMoveTo(new Position(5,5), new Position(5,4)));
-        assertEquals(true, map.canMoveTo(new Position(5,5), new Position(5,6)));
-        assertEquals(false, map.canMoveTo(new Position(5,5), new Position(4,5)));
-        assertEquals(false, map.canMoveTo(new Position(5,5), new Position(6,5)));
-    }
-
+        assertEquals(false, map.canMoveTo(new Position(2,3), new Position(3,3)));
+        assertEquals(false, map.canMoveTo(new Position(4,3), new Position(3,3)));
+        assertEquals(false, map.canMoveTo(new Position(3,2), new Position(3,3)));
+        assertEquals(false, map.canMoveTo(new Position(3,4), new Position(3,3)));
+        
+        assertEquals(false, map.canMoveTo(new Position(4,5), new Position(5,5)));
+        assertEquals(false, map.canMoveTo(new Position(6,5), new Position(5,5)));
+        assertEquals(true, map.canMoveTo(new Position(5,4), new Position(5,5)));
+        assertEquals(true, map.canMoveTo(new Position(5,6), new Position(5,5)));
+    }    
+    
     @Test
     public void MapPlaceTile(){
         GameMap map = new GameMap();

@@ -51,7 +51,7 @@ public class GameMap {
         return false;
     }
     
-    public boolean canMoveTo(Position p1, Position p2){
+    public boolean canMoveFrom(Position p1, Position p2){
         //U[0] L[1] D[2] R[3]
         if( p1.getY() == p2.getY()){ //same column
             if(p1.getX() > p2.getX()){ //going right
@@ -82,6 +82,10 @@ public class GameMap {
         return false;
     }
 
+    public boolean canMoveTo(Position p1, Position p2){
+        return canMoveFrom(p2, p1);
+    }    
+    
     /**
      * Places tile in tilePos, while rotating it so that it faces playerPos.
      * @param playerPos

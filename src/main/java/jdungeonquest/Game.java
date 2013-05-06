@@ -201,26 +201,32 @@ public class Game {
         Position to = new Position(movePlayer.getX(), movePlayer.getY());
         logger.debug("Processing move of " + playerName + " from " + from + " to " + to);
         //check that it is this player's turn
-        //disabled because currentPlayer cannot be relied upon yet
-//        if(currentPlayer.getName() != playerName){
-//            return;
-//        }
+        if(!currentPlayer.getName().equals(playerName)){
+            logger.debug("Current player:" + currentPlayer.getName() + " so " + playerName +" can't move now.");
+            return;
+        }
         //check that he haven't moved this turn yet
+        
         //check that there is no one in that tile
+        for (Player p : players) {
+            if (p.getPosition() == to && !p.getName().equals(playerName)) {
+                logger.debug("There's " + p.getName() + " on that tile. Can't move.");
+                return;
+            }
+        }
         //check that tile is adjacent
         if(!map.isAdjacent(from, to)){
             logger.debug("Not adjacent. Can't move.");
             return;
         }
         //check that you can enter that tile from current one
-        //how to handle situation when moving into existing tile?
-        if(!map.canMoveTo(from, to)){
-            logger.debug("No exit there. Can't move.");
+        if(!map.canMoveFrom(from, to)){
+            logger.debug("Can't leave from " + from + " this way. Can't move.");
             return;
         }
-        //check that there is nothing on that tile yet
-        //if there's nothing there yet, place a tile there
+        //check whether there is something on that tile already
         if(map.isFree(to.getX(), to.getY())){
+            //if there's nothing there yet, place a tile there
             logger.debug("Tile is empty.");
             //this is a hack until movement/turn sequence is complete
             Tile tile = tileHolder.takeSpecificTile(0);
@@ -228,6 +234,10 @@ public class Game {
             //actually place tile on the map
             int tileRotation = map.placeTile(from, to, tile);
             addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
+        }else if(!map.canMoveTo(from, to)){
+            //moving in existing tile
+            logger.debug("Can't enter " + to + " this way. Can't move.");
+            return;
         }
         addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
         player.setPosition(to);
