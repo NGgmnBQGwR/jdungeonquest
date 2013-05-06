@@ -83,7 +83,8 @@ public class Tile {
      * @param turn 
      */
     public void rotate(int turn){
-        this.rotate = turn;
+        this.rotate += turn;
+        this.rotate = this.rotate % 4;
         
         rotateCounterClockwise(turn);
     }

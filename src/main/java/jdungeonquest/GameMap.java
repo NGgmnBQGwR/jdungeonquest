@@ -1,5 +1,6 @@
 package jdungeonquest;
 
+import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
 
 public class GameMap {
@@ -52,7 +53,7 @@ public class GameMap {
     
     public boolean canMoveTo(Position p1, Position p2){
         //U[0] L[1] D[2] R[3]
-        if( p1.getY() == p2.getY()){ //same line
+        if( p1.getY() == p2.getY()){ //same column
             if(p1.getX() > p2.getX()){ //going right
                 if(getTile(p1.getX(), p1.getY()).getWalls().get(3) != RoomWallType.WALL){
                     return true;
@@ -65,7 +66,7 @@ public class GameMap {
             }
             return false;
         }
-        if( p1.getX() == p2.getX()){ //same column
+        if( p1.getX() == p2.getX()){ //same row
             if(p1.getY() > p2.getY()){ //going down
                 if(getTile(p1.getX(), p1.getY()).getWalls().get(2) != RoomWallType.WALL){
                     return true;
@@ -77,18 +78,44 @@ public class GameMap {
                 }
             }
             return false;
-        }        
+        }    
         return false;
     }
 
     /**
-     * Placed tile in tilePos, while rotating it so that it faces playerPos.
-     * @param position
-     * @param to
+     * Places tile in tilePos, while rotating it so that it faces playerPos.
+     * @param playerPos
+     * @param tilePos
      * @param tile
-     * @return number of rotations needed to tile
+     * @return number of rotations needed to tile to place it correctly.
      */
-    int placeTile(Position playerPos, Position tilePos, Tile tile) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int placeTile(Position playerPos, Position tilePos, Tile tile) {
+        //U[0] L[1] D[2] R[3]
+        EntryDirection direction = null;
+        if( playerPos.getY() == tilePos.getY()){ //same column
+            if(playerPos.getX() > tilePos.getX()){ //going right
+                direction = EntryDirection.RIGHT;
+            }
+            if(playerPos.getX() < tilePos.getX()){ //going left
+                direction = EntryDirection.LEFT;
+            }
+        }
+        if( playerPos.getX() == tilePos.getX()){ //same row
+            if(playerPos.getY() > tilePos.getY()){ //going down
+                direction = EntryDirection.DOWN;
+            }
+            if(playerPos.getY() < tilePos.getY()){ //going up
+                direction = EntryDirection.UP;
+            }
+        }
+        
+        int turns = 0;
+        
+        while(tile.getEntryDirection() != direction){
+            turns++;
+            tile.rotate(1);
+        }
+        setTile(tilePos.getX(), tilePos.getY(), tile);
+        return turns;
     }
 }
