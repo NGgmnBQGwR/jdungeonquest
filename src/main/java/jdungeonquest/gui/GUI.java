@@ -158,4 +158,12 @@ public class GUI extends JFrame {
         logger.debug("Current player positions: " + clientGUI.playerPosition);
         clientGUI.repaint();
     }
+
+    public void setCurrentPlayer(String player, boolean localPlayer) {
+        if(localPlayer){
+//            clientGUI.currentPlayer = player;
+        }else{
+//            clientGUI.currentPlayer = player;
+        }
+    }
 }

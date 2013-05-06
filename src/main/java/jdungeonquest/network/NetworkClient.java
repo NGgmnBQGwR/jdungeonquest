@@ -28,6 +28,7 @@ public class NetworkClient implements Runnable {
     //list of players connected to this client
     List<PlayerData> players = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
+    private String currentPlayer;
 
     public NetworkClient(String ip, int port, GUI gui) {
         client = new Client();
@@ -186,14 +187,29 @@ public class NetworkClient implements Runnable {
                             gui.movePlayer(movePlayer);
                             break;                            
                             
+                        case NewTurn:
+                            NewTurn newTurn = (NewTurn)object;
+                            processNewTurn(newTurn);
+                            break;
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
             }
 
+
         });
 
         client.start();
+    }
+
+    private void processNewTurn(NewTurn newTurn) {
+        currentPlayer = newTurn.player;
+        logger.debug("Current player: " + newTurn.player);
+        if(havePlayer(newTurn.player)){
+            gui.setCurrentPlayer(newTurn.player, true);
+        }else{
+            gui.setCurrentPlayer(newTurn.player, false);
+        }
     }
 
     public boolean havePlayer(String playerName) {
@@ -243,7 +259,7 @@ public class NetworkClient implements Runnable {
     public void moveTo(int x, int y) {
         //Client sends 0 as rotation because he doesn't know which tile
         //is going to be placed, nor its number
-        sendMessage(new PlaceTile(x, y, 0, 0));
+        sendMessage(new MovePlayer(x, y, currentPlayer));
     }
 
     class PlayerData {

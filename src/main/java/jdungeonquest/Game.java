@@ -9,6 +9,7 @@ import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.network.ChatMessage;
 import jdungeonquest.network.Message;
 import jdungeonquest.network.MovePlayer;
+import jdungeonquest.network.NewTurn;
 import jdungeonquest.network.PlaceTile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,13 +144,12 @@ public class Game {
 
     public void startGame() {
         setUp();
-    
+        turn = 0;
         addMessage(new ChatMessage("Turn: " + turn, "Game"));
-        for (Player player : players) {
-            setCurrentPlayer(player);
-        }
-
-        turn++;
+        currentPlayer = players.get(0);
+        logger.debug("Current player: " + currentPlayer.getName());
+        addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
+        addMessage(new NewTurn(currentPlayer.getName()));
     }
 
     private void setUp() {
@@ -184,12 +184,7 @@ public class Game {
         System.exit(1);
     }
 
-    private void setCurrentPlayer(Player player) {
-        logger.debug("Current player: " + player.getName());
-//        addMessage(new );
-    }
-
-    public void processPlayerMove(PlaceTile placeTile, String playerName) {
+    public void processPlayerMove(MovePlayer movePlayer, String playerName) {
         Player player = null;
         for(Player p : players){
             if(playerName.equals(p.getName())){
@@ -198,14 +193,12 @@ public class Game {
             }
         }
         if(player == null){
+            logger.debug("No player " + playerName + "found.");
             return;
         }
-        //this is a hack until movement/turn sequence is complete
-        Tile tile = tileHolder.takeSpecificTile(0);
-        int tileNumber = tileHolder.getTileNumber(tile);
-        
+
         Position from = player.getPosition();
-        Position to = new Position(placeTile.x, placeTile.y);
+        Position to = new Position(movePlayer.getX(), movePlayer.getY());
         logger.debug("Processing move of " + playerName + " from " + from + " to " + to);
         //check that it is this player's turn
         //disabled because currentPlayer cannot be relied upon yet
@@ -213,24 +206,30 @@ public class Game {
 //            return;
 //        }
         //check that he haven't moved this turn yet
-        //check that there is nothing on that tile yet
-        if(!map.isFree(placeTile.x, placeTile.y)){
-            return;
-        }
         //check that there is no one in that tile
         //check that tile is adjacent
         if(!map.isAdjacent(from, to)){
+            logger.debug("Not adjacent. Can't move.");
             return;
         }
         //check that you can enter that tile from current one
+        //how to handle situation when moving into existing tile?
         if(!map.canMoveTo(from, to)){
+            logger.debug("No exit there. Can't move.");
             return;
         }
-        //actually place tile on the map
-        int tileRotation = map.placeTile(from, to, tile);
-       
-        addMessage(new PlaceTile(placeTile.x, placeTile.y, tileNumber, tileRotation));
-        addMessage(new MovePlayer(placeTile.x, placeTile.y, playerName));
+        //check that there is nothing on that tile yet
+        //if there's nothing there yet, place a tile there
+        if(map.isFree(to.getX(), to.getY())){
+            logger.debug("Tile is empty.");
+            //this is a hack until movement/turn sequence is complete
+            Tile tile = tileHolder.takeSpecificTile(0);
+            int tileNumber = tileHolder.getTileNumber(tile);
+            //actually place tile on the map
+            int tileRotation = map.placeTile(from, to, tile);
+            addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
+        }
+        addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
         player.setPosition(to);
     }
 

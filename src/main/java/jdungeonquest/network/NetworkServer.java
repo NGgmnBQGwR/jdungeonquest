@@ -102,11 +102,12 @@ public class NetworkServer implements Runnable {
                             toggleClientReadyStatus(connection.getID());
                             break;
                             
-                        case PlaceTile:
-                            PlaceTile placeTile = (PlaceTile) object;
-                            for(String cplayer : clientPlayersMap.get(connection.getID())){
-                                game.processPlayerMove(placeTile, cplayer);
+                        case MovePlayer:
+                            MovePlayer movePlayer = (MovePlayer) object;
+                            if(!havePlayer(connection.getID(), movePlayer.getPlayer())){
+                                break;
                             }
+                            game.processPlayerMove(movePlayer, movePlayer.getPlayer());
                             processMessageQueue();
                             break;
                             
@@ -121,6 +122,7 @@ public class NetworkServer implements Runnable {
 //            processMessageQueue();
             }
 
+
         });
         try {
             server.bind(this.serverPort);
@@ -131,6 +133,16 @@ public class NetworkServer implements Runnable {
         logger.debug("Server started on port " + this.serverPort);
     }
 
+    private boolean havePlayer(int id, String player) {
+        for(String clientPlayer : clientPlayersMap.get(id)){
+            if(player.equals(clientPlayer)){
+                return true;
+            }
+        }
+        logger.debug("Client " + id + " doesn't have player " + player);
+        return false;
+    }
+    
     private void toggleClientReadyStatus(int id) {
         for(String playerName : clientPlayersMap.get(id)){
             logger.debug("Changing ready status of " + playerName + " from Client " + id);

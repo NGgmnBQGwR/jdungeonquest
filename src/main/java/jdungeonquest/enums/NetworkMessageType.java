@@ -8,5 +8,6 @@ public enum NetworkMessageType {
     ClientReady,
     StartGame,
     PlaceTile,
-    MovePlayer;
+    MovePlayer,
+    NewTurn;
 }
