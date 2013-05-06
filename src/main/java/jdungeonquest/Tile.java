@@ -1,5 +1,7 @@
 package jdungeonquest;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -179,12 +181,43 @@ public class Tile {
         this.isSearchable = isSearchable;
     }
 
+    private void drawEntryTriangle(BufferedImage img){
+        Graphics2D g = (Graphics2D) img.createGraphics();
+
+        final int delta = 8;
+        
+        int nPoints = 3;
+        int[] xPoints;
+        int[] yPoints;
+        
+        int h1 = image.getHeight();
+        int h2 = image.getHeight()/2;
+        
+        switch(entryDirection){
+            default:
+            case UP: xPoints = new int[]{h2-delta, h2+delta, h2}; yPoints = new int[]{0+delta, 0+delta, 0+delta*2}; break;
+            case LEFT: xPoints = new int[]{0+delta, 0+delta, 0+delta*2}; yPoints = new int[]{h2-delta, h2+delta, h2}; break;
+            case DOWN: xPoints = new int[]{h2-delta, h2+delta, h2}; yPoints = new int[]{h1-delta, h1-delta, h1-delta*2}; break;
+            case RIGHT: xPoints = new int[]{h1-delta, h1-delta, h1-delta*2}; yPoints = new int[]{h2-delta, h2+delta, h2}; break;
+        }
+        g.setColor(Color.white);
+        g.fillPolygon(xPoints, yPoints, nPoints);
+        g.setColor(Color.black);
+        g.setStroke( new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g.drawPolygon(xPoints, yPoints, nPoints);
+        g.dispose();        
+    }    
+    
     private void refreshImage() {
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        if(image == null){
+            return;
+        }
+        drawEntryTriangle(image);
     }
 
     /**
