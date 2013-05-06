@@ -23,7 +23,7 @@ public class TileHolder {
             + "entryDirection: RIGHT\n"
             + "imagePath: /tiles/start.png\n"
             + "isSearchable: false\n"
-            + "walls: [WALL, WALL, WALL, WALL]\n";
+            + "walls: [EXIT, EXIT, EXIT, EXIT]\n";
     
     public TileHolder(){
         initializeTiles();
