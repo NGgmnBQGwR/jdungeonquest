@@ -231,7 +231,7 @@ public class Game {
         //check that there is no one in that tile
         //add exception for Treasure Chamber, any number of players can fit there
         for (Player p : players) {
-            if (p.getPosition() == to && !p.getName().equals(playerName)) {
+            if (p.getPosition().equals(to)) {
                 logger.debug("There's " + p.getName() + " on that tile. Can't move.");
                 return;
             }
