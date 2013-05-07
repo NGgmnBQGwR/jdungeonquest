@@ -12,6 +12,13 @@ public class Player {
     private int hp;
     private Position position = new Position();
 
+    public int searchInRow = 0; //player may search a room only 2 times in a row
+    
+    public boolean moved = false;
+    public boolean placedTile = false;
+    public boolean searched = false;
+    public boolean didSomething = false; //"a player may do absolutely nothing while missing a turn"
+    
     public Player() {
     }
 
@@ -19,6 +26,13 @@ public class Player {
         this.name = n;
     }
 
+    public void resetTurnVariables(){
+        moved = false;
+        placedTile = false;
+        searched = false;
+        didSomething = false;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }
