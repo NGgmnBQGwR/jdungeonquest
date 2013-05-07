@@ -262,6 +262,10 @@ public class NetworkClient implements Runnable {
         sendMessage(new MovePlayer(x, y, currentPlayer));
     }
 
+    public void searchTile() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     class PlayerData {
 
         String name;

@@ -41,6 +41,7 @@ public class ClientGUI extends JPanel{
     TileHolder tileHolder;
     Map<String, int[]> playerPosition;
     JButton endTurnButton;
+    JButton searchButton;
     public static BufferedImage blankTileImage;
 
     ClientGUI(GUI parent){
@@ -70,6 +71,14 @@ public class ClientGUI extends JPanel{
                 }
             });
         
+        searchButton = new JButton("Search tile");
+        searchButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    parent.getClient().searchTile();
+                }
+            });
+        
         chatPanel = new ChatPanel(this);
         mapPanel = new MapPanel(map);
         mapPanel.setPreferredSize(new Dimension(2000, 2600));
@@ -83,6 +92,7 @@ public class ClientGUI extends JPanel{
         add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow 60");
         add(chatPanel);
         add(endTurnButton);
+        add(searchButton);
     }
 
     void processMouseClick(int x, int y){
