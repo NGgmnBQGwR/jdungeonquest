@@ -2,6 +2,7 @@ package jdungeonquest.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -103,8 +104,16 @@ public class ClientGUI extends JPanel{
     
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
-        String text = time + author + ":" + msg;
-        ((DefaultListModel) chatPanel.messageList.getModel()).add(((DefaultListModel) chatPanel.messageList.getModel()).getSize(), text);
+        final String text = time + author + ": " + msg;
+        EventQueue.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ((DefaultListModel) chatPanel.messageList.getModel()).addElement(text);
+                chatPanel.messageList.ensureIndexIsVisible(((DefaultListModel) chatPanel.messageList.getModel()).size() - 1);
+            }
+        });
     }
 
     private class MapPanel extends JPanel {
