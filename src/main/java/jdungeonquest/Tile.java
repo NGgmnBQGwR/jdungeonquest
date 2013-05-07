@@ -115,11 +115,11 @@ public class Tile {
             case RIGHT: entryDirection = EntryDirection.UP; break;
         }
         
-        RoomWallType firstWall = walls.get(0);
-        walls.remove(0);
-        walls.add(firstWall);
+        RoomWallType firstWall = walls.get(3);
+        walls.remove(3);
+        walls.add(0, firstWall);
         
-        image = rotateImage(image);
+        refreshImage();
         
         this.rotateCounterClockwise(turn -1 );
     }

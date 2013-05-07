@@ -56,7 +56,7 @@ public class TileTest {
         t1.rotate(1);
         
         assertEquals(EntryDirection.LEFT, t1.getEntryDirection());
-        assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT,RoomWallType.WALL} ) , t1.getWalls());
+        assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.EXIT,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) , t1.getWalls());
     }
 
     @Test
