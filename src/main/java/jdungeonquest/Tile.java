@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
@@ -20,7 +22,17 @@ public class Tile {
     private List<RoomWallType> walls;
     private boolean isSearchable;
     int rotate;
-
+    private static BufferedImage doorIcon;
+    
+    {
+        try {
+            doorIcon = ImageIO.read(getClass().getResourceAsStream("/doorIcon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     public Tile(){
         isSearchable = true;
         entryDirection = EntryDirection.UP;
@@ -183,6 +195,56 @@ public class Tile {
         g.setStroke( new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.drawPolygon(xPoints, yPoints, nPoints);
         g.dispose();        
+    }    
+
+    private void drawDoorIcons(BufferedImage img){
+        Graphics2D g = (Graphics2D) img.createGraphics();
+        if(walls.get(0) == RoomWallType.DOOR) drawDoor(g, EntryDirection.UP);
+        if(walls.get(1) == RoomWallType.DOOR) drawDoor(g, EntryDirection.LEFT);
+        if(walls.get(2) == RoomWallType.DOOR) drawDoor(g, EntryDirection.DOWN);
+        if(walls.get(3) == RoomWallType.DOOR) drawDoor(g, EntryDirection.RIGHT);        
+        g.dispose();
+    }
+    
+    private void drawDoor(Graphics2D g, EntryDirection dir){
+        int x;
+        int y;
+        switch(dir){
+            case UP: x = 100-20; y = 5; break;
+            case DOWN: x = 100-20; y = 200-45; break;
+            case LEFT: x = 0; y = 100-20; break;
+            case RIGHT: x = 200-40; y = 100-20; break;
+            default: return;
+        }
+        g.drawImage(doorIcon, x, y, null);
+    }
+    
+    private BufferedImage createBasicTileImage(){
+        BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = (Graphics2D) img.createGraphics();
+        
+        g.setColor(Color.white);
+        g.fillRect(0, 0, 200, 200);
+        g.setColor(Color.black);
+        g.setStroke( new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        //UP
+        if(walls.get(0) != RoomWallType.WALL){
+            g.drawLine(100, 100, 100, 0);
+        }
+        //LEFT
+        if(walls.get(1) != RoomWallType.WALL){
+            g.drawLine(0, 100, 100, 100);
+        }
+        //DOWN
+        if(walls.get(2) != RoomWallType.WALL){
+            g.drawLine(100, 100, 100, 200);
+        }
+        //RIGHT
+        if(walls.get(3) != RoomWallType.WALL){
+            g.drawLine(100, 100, 200, 100);
+        }
+        
+        return img;
     }    
     
     private void refreshImage() {
