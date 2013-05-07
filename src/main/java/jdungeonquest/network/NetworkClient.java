@@ -253,7 +253,7 @@ public class NetworkClient implements Runnable {
     }
 
     public void endTurn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sendMessage( new NewTurn(currentPlayer) );
     }
 
     public void moveTo(int x, int y) {

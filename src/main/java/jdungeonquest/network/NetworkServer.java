@@ -110,6 +110,15 @@ public class NetworkServer implements Runnable {
                             game.processPlayerMove(movePlayer, movePlayer.getPlayer());
                             processMessageQueue();
                             break;
+                        
+                        case NewTurn:
+                            NewTurn newTurn = (NewTurn) object;
+                            if(!havePlayer(connection.getID(), newTurn.player)){
+                                break;
+                            }                            
+                            game.endTurn(newTurn.player);
+                            processMessageQueue();
+                            break;
                             
                         default:
                             logger.debug("Unhandled message found: " + object);

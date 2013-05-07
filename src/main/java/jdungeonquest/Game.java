@@ -26,8 +26,9 @@ public class Game {
     TileHolder tileHolder;
     CardHolder cardHolder;
     
-    private int turn = 0;
-    
+    private int turn = 1;
+    private int sunPosition = 1;
+
     public List<Message> messageQueue;
     
     public Game() {
@@ -147,6 +148,7 @@ public class Game {
         turn = 0;
         addMessage(new ChatMessage("Turn: " + turn, "Game"));
         currentPlayer = players.get(0);
+        currentPlayer.resetTurnVariables();
         logger.debug("Current player: " + currentPlayer.getName());
         addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
         addMessage(new NewTurn(currentPlayer.getName()));
@@ -156,8 +158,11 @@ public class Game {
         switch(players.size()){
             case 0: endGame(); break;
             case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
+                    movePlayer(GameMap.MAX_X-1, GameMap.MAX_Y-1, players.get(3));
             case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
+                    movePlayer(0, GameMap.MAX_Y-1, players.get(2));
             case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile, 0);
+                    movePlayer(GameMap.MAX_X-1, 0, players.get(1));
             case 1: placeTile(0, 0, tileHolder.startingTile, 0);
                     movePlayer(0, 0, players.get(0)); break;
             default: break; //only 4 players are supported right now
@@ -184,6 +189,15 @@ public class Game {
         System.exit(1);
     }
 
+    public void processPlayerSearch(String playerName) {
+        if(currentPlayer.searchInRow == 2){
+            logger.debug(playerName + " can't search this room anymore.");
+            return;
+        }
+        currentPlayer.searchInRow++;
+        currentPlayer.searched = true;
+    }
+    
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
         Player player = null;
         for(Player p : players){
@@ -202,12 +216,21 @@ public class Game {
         logger.debug("Processing move of " + playerName + " from " + from + " to " + to);
         //check that it is this player's turn
         if(!currentPlayer.getName().equals(playerName)){
-            logger.debug("Current player:" + currentPlayer.getName() + " so " + playerName +" can't move now.");
+            logger.debug("Current player is:" + currentPlayer.getName() + " so " + playerName +" can't do anyting now.");
             return;
         }
         //check that he haven't moved this turn yet
+        if(currentPlayer.moved){
+            logger.debug("Player already moved this turn. Can't move now.");
+            return;
+        }
+        if(currentPlayer.searched){
+            logger.debug("Player used search this turn. Can't move now.");
+            return;
+        }
         
         //check that there is no one in that tile
+        //add exception for Treasure Chamber, any number of players can fit there
         for (Player p : players) {
             if (p.getPosition() == to && !p.getName().equals(playerName)) {
                 logger.debug("There's " + p.getName() + " on that tile. Can't move.");
@@ -233,14 +256,55 @@ public class Game {
             int tileNumber = tileHolder.getTileNumber(tile);
             //actually place tile on the map
             int tileRotation = map.placeTile(from, to, tile);
+            currentPlayer.placedTile = true;
+            currentPlayer.didSomething = true;
             addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
         }else if(!map.canMoveTo(from, to)){
             //moving in existing tile
             logger.debug("Can't enter " + to + " this way. Can't move.");
             return;
         }
+        currentPlayer.didSomething = true;
+        currentPlayer.moved = true;
         addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
         player.setPosition(to);
     }
 
+    public void endTurn(String player) {
+        if(!currentPlayer.getName().equals(player)){
+            logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
+            return;
+        }
+        if( !currentPlayer.moved && !currentPlayer.searched){
+            logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
+            return;
+        }
+        
+        newTurn();
+    }
+
+    public void newTurn(){
+        int currentPlayerIndex = players.indexOf(currentPlayer);
+        if(currentPlayerIndex == players.size()-1){
+            currentPlayerIndex = 0;
+        }else{
+            currentPlayerIndex++;
+        }
+        currentPlayer = players.get(currentPlayerIndex);
+        
+        turn++;
+        addMessage(new ChatMessage("Turn: " + turn, "Game"));
+        if(currentPlayer == players.get(0)){
+            sunPosition++;
+            addMessage(new ChatMessage("Current sun position: " + sunPosition, "Game"));
+        }
+        if(sunPosition == 26){
+            endGame();
+        }
+        
+        logger.debug("Current player: " + currentPlayer.getName());
+        addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
+        addMessage(new NewTurn(currentPlayer.getName()));
+        currentPlayer.resetTurnVariables();
+    }
 }
