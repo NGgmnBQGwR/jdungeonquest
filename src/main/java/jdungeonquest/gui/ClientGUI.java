@@ -102,11 +102,6 @@ public class ClientGUI extends JPanel{
         GameMap map;
         BufferedImage testImage;
         public MapPanel(GameMap map) {
-            try {
-                this.testImage = ImageIO.read(getClass().getResourceAsStream( (new Tile()).getImagePath()));
-            } catch (IOException ex) {
-                Logger.getLogger(ClientGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
             this.map = map;            
         }
         

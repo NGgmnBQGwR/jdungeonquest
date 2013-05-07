@@ -37,7 +37,6 @@ public class TileTest {
     public void TileRotate0(){
         Tile t1 = new Tile();
         t1.setEntryDirection(EntryDirection.UP);
-        t1.setImagePath("/tiles/empty.png");
         t1.setIsSearchable(true);
         t1.setWalls( new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) ));
         
@@ -51,7 +50,6 @@ public class TileTest {
     public void TileRotate1(){
         Tile t1 = new Tile();
         t1.setEntryDirection(EntryDirection.UP);
-        t1.setImagePath("/tiles/empty.png");
         t1.setIsSearchable(true);
         t1.setWalls( new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) ));
         
@@ -65,7 +63,6 @@ public class TileTest {
     public void TileRotate2(){
         Tile t1 = new Tile();
         t1.setEntryDirection(EntryDirection.UP);
-        t1.setImagePath("/tiles/empty.png");
         t1.setIsSearchable(true);
         t1.setWalls( new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) ));
         
@@ -79,7 +76,6 @@ public class TileTest {
     public void TileRotate2and2(){
         Tile t1 = new Tile();
         t1.setEntryDirection(EntryDirection.UP);
-        t1.setImagePath("/tiles/empty.png");
         t1.setIsSearchable(true);
         List<RoomWallType> t1Walls = new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ) );
         t1.setWalls(t1Walls );
@@ -218,7 +214,6 @@ public class TileTest {
         
         assertTrue(t1.getImage() != t2.getImage());
         assertTrue(t1.getWalls()!= t2.getWalls());
-        assertTrue(t1.getImagePath()!= t2.getImagePath());
         assertTrue(t1 != t2);
     }
 }

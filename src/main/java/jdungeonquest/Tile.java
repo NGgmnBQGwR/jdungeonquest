@@ -15,8 +15,6 @@ import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
 
 public class Tile {
-//    RoomType roomType;
-    private String imagePath; //format: "/tiles/01.png";
     private BufferedImage image;
     private EntryDirection entryDirection;
     private List<RoomWallType> walls;
@@ -24,7 +22,6 @@ public class Tile {
     int rotate;
 
     public Tile(){
-        imagePath = "/tiles/empty.png";
         isSearchable = true;
         entryDirection = EntryDirection.UP;
         walls = new ArrayList<>( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) );
@@ -36,7 +33,6 @@ public class Tile {
         this.isSearchable = another.isSearchable; //boolean
         this.entryDirection = another.entryDirection; //enum
         this.rotate = another.rotate; //int
-        this.imagePath = new String(another.imagePath);
         this.walls = new ArrayList(another.walls);
         this.refreshImage();
     }
@@ -44,7 +40,6 @@ public class Tile {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 19 * hash + Objects.hashCode(this.imagePath);
         hash = 19 * hash + (this.entryDirection != null ? this.entryDirection.hashCode() : 0);
         hash = 19 * hash + Objects.hashCode(this.walls);
         hash = 19 * hash + (this.isSearchable ? 1 : 0);
@@ -59,9 +54,6 @@ public class Tile {
             return false;
         }
         final Tile other = (Tile)obj;
-        if(!this.imagePath.equals(other.getImagePath())){
-            return false;
-        }
         if(!this.isSearchable == other.isSearchable){
             return false;
         }
@@ -124,21 +116,6 @@ public class Tile {
         return rotate;
     }
     
-    /**
-     * @return the imagePath
-     */
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    /**
-     * @param imagePath the imagePath to set
-     */
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-        refreshImage();
-    }
-
     /**
      * @return the entryDirection
      */
@@ -209,14 +186,8 @@ public class Tile {
     }    
     
     private void refreshImage() {
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(imagePath));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        if(image == null){
-            return;
-        }
+        image = createBasicTileImage();
+        drawDoorIcons(image);
         drawEntryTriangle(image);
     }
 

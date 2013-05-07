@@ -21,7 +21,6 @@ public class TileHolder {
     final static String startingTileYaml =
             "!!jdungeonquest.Tile\n"
             + "entryDirection: RIGHT\n"
-            + "imagePath: /tiles/start.png\n"
             + "isSearchable: false\n"
             + "walls: [EXIT, EXIT, EXIT, EXIT]\n";
     
