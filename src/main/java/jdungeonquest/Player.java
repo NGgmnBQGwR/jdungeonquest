@@ -14,10 +14,10 @@ public class Player {
 
     public int searchInRow = 0; //player may search a room only 2 times in a row
     
-    public boolean moved = false;
-    public boolean placedTile = false;
-    public boolean searched = false;
-    public boolean didSomething = false; //"a player may do absolutely nothing while missing a turn"
+    private boolean moved = false;
+    private boolean placedTile = false;
+    private boolean searched = false;
+    private boolean didSomething = false; //"a player may do absolutely nothing while missing a turn"
     
     public Player() {
     }
@@ -27,10 +27,10 @@ public class Player {
     }
 
     public void resetTurnVariables(){
-        moved = false;
-        placedTile = false;
-        searched = false;
-        didSomething = false;
+        setMoved(false);
+        setPlacedTile(false);
+        setSearched(false);
+        setDidSomething(false);
     }
     
     public void setName(String name) {
@@ -67,5 +67,70 @@ public class Player {
      */
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    /**
+     * @return the moved
+     */
+    public boolean isMoved() {
+        return moved;
+    }
+
+    /**
+     * @param moved the moved to set
+     */
+    public void setMoved(boolean moved) {
+        this.moved = moved;
+        if(moved){
+            setDidSomething(true);
+        }
+    }
+
+    /**
+     * @return the placedTile
+     */
+    public boolean isPlacedTile() {
+        return placedTile;
+    }
+
+    /**
+     * @param placedTile the placedTile to set
+     */
+    public void setPlacedTile(boolean placedTile) {
+        this.placedTile = placedTile;
+        if(placedTile){
+            setDidSomething(true);
+        }
+    }
+
+    /**
+     * @return the searched
+     */
+    public boolean isSearched() {
+        return searched;
+    }
+
+    /**
+     * @param searched the searched to set
+     */
+    public void setSearched(boolean searched) {
+        this.searched = searched;
+        if(searched){
+            setDidSomething(true);
+        }
+    }
+
+    /**
+     * @return the didSomething
+     */
+    public boolean isDidSomething() {
+        return didSomething;
+    }
+
+    /**
+     * @param didSomething the didSomething to set
+     */
+    public void setDidSomething(boolean didSomething) {
+        this.didSomething = didSomething;
     }
 }

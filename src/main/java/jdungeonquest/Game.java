@@ -195,7 +195,7 @@ public class Game {
             return;
         }
         currentPlayer.searchInRow++;
-        currentPlayer.searched = true;
+        currentPlayer.setSearched(true);
     }
     
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
@@ -220,15 +220,14 @@ public class Game {
             return;
         }
         //check that he haven't moved this turn yet
-        if(currentPlayer.moved){
+        if(currentPlayer.isMoved()){
             logger.debug("Player already moved this turn. Can't move now.");
             return;
         }
-        if(currentPlayer.searched){
+        if(currentPlayer.isSearched()){
             logger.debug("Player used search this turn. Can't move now.");
             return;
         }
-        
         //check that there is no one in that tile
         //add exception for Treasure Chamber, any number of players can fit there
         for (Player p : players) {
@@ -256,16 +255,14 @@ public class Game {
             int tileNumber = tileHolder.getTileNumber(tile);
             //actually place tile on the map
             int tileRotation = map.placeTile(from, to, tile);
-            currentPlayer.placedTile = true;
-            currentPlayer.didSomething = true;
+            currentPlayer.setPlacedTile(true);
             addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
         }else if(!map.canMoveTo(from, to)){
             //moving in existing tile
             logger.debug("Can't enter " + to + " this way. Can't move.");
             return;
         }
-        currentPlayer.didSomething = true;
-        currentPlayer.moved = true;
+        currentPlayer.setMoved(true);
         addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
         player.setPosition(to);
     }
@@ -275,7 +272,7 @@ public class Game {
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
             return;
         }
-        if( !currentPlayer.moved && !currentPlayer.searched){
+        if( !currentPlayer.isMoved() && !currentPlayer.isSearched()){
             logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
             return;
         }
