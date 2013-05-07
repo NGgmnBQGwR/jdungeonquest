@@ -38,7 +38,7 @@ class LobbyGUI extends JPanel{
         initGUI();
     }
 
-    private void enableComponents(Container container, boolean enable) {
+    public static void enableComponents(Container container, boolean enable) {
         Component[] components = container.getComponents();
         for (Component component : components) {
             component.setEnabled(enable);

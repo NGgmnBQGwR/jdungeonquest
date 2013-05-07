@@ -162,9 +162,13 @@ public class GUI extends JFrame {
 
     public void setCurrentPlayer(String player, boolean localPlayer) {
         if(localPlayer){
-//            clientGUI.currentPlayer = player;
+            clientGUI.endTurnButton.setEnabled(true);
+            clientGUI.searchButton.setEnabled(true);
+            LobbyGUI.enableComponents(clientGUI.mapPanel, true);
         }else{
-//            clientGUI.currentPlayer = player;
+            clientGUI.endTurnButton.setEnabled(false);
+            clientGUI.searchButton.setEnabled(false);
+            LobbyGUI.enableComponents(clientGUI.mapPanel, false);
         }
     }
 }

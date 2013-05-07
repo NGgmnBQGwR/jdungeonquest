@@ -86,7 +86,9 @@ public class ClientGUI extends JPanel{
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                processMouseClick(evt.getPoint().x, evt.getPoint().y);
+                if(isEnabled()){
+                    processMouseClick(evt.getPoint().x, evt.getPoint().y);
+                }
             }
         });        
         
