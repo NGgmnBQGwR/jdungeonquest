@@ -2,6 +2,7 @@ package jdungeonquest.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -161,14 +162,10 @@ public class GUI extends JFrame {
     }
 
     public void setCurrentPlayer(String player, boolean localPlayer) {
-        if(localPlayer){
-            clientGUI.endTurnButton.setEnabled(true);
-            clientGUI.searchButton.setEnabled(true);
-            LobbyGUI.enableComponents(clientGUI.mapPanel, true);
-        }else{
-            clientGUI.endTurnButton.setEnabled(false);
-            clientGUI.searchButton.setEnabled(false);
-            LobbyGUI.enableComponents(clientGUI.mapPanel, false);
-        }
+        clientGUI.selectPlayer(player, localPlayer);
+    }
+
+    public void initPlayers(List<String> players) {
+        clientGUI.initPlayers(players);
     }
 }

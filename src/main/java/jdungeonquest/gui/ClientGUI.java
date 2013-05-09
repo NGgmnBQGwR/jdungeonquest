@@ -3,6 +3,7 @@ package jdungeonquest.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -15,10 +16,12 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,7 +39,8 @@ public class ClientGUI extends JPanel{
     
     ChatPanel chatPanel;
 //    SunPanel sunPanel;
-//    PlayerHolderPanel playerHolderPanel;
+    PlayerHolder[] playerHolders;
+    JPanel playerHolderPanel;
     MapPanel mapPanel;
     GameMap map;
     TileHolder tileHolder;
@@ -64,6 +68,9 @@ public class ClientGUI extends JPanel{
         MigLayout layout = new MigLayout("fill", "[grow][grow]", "[grow][grow]");
         this.setLayout(layout);
         
+        playerHolderPanel = new JPanel();
+        playerHolderPanel.setLayout(new FlowLayout());
+
         endTurnButton = new JButton("End turn");
         endTurnButton.addActionListener(new ActionListener() {
                 @Override
@@ -92,8 +99,9 @@ public class ClientGUI extends JPanel{
             }
         });        
         
-        add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow 60");
-        add(chatPanel);
+        add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow 60, spany");
+        add(playerHolderPanel, "wrap");
+        add(chatPanel, "wrap");
         add(endTurnButton);
         add(searchButton);
     }
@@ -116,6 +124,25 @@ public class ClientGUI extends JPanel{
                 chatPanel.messageList.ensureIndexIsVisible(((DefaultListModel) chatPanel.messageList.getModel()).size() - 1);
             }
         });
+    }
+
+    void selectPlayer(String player, boolean localPlayer) {
+        for(PlayerHolder holder : playerHolders){
+            holder.unselect();
+            if(holder.getPlayerName().equals(player)){
+                holder.select();
+            }
+        }
+        
+        if(localPlayer){
+            endTurnButton.setEnabled(true);
+            searchButton.setEnabled(true);
+            LobbyGUI.enableComponents(mapPanel, true);
+        }else{
+            endTurnButton.setEnabled(false);
+            searchButton.setEnabled(false);
+            LobbyGUI.enableComponents(mapPanel, false);
+        }        
     }
 
     private class MapPanel extends JPanel {
@@ -222,6 +249,101 @@ public class ClientGUI extends JPanel{
             add(textField, "grow, push");
             add(sendButton, "wrap");
             add(new JScrollPane(messageList), "grow");
+        }
+    }
+
+    void initPlayers(List<String> players) {
+        playerHolders = new PlayerHolder[players.size()];
+        for(int i=0; i<players.size(); i++){
+            String player = players.get(i);
+            PlayerHolder newPlayer = new PlayerHolder();
+            newPlayer.setPlayerName(player);
+            playerHolders[i] = newPlayer;
+            playerHolderPanel.add(newPlayer);
+        }
+    }    
+    
+    class PlayerHolder extends JPanel{
+        private String playerName = "";
+        private int gold = 0;
+        private int hp = 0;
+        
+        JLabel nameLabel;
+        JLabel goldLabel;
+        JLabel hpLabel;
+        
+        public PlayerHolder(){
+            nameLabel = new JLabel();
+            hpLabel = new JLabel();
+            goldLabel = new JLabel();
+
+            hpLabel.setText(new Integer(hp).toString());
+            goldLabel.setText(new Integer(gold).toString());
+            nameLabel.setText(playerName);
+            
+            this.setLayout(new MigLayout("", "[][]"));
+            add(new JLabel("Name: "));
+            add(nameLabel, "wrap");
+            add(new JLabel("HP: "));
+            add(hpLabel, "wrap");
+            add(new JLabel("Gold: "));
+            add(goldLabel);
+            
+            unselect();
+        }
+
+        public final void unselect(){
+            setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, new Color(192, 192, 192)));
+        }
+
+        public final void select(){
+            setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+        }
+        
+        /**
+         * @return the name
+         */
+        public String getPlayerName() {
+            return playerName;
+        }
+
+        /**
+         * @return the gold
+         */
+        public int getGold() {
+            return gold;
+        }
+        
+        /**
+         * @return the hp
+         */
+        public int getHp() {
+            return hp;
+        }
+
+        /**
+         * @param name the name to set
+         */
+        public void setPlayerName(String name) {
+            this.playerName = name;
+            nameLabel.setText(name);
+        }
+
+        /**
+         * @param gold the gold to set
+         */
+        public void setGold(int gold) {
+            this.gold = gold;
+            goldLabel.setText(new Integer(gold).toString());
+        }
+
+
+        /**
+         * @param hp the hp to set
+         */
+        public void setHp(int hp) {
+            this.hp = hp;
+            hpLabel.setText(new Integer(hp).toString());
         }
     }
 }

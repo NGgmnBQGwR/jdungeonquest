@@ -173,6 +173,7 @@ public class NetworkClient implements Runnable {
                             
                         //Every player is ready, and server declared game start
                         case StartGame:
+                            gui.initPlayers(getPlayerNames());
                             gui.showClient();
                             changeState(ClientState.IN_GAME);
                             break;
