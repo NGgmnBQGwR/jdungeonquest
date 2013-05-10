@@ -13,17 +13,20 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
 
 public class Tile {
-    private BufferedImage image;
     private EntryDirection entryDirection;
     private List<RoomWallType> walls;
     private boolean isSearchable;
-    int rotate;
-    private static BufferedImage doorIcon;
+    private List<Effect> effects = new ArrayList<>();
     
+    private BufferedImage image;
+    private int rotate;
+    private static BufferedImage doorIcon;
+
     {
         try {
             doorIcon = ImageIO.read(getClass().getResourceAsStream("/doorIcon.png"));
@@ -31,7 +34,6 @@ public class Tile {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
     
     public Tile(){
         isSearchable = true;
@@ -77,6 +79,12 @@ public class Tile {
         }
         return true;
     }
+
+    public void activate(Game game) {
+        for (Effect e : getEffects()) {
+            e.doAction(game);
+        }
+    }    
     
     private static BufferedImage rotateImage(BufferedImage img) {
         int w = img.getWidth();
@@ -262,5 +270,19 @@ public class Tile {
      */
     public BufferedImage getImage() {
         return image;
+    }
+
+    /**
+     * @return the effects
+     */
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    /**
+     * @param effects the effects to set
+     */
+    public void setEffects(List<Effect> effects) {
+        this.effects = effects;
     }
 }
