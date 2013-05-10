@@ -122,6 +122,7 @@ public class NetworkServer implements Runnable {
                             
                         case GuessNumber:
                             game.processGuessNumber((GuessNumber)object);
+                            processMessageQueue();
                             break;
                             
                         default:
