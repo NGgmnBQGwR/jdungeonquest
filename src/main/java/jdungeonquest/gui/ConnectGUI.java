@@ -34,7 +34,7 @@ public class ConnectGUI extends JPanel {
         ipTextField = new JTextField("127.0.0.1");
 
         JLabel portLabel = new JLabel("Server port:");
-        portTextField = new JTextField("4445");
+        portTextField = new JTextField("4447");
 
         infoLabel = new JLabel("Enter server data:");
 

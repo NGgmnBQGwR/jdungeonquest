@@ -32,7 +32,7 @@ class ServerGUI extends JPanel {
         infoLabel = new JLabel("No server running");
 
         JLabel portLabel = new JLabel("Server port:");
-        portTextField = new JTextField("4445");
+        portTextField = new JTextField("4447");
 
         startButton = new JButton("Start");
         stopButton = new JButton("Stop");
