@@ -26,6 +26,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -162,6 +163,19 @@ public class ClientGUI extends JPanel{
                 break;
             }
         }
+    }
+
+    int askForNumber() {
+        int value = 0;
+        while(value < 1 || value > 6){
+            String result = JOptionPane.showInputDialog("Enter number from 1 to 6:", "1");
+            try{
+                value = Integer.parseInt(result);
+            }catch(java.lang.NumberFormatException a){
+                value = -1;
+            }
+        }
+        return value;
     }
 
     private class MapPanel extends JPanel {

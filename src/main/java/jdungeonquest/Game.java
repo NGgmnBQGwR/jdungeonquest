@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import jdungeonquest.effects.Effect;
+import jdungeonquest.enums.GameState;
 import jdungeonquest.enums.PlayerAttributes;
+import jdungeonquest.enums.PlayerState;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
+import jdungeonquest.network.GuessNumber;
 import jdungeonquest.network.Message;
 import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NewTurn;
@@ -23,7 +27,11 @@ public class Game {
     Map<String, Boolean> playerClasses = new HashMap();
     Map<String, Boolean> playerReadyStatus = new HashMap();
     Player currentPlayer;
+    PlayerState currentPlayerState;
+    int currentPlayerContextValue;
     GameMap map;
+    private GameState state = GameState.NOT_STARTED;
+    private Random random = new Random();
 
     TileHolder tileHolder;
     CardHolder cardHolder;
@@ -74,6 +82,9 @@ public class Game {
     }
 
     public boolean registerPlayer(String playerName, String playerClass) {
+        if(state != GameState.NOT_STARTED){
+            return false;
+        }
         if(playerName.equals("")){
             return false;
         }
@@ -148,6 +159,7 @@ public class Game {
     }
 
     public void startGame() {
+        state = GameState.IN_PROGRESS;
         setUp();
         turn = 0;
         addMessage(new ChatMessage("Turn: " + turn, "Game"));
@@ -196,6 +208,7 @@ public class Game {
     }
 
     private void endGame() {
+        state = GameState.ENDED;
         System.exit(1);
     }
 
@@ -336,5 +349,35 @@ public class Game {
         addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
         addMessage(new NewTurn(currentPlayer.getName()));
         currentPlayer.resetTurnVariables();
+    }
+
+    public void effectCaveIn() {
+        currentPlayerState = PlayerState.guessCaveInNumber;
+        currentPlayerContextValue = random.nextInt(6)+1;
+        logger.debug("Cave-In death is set to " + currentPlayerContextValue);
+        addMessage(new ChatMessage("A cave-in! Beware the falling rocks!", "Game"));
+        addMessage(new GuessNumber());
+    }
+
+    public void processGuessNumber(GuessNumber guessNumber) {
+        if(currentPlayerState != PlayerState.guessCaveInNumber){
+            logger.debug("Recieved unwanted GuessNumber!");
+            return;
+        }
+        logger.debug("Recieved GuessNumber:" + guessNumber);
+        if(guessNumber.value == currentPlayerContextValue){
+            killPlayer(currentPlayer, "A giant boulder falls on his head!");
+        }else{
+            hurtPlayer(currentPlayer, 3, "barely escapes death!");
+        }
+        currentPlayerContextValue = 0;
+    }
+
+    private void killPlayer(Player player, String cause) {
+        logger.debug("Killing " + player + " because " + cause);
+    }
+
+    private void hurtPlayer(Player player, int value, String description) {
+        logger.debug("Hurting " + player + " for " + value + " he " + description);
     }
 }

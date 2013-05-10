@@ -204,6 +204,15 @@ public class NetworkClient implements Runnable {
                             ChangePlayerAttribute changeAtt = (ChangePlayerAttribute)object;
                             gui.changeAttribute(changeAtt);
                             break;
+                        
+                        case GuessNumber:
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run () {
+                                    int number = gui.askForNumber();
+                                    sendMessage(new GuessNumber(number));
+                                }});
+                            break;
                             
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {

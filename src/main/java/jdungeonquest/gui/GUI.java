@@ -173,4 +173,8 @@ public class GUI extends JFrame {
     public void changeAttribute(ChangePlayerAttribute changeAtt) {
         clientGUI.changeAttribute(changeAtt);
     }
+
+    public int askForNumber() {
+        return clientGUI.askForNumber();
+    }
 }

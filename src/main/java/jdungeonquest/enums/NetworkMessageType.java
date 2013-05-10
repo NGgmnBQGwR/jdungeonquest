@@ -10,5 +10,6 @@ public enum NetworkMessageType {
     PlaceTile,
     MovePlayer,
     NewTurn,
-    ChangeAttribute;
+    ChangeAttribute,
+    GuessNumber;
 }

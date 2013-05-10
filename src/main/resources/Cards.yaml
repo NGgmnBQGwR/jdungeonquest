@@ -48,6 +48,13 @@
  effects:
  - !!jdungeonquest.effects.Empty {}
 
+- !!jdungeonquest.Card
+ description: Empty Room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.CaveIn {}
+
+
 #Treasure
 #Monster
 

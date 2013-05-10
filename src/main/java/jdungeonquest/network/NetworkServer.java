@@ -120,6 +120,10 @@ public class NetworkServer implements Runnable {
                             processMessageQueue();
                             break;
                             
+                        case GuessNumber:
+                            game.processGuessNumber((GuessNumber)object);
+                            break;
+                            
                         default:
                             logger.debug("Unhandled message found: " + object);
                             break;
@@ -143,6 +147,9 @@ public class NetworkServer implements Runnable {
     }
 
     private boolean havePlayer(int id, String player) {
+        if(!clientPlayersMap.containsKey(id)){
+            logger.debug("There is no client " + id + " (anymore?)");
+        }
         for(String clientPlayer : clientPlayersMap.get(id)){
             if(player.equals(clientPlayer)){
                 return true;
@@ -236,8 +243,25 @@ public class NetworkServer implements Runnable {
             return;
         }
         for(Message m : game.messageQueue){
-            logger.debug("Sending all message " + m);
-            server.sendToAllTCP(m);
+            if(m instanceof GuessNumber){
+                String curPlayer = game.getCurrentPlayer();
+                int id = -1;
+                for(int key : clientPlayersMap.keySet()){
+                    if(havePlayer(key, curPlayer)){
+                        id = key;
+                        break;
+                    }
+                }
+                if(id == -1){
+                    logger.debug("Unable to find client with player " + curPlayer);
+                    return;
+                }
+                logger.debug("Sending message " + m + " to " + id);
+                server.sendToTCP(id, m);
+            }else{
+                logger.debug("Sending all message " + m);
+                server.sendToAllTCP(m);
+            }
         }
         game.messageQueue.clear();
     }
