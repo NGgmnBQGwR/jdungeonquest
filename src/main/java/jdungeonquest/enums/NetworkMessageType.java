@@ -9,5 +9,6 @@ public enum NetworkMessageType {
     StartGame,
     PlaceTile,
     MovePlayer,
-    NewTurn;
+    NewTurn,
+    ChangeAttribute;
 }

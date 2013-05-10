@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import jdungeonquest.GameMap;
 import jdungeonquest.Tile;
 import jdungeonquest.TileHolder;
+import jdungeonquest.network.ChangePlayerAttribute;
 import net.miginfocom.swing.MigLayout;
 
 public class ClientGUI extends JPanel{
@@ -143,6 +144,24 @@ public class ClientGUI extends JPanel{
             searchButton.setEnabled(false);
             LobbyGUI.enableComponents(mapPanel, false);
         }        
+    }
+
+    void changeAttribute(ChangePlayerAttribute changeAtt) {
+        for(PlayerHolder ph : playerHolders){
+            if(ph.getPlayerName().equals(changeAtt.player)){
+                switch(changeAtt.attribute){
+                    case Gold:
+                        ph.setGold(changeAtt.amount);
+                        break;
+                    case HP:
+                        ph.setHp(changeAtt.amount);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            }
+        }
     }
 
     private class MapPanel extends JPanel {

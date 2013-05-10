@@ -199,6 +199,12 @@ public class NetworkClient implements Runnable {
                             NewTurn newTurn = (NewTurn)object;
                             processNewTurn(newTurn);
                             break;
+                        
+                        case ChangeAttribute:
+                            ChangePlayerAttribute changeAtt = (ChangePlayerAttribute)object;
+                            gui.changeAttribute(changeAtt);
+                            break;
+                            
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
@@ -269,7 +275,7 @@ public class NetworkClient implements Runnable {
     }
 
     public void searchTile() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.debug("Searching tile. NOT YET IMPLEMENTED.");
     }
 
     class PlayerData {

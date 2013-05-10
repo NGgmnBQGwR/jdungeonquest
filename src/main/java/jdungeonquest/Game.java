@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.PlayerAttributes;
+import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
 import jdungeonquest.network.Message;
 import jdungeonquest.network.MovePlayer;
@@ -46,7 +47,9 @@ public class Game {
     }
 
     public void changePlayerAttribute(Player player, PlayerAttributes attribute, int amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String playerName = player.getName();
+        logger.debug("Changing " + playerName + " " + attribute + " to " + amount);
+        addMessage(new ChangePlayerAttribute(playerName, attribute, amount));
     }
 
     public int GetPlayerAttribute(Player currentPlayer, PlayerAttributes playerAttributes) {
@@ -151,6 +154,12 @@ public class Game {
         currentPlayer = players.get(0);
         currentPlayer.resetTurnVariables();
         logger.debug("Current player: " + currentPlayer.getName());
+        
+        for(Player player : players){
+            changePlayerAttribute(player, PlayerAttributes.HP, 15);
+            changePlayerAttribute(player, PlayerAttributes.Gold, 0);
+        }
+        
         addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
         addMessage(new NewTurn(currentPlayer.getName()));
     }

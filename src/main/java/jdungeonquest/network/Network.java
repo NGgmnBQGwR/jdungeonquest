@@ -3,6 +3,7 @@ package jdungeonquest.network;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 import jdungeonquest.enums.NetworkMessageType;
+import jdungeonquest.enums.PlayerAttributes;
 
 public class Network {
 
@@ -13,12 +14,15 @@ public class Network {
         kryo.register(ChatMessage.class);
         kryo.register(PlayerList.class);
         
+        kryo.register(PlayerAttributes.class);
+        
         kryo.register(NetworkMessageType.class);
         kryo.register(RegistrationRequest.class);
         kryo.register(UnregisterRequest.class);
         kryo.register(PlaceTile.class);
         kryo.register(MovePlayer.class);
         kryo.register(NewTurn.class);
+        kryo.register(ChangePlayerAttribute.class);
         
         kryo.register(String.class);
         kryo.register(String[].class);

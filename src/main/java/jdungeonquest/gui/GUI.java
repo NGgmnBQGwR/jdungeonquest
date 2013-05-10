@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.Tile;
+import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NetworkClient;
 import jdungeonquest.network.PlaceTile;
@@ -167,5 +168,9 @@ public class GUI extends JFrame {
 
     public void initPlayers(List<String> players) {
         clientGUI.initPlayers(players);
+    }
+
+    public void changeAttribute(ChangePlayerAttribute changeAtt) {
+        clientGUI.changeAttribute(changeAtt);
     }
 }
