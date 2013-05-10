@@ -67,5 +67,14 @@ public class CardHolder {
                 default: break;
             }
         }
+        dragonDeck.shuffle();
+        doorDeck.shuffle();
+        corpseDeck.shuffle();
+        cryptDeck.shuffle();
+        trapDeck.shuffle();
+        searchDeck.shuffle();
+        roomDeck.shuffle();
+        treasureDeck.shuffle();
+        monsterDeck.shuffle();
     }
 }
