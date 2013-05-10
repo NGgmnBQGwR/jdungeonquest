@@ -58,6 +58,7 @@ public class Tile {
         return hash;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -199,49 +200,52 @@ public class Tile {
 
     private void drawDoorIcons(BufferedImage img){
         Graphics2D g = (Graphics2D) img.createGraphics();
-        if(walls.get(0) == RoomWallType.DOOR) drawDoor(g, EntryDirection.UP);
-        if(walls.get(1) == RoomWallType.DOOR) drawDoor(g, EntryDirection.LEFT);
-        if(walls.get(2) == RoomWallType.DOOR) drawDoor(g, EntryDirection.DOWN);
-        if(walls.get(3) == RoomWallType.DOOR) drawDoor(g, EntryDirection.RIGHT);        
+        int wh = img.getHeight();
+        if(walls.get(0) == RoomWallType.DOOR) drawDoor(g, EntryDirection.UP, wh);
+        if(walls.get(1) == RoomWallType.DOOR) drawDoor(g, EntryDirection.LEFT, wh);
+        if(walls.get(2) == RoomWallType.DOOR) drawDoor(g, EntryDirection.DOWN, wh);
+        if(walls.get(3) == RoomWallType.DOOR) drawDoor(g, EntryDirection.RIGHT, wh);        
         g.dispose();
     }
     
-    private void drawDoor(Graphics2D g, EntryDirection dir){
+    private void drawDoor(Graphics2D g, EntryDirection dir, int wh){
         int x;
         int y;
+        int wh2 = wh/2;
         switch(dir){
-            case UP: x = 100-20; y = 5; break;
-            case DOWN: x = 100-20; y = 200-45; break;
-            case LEFT: x = 0; y = 100-20; break;
-            case RIGHT: x = 200-40; y = 100-20; break;
+            case UP: x = wh2-20; y = 5; break;
+            case DOWN: x = wh2-20; y = wh-45; break;
+            case LEFT: x = 0; y = wh2-20; break;
+            case RIGHT: x = wh-40; y = wh2-20; break;
             default: return;
         }
         g.drawImage(doorIcon, x, y, null);
     }
     
     private BufferedImage createBasicTileImage(){
-        BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+        int wh = 150;
+        BufferedImage img = new BufferedImage(wh, wh, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) img.createGraphics();
         
         g.setColor(Color.white);
-        g.fillRect(0, 0, 200, 200);
+        g.fillRect(0, 0, wh, wh);
         g.setColor(Color.black);
         g.setStroke( new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         //UP
         if(walls.get(0) != RoomWallType.WALL){
-            g.drawLine(100, 100, 100, 0);
+            g.drawLine(wh/2, wh/2, wh/2, 0);
         }
         //LEFT
         if(walls.get(1) != RoomWallType.WALL){
-            g.drawLine(0, 100, 100, 100);
+            g.drawLine(0, wh/2, wh/2, wh/2);
         }
         //DOWN
         if(walls.get(2) != RoomWallType.WALL){
-            g.drawLine(100, 100, 100, 200);
+            g.drawLine(wh/2, wh/2, wh/2, wh);
         }
         //RIGHT
         if(walls.get(3) != RoomWallType.WALL){
-            g.drawLine(100, 100, 200, 100);
+            g.drawLine(wh/2, wh/2, wh, wh/2);
         }
         
         return img;

@@ -89,7 +89,7 @@ public class ClientGUI extends JPanel{
         
         chatPanel = new ChatPanel(this);
         mapPanel = new MapPanel(map);
-        mapPanel.setPreferredSize(new Dimension(2000, 2600));
+        mapPanel.setPreferredSize(new Dimension(1500, 1950));
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -107,8 +107,8 @@ public class ClientGUI extends JPanel{
     }
 
     void processMouseClick(int x, int y){
-        int tx = x / 200;
-        int ty = y / 200;
+        int tx = x / 150;
+        int ty = y / 150;
         parent.getClient().moveTo(tx, ty);
     }
     
