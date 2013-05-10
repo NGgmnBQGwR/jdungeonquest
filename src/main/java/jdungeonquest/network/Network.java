@@ -24,6 +24,8 @@ public class Network {
         kryo.register(NewTurn.class);
         kryo.register(ChangePlayerAttribute.class);
         kryo.register(GuessNumber.class);
+        kryo.register(KillPlayer.class);
+        kryo.register(EndGame.class);
         
         kryo.register(String.class);
         kryo.register(String[].class);

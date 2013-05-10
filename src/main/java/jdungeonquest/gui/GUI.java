@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.Tile;
 import jdungeonquest.network.ChangePlayerAttribute;
+import jdungeonquest.network.EndGame;
+import jdungeonquest.network.KillPlayer;
 import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NetworkClient;
 import jdungeonquest.network.PlaceTile;
@@ -176,5 +178,13 @@ public class GUI extends JFrame {
 
     public int askForNumber() {
         return clientGUI.askForNumber();
+    }
+
+    public void killPlayer(KillPlayer killPlayer) {
+        clientGUI.killPlayer(killPlayer);
+    }
+
+    public void endGame(EndGame endGame) {
+        clientGUI.endGame(endGame);
     }
 }

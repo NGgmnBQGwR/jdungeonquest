@@ -214,6 +214,14 @@ public class NetworkClient implements Runnable {
                                 }});
                             break;
                             
+                        case KillPlayer:
+                            gui.killPlayer((KillPlayer)object);
+                            break;
+                            
+                        case EndGame:
+                            gui.endGame((EndGame)object);
+                            state = ClientState.GAME_END;
+                            break;
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }

@@ -7,9 +7,11 @@ public enum NetworkMessageType {
     UnregisterRequest,
     ClientReady,
     StartGame,
+    EndGame,
     PlaceTile,
     MovePlayer,
     NewTurn,
     ChangeAttribute,
-    GuessNumber;
+    GuessNumber,
+    KillPlayer;
 }

@@ -12,7 +12,9 @@ import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.enums.PlayerState;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
+import jdungeonquest.network.EndGame;
 import jdungeonquest.network.GuessNumber;
+import jdungeonquest.network.KillPlayer;
 import jdungeonquest.network.Message;
 import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NewTurn;
@@ -55,6 +57,16 @@ public class Game {
     }
 
     public void changePlayerAttribute(Player player, PlayerAttributes attribute, int amount) {
+        switch(attribute){
+            case Gold:
+                player.setGold(amount);
+                break;
+            case HP:
+                player.setHp(amount);
+                break;
+            default:
+                break;
+        }
         String playerName = player.getName();
         logger.debug("Changing " + playerName + " " + attribute + " to " + amount);
         addMessage(new ChangePlayerAttribute(playerName, attribute, amount));
@@ -209,7 +221,9 @@ public class Game {
 
     private void endGame() {
         state = GameState.ENDED;
-        System.exit(1);
+        logger.debug("EVERYONE DIED. BAD END.");
+        addMessage(new ChatMessage("Game ended!", "Game"));
+        addMessage(new EndGame());
     }
 
     public void processPlayerSearch(String playerName) {
@@ -223,6 +237,10 @@ public class Game {
     }
     
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
+        if(state != GameState.IN_PROGRESS){
+            return;
+        }
+        
         Player player = null;
         for(Player p : players){
             if(playerName.equals(p.getName())){
@@ -328,10 +346,20 @@ public class Game {
 
     public void newTurn(){
         int currentPlayerIndex = players.indexOf(currentPlayer);
-        if(currentPlayerIndex == players.size()-1){
-            currentPlayerIndex = 0;
-        }else{
-            currentPlayerIndex++;
+        //cycle through all players and find the first one that is:
+        //1. located after current one
+        //2. is alive
+        while(true){
+            if(currentPlayerIndex == players.size()-1){
+                currentPlayerIndex = 0;
+            }else{
+                currentPlayerIndex++;
+            }
+            if(players.get(currentPlayerIndex).isDead()){
+                continue;
+            }else{
+                break;
+            }
         }
         currentPlayer = players.get(currentPlayerIndex);
         
@@ -368,16 +396,33 @@ public class Game {
         if(guessNumber.value == currentPlayerContextValue){
             killPlayer(currentPlayer, "A giant boulder falls on his head!");
         }else{
-            hurtPlayer(currentPlayer, 3, "barely escapes death!");
+            hurtPlayer(currentPlayer, 3, "He is battered by falling rocks!");
         }
         currentPlayerContextValue = 0;
     }
 
     private void killPlayer(Player player, String cause) {
         logger.debug("Killing " + player + " because " + cause);
+        currentPlayer.setDead(true);
+        changePlayerAttribute(player, PlayerAttributes.HP, 0);
+        addMessage(new ChatMessage(cause + " " + player.getName() + " was killed!", "Game"));
+        addMessage(new KillPlayer(currentPlayer.getName()));
+        //end game if there's no one left alive
+        for(Player p : players){
+            if(!p.isDead()){
+                return;
+            }
+        }
+        endGame();
     }
 
     private void hurtPlayer(Player player, int value, String description) {
-        logger.debug("Hurting " + player + " for " + value + " he " + description);
+        logger.debug(" Hurting " + player + " for " + value + " he " + description);
+        int newHealth = currentPlayer.getHp() - value;
+        addMessage(new ChatMessage(description + " " + player.getName() + " was hurt for " + value + " HP!", "Game"));
+        changePlayerAttribute(player, PlayerAttributes.HP, newHealth);
+        if(newHealth < 1){
+            killPlayer(currentPlayer, "");
+        }
     }
 }

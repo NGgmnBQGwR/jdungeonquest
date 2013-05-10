@@ -34,6 +34,8 @@ import jdungeonquest.GameMap;
 import jdungeonquest.Tile;
 import jdungeonquest.TileHolder;
 import jdungeonquest.network.ChangePlayerAttribute;
+import jdungeonquest.network.EndGame;
+import jdungeonquest.network.KillPlayer;
 import net.miginfocom.swing.MigLayout;
 
 public class ClientGUI extends JPanel{
@@ -296,20 +298,42 @@ public class ClientGUI extends JPanel{
         }
     }    
     
+    public void killPlayer(KillPlayer killPlayer){
+        String playerName = killPlayer.player;
+        for(PlayerHolder p : playerHolders){
+            if(p.getPlayerName().equals(playerName)){
+                p.unselect();
+                p.setDead(true);
+                p.setEnabled(false);
+            }
+        }
+    }
+
+    void endGame(EndGame endGame) {
+        endTurnButton.setEnabled(false);
+        searchButton.setEnabled(false);
+        LobbyGUI.enableComponents(mapPanel, false);        
+    }
+    
     class PlayerHolder extends JPanel{
         private String playerName = "";
         private int gold = 0;
         private int hp = 0;
+        private boolean dead = false;
         
         JLabel nameLabel;
         JLabel goldLabel;
         JLabel hpLabel;
+        JLabel deadLabel;
         
         public PlayerHolder(){
             nameLabel = new JLabel();
             hpLabel = new JLabel();
             goldLabel = new JLabel();
-
+            deadLabel = new JLabel("DEAD");
+            deadLabel.setForeground(Color.RED);
+            deadLabel.setVisible(false);
+            
             hpLabel.setText(new Integer(hp).toString());
             goldLabel.setText(new Integer(gold).toString());
             nameLabel.setText(playerName);
@@ -378,5 +402,18 @@ public class ClientGUI extends JPanel{
             this.hp = hp;
             hpLabel.setText(new Integer(hp).toString());
         }
+
+        public void setDead(boolean b) {
+            dead = b;
+            if(b){
+                deadLabel.setVisible(true);
+            }else{
+                deadLabel.setVisible(false);
+            }
+            invalidate();
+        }
+        public boolean getDead() {
+            return dead;
+        }        
     }
 }
