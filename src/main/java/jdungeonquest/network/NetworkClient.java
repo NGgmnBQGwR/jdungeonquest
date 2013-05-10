@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ public class NetworkClient implements Runnable {
     private ClientState state = ClientState.NOT_CONNECTED;
     //list of players connected to this client
     List<PlayerData> players = new ArrayList<>();
+    List<String> allPlayersNames = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(NetworkClient.class);
     private String currentPlayer;
 
@@ -72,6 +74,10 @@ public class NetworkClient implements Runnable {
         state = newState;
     }
 
+    public List<String> getAllPlayerNames() {
+        return allPlayersNames;
+    }   
+    
     public List<String> getPlayerNames(){
         List<String> names = new ArrayList<>();
         for(PlayerData pd : players){
@@ -168,12 +174,13 @@ public class NetworkClient implements Runnable {
                         //Received player list with all players (including local) from the server
                         case PlayerList:
                             PlayerList p = (PlayerList)object;
+                            allPlayersNames = new ArrayList<>(Arrays.asList(p.players));
                             gui.updatePlayerList(p);
                             break;
                             
                         //Every player is ready, and server declared game start
                         case StartGame:
-                            gui.initPlayers(getPlayerNames());
+                            gui.initPlayers(getAllPlayerNames());
                             gui.showClient();
                             changeState(ClientState.IN_GAME);
                             break;
@@ -196,8 +203,6 @@ public class NetworkClient implements Runnable {
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }
             }
-
-
         });
 
         client.start();
