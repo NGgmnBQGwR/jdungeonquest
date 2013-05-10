@@ -69,7 +69,7 @@ public class ClientGUI extends JPanel{
     }
 
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[grow][grow]", "[grow][grow]");
+        MigLayout layout = new MigLayout("fill", "[][]", "[][]");
         this.setLayout(layout);
         
         playerHolderPanel = new JPanel();
@@ -103,9 +103,9 @@ public class ClientGUI extends JPanel{
             }
         });        
         
-        add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow 60, spany");
+        add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow, spany");
         add(playerHolderPanel, "wrap");
-        add(chatPanel, "wrap");
+        add(chatPanel, "spanx, grow, wrap");
         add(endTurnButton);
         add(searchButton);
     }
@@ -262,7 +262,7 @@ public class ClientGUI extends JPanel{
         
         public ChatPanel(ClientGUI p) {
             this.parent = p;
-            MigLayout layout = new MigLayout("", "[grow 0][grow 0]", "[grow 0]");
+            MigLayout layout = new MigLayout("", "[][]", "[][]");
             setLayout(layout);
             
             messageList = new JList();
@@ -281,9 +281,9 @@ public class ClientGUI extends JPanel{
                 }
             });  
             
-            add(textField, "grow, push");
+            add(textField, "pushx, growx");
             add(sendButton, "wrap");
-            add(new JScrollPane(messageList), "grow");
+            add(new JScrollPane(messageList), "grow, pushy, spanx");
         }
     }
 
@@ -341,10 +341,11 @@ public class ClientGUI extends JPanel{
             this.setLayout(new MigLayout("", "[][]"));
             add(new JLabel("Name: "));
             add(nameLabel, "wrap");
+            add(deadLabel, "wrap");
             add(new JLabel("HP: "));
             add(hpLabel, "wrap");
             add(new JLabel("Gold: "));
-            add(goldLabel);
+            add(goldLabel, "wrap");
             
             unselect();
         }
