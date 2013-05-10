@@ -10,6 +10,9 @@ public class Deck {
     List<Card> usedCards = new ArrayList<>();
     
     public Card takeCard(){
+        if(cardArray.isEmpty()){
+            shuffle();
+        }
         Card c = cardArray.get(0);
         usedCards.add(c);
         cardArray.remove(0);

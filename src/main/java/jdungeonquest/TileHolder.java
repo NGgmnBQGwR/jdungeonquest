@@ -29,6 +29,9 @@ public class TileHolder {
     }
 
     public Tile takeTile() {
+        if(allTiles.isEmpty()){
+            shuffle();
+        }
         Tile t = allTiles.get(0);
         usedTiles.add(t);
         allTiles.remove(0);
