@@ -41,13 +41,29 @@ public class CardHolder {
                     dragonDeck.putCard(card);
                     break;
                 case Door:
+                    doorDeck.putCard(card);
+                    break;                          
                 case Corpse:
+                    corpseDeck.putCard(card);
+                    break;                          
                 case Crypt:
+                    cryptDeck.putCard(card);
+                    break;                          
                 case Trap:
+                    trapDeck.putCard(card);
+                    break;                          
                 case Search:
+                    searchDeck.putCard(card);
+                    break;                          
                 case Room:
+                    roomDeck.putCard(card);
+                    break;                    
                 case Treasure:
+                    treasureDeck.putCard(card);
+                    break;                          
                 case Monster:
+                    monsterDeck.putCard(card);
+                    break;                          
                 default: break;
             }
         }
