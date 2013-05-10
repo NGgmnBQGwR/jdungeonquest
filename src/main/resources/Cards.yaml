@@ -33,14 +33,21 @@
  deckType: Dragon
  effects: []
 
-#   - !!jdungeonquest.effectss.GiveGold {amount: 1}
-#   - !!jdungeonquest.effectss.GiveGold {amount: 2}
+#   - !!jdungeonquest.effects.GiveGold {amount: 1}
+#   - !!jdungeonquest.effects.GiveGold {amount: 2}
 #Door
 #Corpse
 #Crypt
 #Trap
 #Search
 #Room
+
+- !!jdungeonquest.Card
+ description: Empty Room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+
 #Treasure
 #Monster
 
@@ -48,5 +55,5 @@
 # description: Card1
 # deckType: Trap
 # effects:
-#   - !!jdungeonquest.effectss.GiveGold {amount: 1}
-#   - !!jdungeonquest.effectss.GiveGold {amount: 2}
+#   - !!jdungeonquest.effects.GiveGold {amount: 1}
+#   - !!jdungeonquest.effects.GiveGold {amount: 2}

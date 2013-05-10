@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.network.ChatMessage;
 import jdungeonquest.network.Message;
@@ -180,7 +181,7 @@ public class Game {
         addMessage( new MovePlayer(x, y, player.getName()));
     }
 
-    private void addMessage(Message m) {
+    public void addMessage(Message m) {
         logger.debug("Adding message to queue: " + m);
         messageQueue.add(m);
     }
@@ -196,6 +197,7 @@ public class Game {
         }
         currentPlayer.searchInRow++;
         currentPlayer.setSearched(true);
+        //processDrawSearchCard();
     }
     
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
@@ -250,10 +252,11 @@ public class Game {
         if(map.isFree(to.getX(), to.getY())){
             //if there's nothing there yet, place a tile there
             logger.debug("Tile is empty.");
-            //this is a hack until movement/turn sequence is complete
-            Tile tile = tileHolder.takeSpecificTile(0);
+
+            Tile tile = tileHolder.takeTile();
             int tileNumber = tileHolder.getTileNumber(tile);
             //actually place tile on the map
+            logger.debug("Placed tile " + tile + " on " + to);
             int tileRotation = map.placeTile(from, to, tile);
             currentPlayer.setPlacedTile(true);
             addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
@@ -263,10 +266,31 @@ public class Game {
             return;
         }
         currentPlayer.setMoved(true);
+        currentPlayer.setPosition(to);
         addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
-        player.setPosition(to);
+        
+        processCurrentPlayerTile();
     }
 
+    private void processCurrentPlayerTile() {
+        //get position of current player 
+        Position playerPosition = currentPlayer.getPosition();
+        //get tile on this position
+        Tile tile = map.getTile(playerPosition.getX(), playerPosition.getY());
+        //get effects from this tile
+        List<Effect> tileEffects = tile.getEffects();
+        logger.debug("Found " + tileEffects.size() + " effects on Tile " + tile + " on " + playerPosition);
+        //TODO: actual check
+        //if it's not a special tile, grab a Room card
+        processDrawRoomCard();
+    }    
+    
+    private void processDrawRoomCard() {
+        Card card = cardHolder.roomDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);
+    }
+    
     public void endTurn(String player) {
         if(!currentPlayer.getName().equals(player)){
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
