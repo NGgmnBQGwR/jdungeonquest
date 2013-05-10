@@ -8,8 +8,8 @@ public class Player {
 
     private String name;
     private String classname;
-    private int gold;
-    private int hp;
+    private int gold = 0;
+    private int hp = 0;
     private Position position = new Position();
 
     public int searchInRow = 0; //player may search a room only 2 times in a row
@@ -18,6 +18,7 @@ public class Player {
     private boolean placedTile = false;
     private boolean searched = false;
     private boolean didSomething = false; //"a player may do absolutely nothing while missing a turn"
+    private boolean dead = false;
     
     public Player() {
     }
@@ -132,5 +133,47 @@ public class Player {
      */
     public void setDidSomething(boolean didSomething) {
         this.didSomething = didSomething;
+    }
+
+    /**
+     * @return the dead
+     */
+    public boolean isDead() {
+        return dead;
+    }
+
+    /**
+     * @param dead the dead to set
+     */
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    /**
+     * @return the gold
+     */
+    public int getGold() {
+        return gold;
+    }
+
+    /**
+     * @param gold the gold to set
+     */
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    /**
+     * @return the hp
+     */
+    public int getHp() {
+        return hp;
+    }
+
+    /**
+     * @param hp the hp to set
+     */
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }
