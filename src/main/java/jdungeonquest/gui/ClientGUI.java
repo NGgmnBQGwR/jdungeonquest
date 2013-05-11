@@ -52,6 +52,7 @@ public class ClientGUI extends JPanel{
     JButton endTurnButton;
     JButton searchButton;
     public static BufferedImage blankTileImage;
+    JScrollPane mapScrollPane;
 
     ClientGUI(GUI parent){
         this.parent = parent;
@@ -103,7 +104,8 @@ public class ClientGUI extends JPanel{
             }
         });        
         
-        add(new JScrollPane(mapPanel), "w 200:600:1000, h 200:600:1000, grow, spany");
+        mapScrollPane = new JScrollPane(mapPanel);
+        add(mapScrollPane, "w 200:600:1000, h 200:600:1000, grow, spany");
         add(playerHolderPanel, "wrap");
         add(chatPanel, "spanx, grow, wrap");
         add(endTurnButton);

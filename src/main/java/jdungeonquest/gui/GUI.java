@@ -1,5 +1,6 @@
 package jdungeonquest.gui;
 
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -155,6 +156,11 @@ public class GUI extends JFrame {
         Tile t = clientGUI.tileHolder.takeSpecificTile(tile);
         t.rotate(placeTile.rotate);
         clientGUI.map.setTile(x, y, t);
+        int tile_x = (x-2)*150;
+        int tile_y = (y-2)*150;
+//        clientGUI.mapScrollPane.scrollRectToVisible(new Rectangle(800, 800, 1, 1);
+        clientGUI.mapScrollPane.getVerticalScrollBar().setValue(tile_y);
+        clientGUI.mapScrollPane.getHorizontalScrollBar().setValue(tile_x);
         clientGUI.repaint();
     }
     
