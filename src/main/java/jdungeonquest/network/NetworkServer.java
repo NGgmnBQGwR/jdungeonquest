@@ -49,6 +49,10 @@ public class NetworkServer implements Runnable {
             public void disconnected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " disconnected");
                 broadcast("Client " + connection.toString() + " has quit.");
+                if(!clientPlayersMap.containsKey(connection.getID())){
+                    logger.debug("There is no client " + connection.getID() + " (anymore?)");
+                    return;
+                }
                 for(String player : clientPlayersMap.get(connection.getID())){
                     //game.removePlayer(player);
                 }
