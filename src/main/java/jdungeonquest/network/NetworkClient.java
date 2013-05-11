@@ -259,13 +259,21 @@ public class NetworkClient implements Runnable {
     }
 
     public void sendChatMessage(String text) {
-        logger.debug("Sending ChatMessage: " + text);
-        ChatMessage msg = new ChatMessage(text, "");
-        sendMessage(msg);
+        StringBuilder sb = new StringBuilder();
+        
         String author = "";
-        for(PlayerData pd : players){
-            author += pd.getName() + ", ";
+        if(players.isEmpty()){
+            author = new Integer(client.getID()).toString();
+        }else{
+            for (PlayerData pd : players) {
+                sb.append(pd.getName()).append(", ");
+            }
+            sb.setLength(sb.length() - ", ".length());
+            author = sb.toString();
         }
+        logger.debug("Sending ChatMessage: " + text + " from " + author);
+        ChatMessage msg = new ChatMessage(text, author);
+        sendMessage(msg);
         gui.addChatMessage(text, author);
     }
     

@@ -120,7 +120,7 @@ class LobbyGUI extends JPanel{
 
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
-        String text = time + author + ":" + msg;
+        String text = time + author + ": " + msg;
         ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
     }
 
