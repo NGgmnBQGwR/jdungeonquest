@@ -270,6 +270,12 @@ public class ClientGUI extends JPanel{
             messageList.ensureIndexIsVisible(((DefaultListModel) messageList.getModel()).size() - 1);
 
             textField = new JTextField("");
+            textField.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sendButton.doClick();
+                }
+            });
 
             sendButton = new JButton("Send");
             sendButton.addActionListener(new ActionListener() {
