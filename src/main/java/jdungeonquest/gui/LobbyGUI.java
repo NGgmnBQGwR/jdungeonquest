@@ -2,6 +2,7 @@ package jdungeonquest.gui;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -120,8 +121,16 @@ class LobbyGUI extends JPanel{
 
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
-        String text = time + author + ": " + msg;
-        ((DefaultListModel)messageList.getModel()).add( ((DefaultListModel)messageList.getModel()).getSize(), text);
+        final String text = time + author + ": " + msg;
+        EventQueue.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ((DefaultListModel) messageList.getModel()).addElement(text);
+                messageList.ensureIndexIsVisible(((DefaultListModel) messageList.getModel()).size() -1);
+            }
+        });        
     }
 
     void addLocalPlayer(String newPlayer) {
