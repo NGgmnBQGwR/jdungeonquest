@@ -1,6 +1,7 @@
 package jdungeonquest.gui;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -24,6 +25,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -33,6 +35,7 @@ import javax.swing.JTextField;
 import jdungeonquest.GameMap;
 import jdungeonquest.Tile;
 import jdungeonquest.TileHolder;
+import jdungeonquest.network.BattleAction;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.EndGame;
 import jdungeonquest.network.KillPlayer;
@@ -53,6 +56,7 @@ public class ClientGUI extends JPanel{
     JButton searchButton;
     public static BufferedImage blankTileImage;
     JScrollPane mapScrollPane;
+    JDialog di;
 
     ClientGUI(GUI parent){
         this.parent = parent;
@@ -169,7 +173,7 @@ public class ClientGUI extends JPanel{
         }
     }
 
-    int askForNumber() {
+    public int askForNumber() {
         int value = 0;
         while(value < 1 || value > 6){
             String result = JOptionPane.showInputDialog("Enter number from 1 to 6:", "1");
@@ -180,6 +184,58 @@ public class ClientGUI extends JPanel{
             }
         }
         return value;
+    }
+    
+    public int askForStartBattleChoice(){
+        int value = 0;
+        while(value < 1 || value > 3){
+            String result = JOptionPane.showInputDialog("1. Combat\n2. Wait\n3. Flee", "1");
+            try{
+                value = Integer.parseInt(result);
+            }catch(java.lang.NumberFormatException a){
+                value = -1;
+            }
+        }
+        return value;
+    }
+
+    void hideBattleDialog(){
+        di.dispose();
+    }
+    
+    void showBattleDialog() {
+        di = new JDialog(null, "Battle!", Dialog.ModalityType.APPLICATION_MODAL);
+        di.setLayout(new FlowLayout());
+
+        JButton b1 = new JButton("Mighty Blow!");
+        JButton b2 = new JButton("Slash!");
+        JButton b3 = new JButton("Leap Aside!");
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.getClient().sendMessage(new BattleAction(1));
+            }
+        });
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.getClient().sendMessage(new BattleAction(2));
+            }
+        });
+        b3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.getClient().sendMessage(new BattleAction(3));
+            }
+        });
+        
+        di.add(b1);
+        di.add(b2);
+        di.add(b3);
+
+        di.pack();
+        di.setVisible(true);
     }
 
     private class MapPanel extends JPanel {

@@ -10,7 +10,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jdungeonquest.Tile;
+import jdungeonquest.network.BattleAction;
 import jdungeonquest.network.ChangePlayerAttribute;
+import jdungeonquest.network.EndBattle;
 import jdungeonquest.network.EndGame;
 import jdungeonquest.network.KillPlayer;
 import jdungeonquest.network.MovePlayer;
@@ -192,5 +194,19 @@ public class GUI extends JFrame {
 
     public void endGame(EndGame endGame) {
         clientGUI.endGame(endGame);
+    }
+
+    public int askForStartBattleChoice() {
+        return clientGUI.askForStartBattleChoice();
+    }
+
+    public void processBattleAction(BattleAction battleAction) {
+        if(battleAction.action == 0){
+            clientGUI.showBattleDialog();
+        }
+    }
+
+    public void processEndBattle(EndBattle endBattle) {
+        clientGUI.hideBattleDialog();
     }
 }

@@ -14,6 +14,7 @@ import jdungeonquest.enums.ClientState;
 import jdungeonquest.enums.NetworkMessageType;
 import static jdungeonquest.enums.NetworkMessageType.MovePlayer;
 import static jdungeonquest.enums.NetworkMessageType.RegistrationRequest;
+import static jdungeonquest.enums.NetworkMessageType.StartBattle;
 import static jdungeonquest.enums.NetworkMessageType.UnregisterRequest;
 import jdungeonquest.gui.GUI;
 import org.slf4j.Logger;
@@ -213,6 +214,35 @@ public class NetworkClient implements Runnable {
                                     sendMessage(new GuessNumber(number));
                                 }});
                             break;
+                            
+                        case StartBattle:
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int number = gui.askForStartBattleChoice();
+                                    sendMessage(new StartBattle(new int[]{number}));
+                                }
+                            });
+                            break;
+                        case BattleAction:
+                            final Object obj = object;
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gui.processBattleAction((BattleAction)obj);
+                                }
+                            });                            
+                            break;
+
+                        case EndBattle:
+                            final Object obj2 = object;
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gui.processEndBattle((EndBattle)obj2);
+                                }
+                            });           
+                            break;                            
                             
                         case KillPlayer:
                             gui.killPlayer((KillPlayer)object);
