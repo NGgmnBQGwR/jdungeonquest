@@ -8,10 +8,13 @@ import java.util.Map;
 import java.util.Random;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.GameState;
+import jdungeonquest.enums.MonsterType;
 import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.enums.PlayerState;
+import jdungeonquest.network.BattleAction;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
+import jdungeonquest.network.EndBattle;
 import jdungeonquest.network.EndGame;
 import jdungeonquest.network.GuessNumber;
 import jdungeonquest.network.KillPlayer;
@@ -19,6 +22,7 @@ import jdungeonquest.network.Message;
 import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NewTurn;
 import jdungeonquest.network.PlaceTile;
+import jdungeonquest.network.StartBattle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +44,9 @@ public class Game {
     
     private int turn = 1;
     private int sunPosition = 1;
-
+    private boolean battleStarted = false;
+    private int monsterHP = 0;
+    
     public List<Message> messageQueue;
     
     public Game() {
@@ -340,7 +346,7 @@ public class Game {
             logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
             return;
         }
-        
+        resetTurnVariables();
         newTurn();
     }
 
@@ -396,20 +402,32 @@ public class Game {
         if(guessNumber.value == currentPlayerContextValue){
             killPlayer(currentPlayer, "A giant boulder falls on his head!");
         }else{
-            hurtPlayer(currentPlayer, 3, "He is battered by falling rocks!");
+            hurtPlayer(currentPlayer, 2, "He is battered by falling rocks!");
         }
         currentPlayerContextValue = 0;
     }
 
+    private void resetTurnVariables(){
+        currentPlayerState = PlayerState.idle;
+        currentPlayerContextValue = 0;
+        battleStarted = false;
+    }
+    
     private void killPlayer(Player player, String cause) {
         logger.debug("Killing " + player + " because " + cause);
         currentPlayer.setDead(true);
+        //end combat if player was killed in it
+        if(currentPlayerState == PlayerState.InCombat){
+            addMessage(new EndBattle());
+        }
+        
         changePlayerAttribute(player, PlayerAttributes.HP, 0);
         addMessage(new ChatMessage(cause + " " + player.getName() + " was killed!", "Game"));
         addMessage(new KillPlayer(currentPlayer.getName()));
         //end game if there's no one left alive
         for(Player p : players){
             if(!p.isDead()){
+                endTurn(currentPlayer.getName());
                 return;
             }
         }
@@ -423,6 +441,147 @@ public class Game {
         changePlayerAttribute(player, PlayerAttributes.HP, newHealth);
         if(newHealth < 1){
             killPlayer(currentPlayer, "");
+        }
+    }
+
+    public void startMonsterCombat(MonsterType type) {
+        //set correct variables
+        battleStarted = true;
+
+        logger.debug("startMonsterCombat:" + type);
+        //give player a list of options and remember them, so it's possible to check answer later
+        addMessage(new StartBattle(new int[]{1,2,3}));
+        addMessage(new ChatMessage(currentPlayer.getName() + " has encountered " + type + "!", "Game"));
+    }
+
+    public void processStartBattle(StartBattle startBattle) {
+        int playerDecision = startBattle.choices[0];
+        logger.debug("Player decided to " + playerDecision);
+        //check if player can do what he wants to
+        
+        //take a Monster card
+
+        //player wants to Attack
+        if (playerDecision == 1) {
+            //player Attacks
+            currentPlayerState = PlayerState.InCombat;
+            monsterHP = 5;
+            addMessage(new BattleAction(0));
+            addMessage(new ChatMessage(currentPlayer.getName() + " charges into battle!", "Game"));
+        }
+
+        //player wants to Wait
+        if (playerDecision == 2) {
+            //player recieves damage and Attacks
+            currentPlayerState = PlayerState.InCombat;
+            monsterHP = 3;
+            addMessage(new BattleAction(0));
+            hurtPlayer(currentPlayer, 2, "A monster viciously attacks from the shadows!");
+            if(!currentPlayer.isDead()){
+                addMessage(new ChatMessage(currentPlayer.getName() + " have to fight!", "Game"));
+            }
+        }
+
+        //player wants to Escape
+        //todo: apply check for escape:
+        //"you cannot escape if there's a portcullis behind you or you entered via secret door"
+        if (playerDecision == 3) {
+            //player escapes
+            Position prevPos = currentPlayer.getPreviousPosition();
+            int prev_x = prevPos.getX();
+            int prev_y = prevPos.getY();
+            movePlayer(prev_x, prev_y, currentPlayer);
+            addMessage(new ChatMessage(currentPlayer.getName() + " escaped!", "Game"));
+        }        
+        
+        //list of possible outcomes:
+        //combat
+        //escape - move back, don't draw a room or a door card, but special tiles work
+        //todo: store previous player position somewhere
+        //flee
+        //slash/escape
+        //slash/combat
+    }
+    
+    public void processBattleAction(BattleAction ba){
+        if(!battleStarted){
+            logger.debug("Not in combat");
+            return;
+        }
+        if(!(currentPlayerState == PlayerState.InCombat)){
+            logger.debug("Not in combat");
+            return;
+        }
+        int pa = ba.action;
+        int ma = 1 + random.nextInt(3);
+        logger.debug("Player chose action " + pa);
+        logger.debug("Monster chose action " + ma);
+        
+        int playerDamage = 0;
+        int monsterDamage = 0;
+        
+        switch (pa) {
+            default:
+            case 1: //MB
+                switch (ma) {
+                    default:
+                    case 1: //MB
+                        monsterDamage = 1;
+                        playerDamage = 1;
+                        break;
+                    case 2: //S
+                        monsterDamage = 2;
+                        break;
+                    case 3: //LA
+                        playerDamage = 1;
+                        break;
+                }
+                break;
+
+            case 2: //S
+                switch (ma) {
+                    default:
+                    case 1: //MB
+                        playerDamage = 1;
+                        break;
+                    case 2: //S
+                        monsterDamage = 1;
+                        playerDamage = 1;
+                        break;
+                    case 3: //LA
+                        monsterDamage = 1;
+                        break;
+                }
+                break;
+
+            case 3: //LA
+                switch (ma) {
+                    default:
+                    case 1: //MB
+                        monsterDamage = 1;
+                        break;
+                    case 2: //S
+                        playerDamage = 1;
+                        break;
+                    case 3: //LA
+                        monsterDamage = 1;
+                        playerDamage = 1;
+                        break;
+                }
+                break;
+        }
+        
+        logger.debug("PDamage: " + playerDamage + " MDamage: " + monsterDamage);
+        if(monsterDamage > 0){
+            addMessage(new ChatMessage(currentPlayer.getName() + " dealt " + monsterDamage + " damage to a monster!", "Game"));
+            monsterHP -= monsterDamage;
+        }
+        if(monsterHP <= 0){
+            addMessage(new ChatMessage(currentPlayer.getName() + " emerged victorious!", "Game"));
+            addMessage(new EndBattle());
+        }
+        if(playerDamage > 0){
+            hurtPlayer(currentPlayer, playerDamage, "Monster lands a hit!");
         }
     }
 }

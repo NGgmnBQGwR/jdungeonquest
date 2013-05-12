@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 import jdungeonquest.Game;
 import jdungeonquest.enums.NetworkMessageType;
+import static jdungeonquest.enums.NetworkMessageType.BattleAction;
 import static jdungeonquest.enums.NetworkMessageType.ChatMessage;
+import static jdungeonquest.enums.NetworkMessageType.StartBattle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,6 +128,16 @@ public class NetworkServer implements Runnable {
                             
                         case GuessNumber:
                             game.processGuessNumber((GuessNumber)object);
+                            processMessageQueue();
+                            break;
+
+                        case StartBattle:
+                            game.processStartBattle((StartBattle)object);
+                            processMessageQueue();
+                            break;                            
+
+                        case BattleAction:
+                            game.processBattleAction((BattleAction)object);
                             processMessageQueue();
                             break;
                             
@@ -248,7 +260,7 @@ public class NetworkServer implements Runnable {
             return;
         }
         for(Message m : game.messageQueue){
-            if(m instanceof GuessNumber){
+            if(m instanceof GuessNumber || m instanceof StartBattle || m instanceof BattleAction){
                 String curPlayer = game.getCurrentPlayer();
                 int id = -1;
                 for(int key : clientPlayersMap.keySet()){
