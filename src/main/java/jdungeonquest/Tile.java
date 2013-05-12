@@ -80,6 +80,24 @@ public class Tile {
         return true;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append("[");
+        for(RoomWallType w : walls){
+            s.append(w);
+            s.append(" ");
+        }
+        s.append("]R");
+        s.append(rotate);
+        s.append(" ");
+        s.append(entryDirection);
+        s.append(" (");
+        s.append(effects.size());
+        s.append(")");
+        return s.toString();
+    }
+    
     public void activate(Game game) {
         for (Effect e : getEffects()) {
             e.doAction(game);

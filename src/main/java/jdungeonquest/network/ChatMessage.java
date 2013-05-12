@@ -14,4 +14,9 @@ public class ChatMessage extends Message{
         message = text;
         author = clientName;
     }
+    
+    @Override
+    public String toString(){
+        return author + ": " + message;
+    }
 }
