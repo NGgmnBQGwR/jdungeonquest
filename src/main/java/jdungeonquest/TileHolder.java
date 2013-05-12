@@ -70,7 +70,7 @@ public class TileHolder {
                 return entry.getKey();
             }
         }
-        return -1;
+        throw new IllegalArgumentException();
     }
 
     public int getSize() {
