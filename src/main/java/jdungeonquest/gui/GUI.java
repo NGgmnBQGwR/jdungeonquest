@@ -152,9 +152,9 @@ public class GUI extends JFrame {
         final int x = placeTile.x;
         final int y = placeTile.y;
         
-        logger.debug("Placing tile " + tile + " at " + x + ":" + y);
         Tile t = clientGUI.tileHolder.takeSpecificTile(tile);
         t.rotate(placeTile.rotate);
+        logger.debug("Placing tile " + tile + " " + t + " at " + x + ":" + y);
         clientGUI.map.setTile(x, y, t);
         int tile_x = (x-2)*150;
         int tile_y = (y-2)*150;

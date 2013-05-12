@@ -205,6 +205,8 @@ public class Game {
 
     private void placeTile(int x, int y, Tile tile, int rotation) {
         int tileNumber = tileHolder.getTileNumber(tile);
+        tile.rotate(rotation);
+        logger.debug("Placing tile " + tile + " at rotation " + rotation + " at " + x + ":" + y);
         map.setTile(x, y, tile);
         addMessage( new PlaceTile(x, y, tileNumber, rotation));
     }
@@ -287,7 +289,7 @@ public class Game {
         }
         //check that you can enter that tile from current one
         if(!map.canMoveFrom(from, to)){
-            logger.debug("Can't leave from " + from + " this way. Can't move.");
+            logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
             return;
         }
         //check whether there is something on that tile already
