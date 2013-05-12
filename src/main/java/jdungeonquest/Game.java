@@ -210,6 +210,8 @@ public class Game {
     }
 
     private void movePlayer(int x, int y, Player player) {
+        logger.debug("Moving " + player.getName() + " from " + player.getPosition() + " to " + new Position(x,y));
+        player.setPreviousPosition(player.getPosition());
         player.setPosition( new Position(x,y));
         addMessage( new MovePlayer(x, y, player.getName()));
     }

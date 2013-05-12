@@ -10,6 +10,7 @@ public class Player {
     private String classname;
     private int gold = 0;
     private int hp = 0;
+    private Position previousPosition = new Position();
     private Position position = new Position();
 
     public int searchInRow = 0; //player may search a room only 2 times in a row
@@ -175,5 +176,19 @@ public class Player {
      */
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    /**
+     * @return the previousPosition
+     */
+    public Position getPreviousPosition() {
+        return previousPosition;
+    }
+
+    /**
+     * @param previousPosition the previousPosition to set
+     */
+    public void setPreviousPosition(Position previousPosition) {
+        this.previousPosition = previousPosition;
     }
 }
