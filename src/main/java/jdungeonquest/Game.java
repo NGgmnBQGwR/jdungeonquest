@@ -298,20 +298,16 @@ public class Game {
             logger.debug("Tile is empty.");
 
             Tile tile = tileHolder.takeTile();
-            int tileNumber = tileHolder.getTileNumber(tile);
-            //actually place tile on the map
-            logger.debug("Placed tile " + tile + " on " + to);
-            int tileRotation = map.placeTile(from, to, tile);
+            int tileRotation = map.getRequiredRotation(from, to, tile);
+            placeTile(to.getX(), to.getY(), tile, tileRotation);
             currentPlayer.setPlacedTile(true);
-            addMessage(new PlaceTile(to.getX(), to.getY(), tileNumber, tileRotation));
         }else if(!map.canMoveTo(from, to)){
             //moving in existing tile
-            logger.debug("Can't enter " + to + " this way. Can't move.");
+            logger.debug("Can't enter " + map.getTile(to.getX(), to.getY()) + " on " + to + " this way. Can't move.");
             return;
         }
         currentPlayer.setMoved(true);
-        currentPlayer.setPosition(to);
-        addMessage(new MovePlayer(to.getX(), to.getY(), playerName));
+        movePlayer(to.getX(), to.getY(), currentPlayer);
         
         processCurrentPlayerTile();
     }
