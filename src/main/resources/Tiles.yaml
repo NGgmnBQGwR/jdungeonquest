@@ -8,4 +8,18 @@
  isSearchable: true
  walls: [EXIT, WALL, EXIT, WALL]
  
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, EXIT, WALL, WALL]
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, WALL, WALL, EXIT]
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, EXIT, WALL, EXIT]
  

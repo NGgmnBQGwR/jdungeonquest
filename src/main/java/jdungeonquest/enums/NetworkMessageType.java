@@ -13,5 +13,8 @@ public enum NetworkMessageType {
     NewTurn,
     ChangeAttribute,
     GuessNumber,
-    KillPlayer;
+    KillPlayer,
+    StartBattle,
+    BattleAction,
+    EndBattle;
 }

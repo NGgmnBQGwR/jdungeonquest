@@ -49,10 +49,16 @@
  - !!jdungeonquest.effects.Empty {}
 
 - !!jdungeonquest.Card
- description: Empty Room
+ description: Cave-In!
  deckType: Room
  effects:
  - !!jdungeonquest.effects.CaveIn {}
+
+- !!jdungeonquest.Card
+ description: You've met a Goblin!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
 
 
 #Treasure
