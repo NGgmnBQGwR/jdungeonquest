@@ -201,10 +201,22 @@ public class TileTest {
         deadEnd.setWalls( new ArrayList(Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.EXIT,RoomWallType.WALL,RoomWallType.WALL} ) ));
 
         map.setTile(3, 3, crossroads);
+        int r = 0;
         
-        assertEquals(0, map.placeTile( new Position(3,3), new Position(2,3), lTurn));
-        assertEquals(3, map.placeTile( new Position(3,3), new Position(4,3), corridor));
-        assertEquals(0, map.placeTile( new Position(4,3), new Position(5,3), deadEnd));
+        r = map.getRequiredRotation( new Position(3,3), new Position(2,3), lTurn);
+        assertEquals(0, r);
+        lTurn.rotate(r);
+        map.setTile(2, 3, lTurn);
+
+        r = map.getRequiredRotation( new Position(3,3), new Position(4,3), corridor);
+        corridor.rotate(r);
+        map.setTile(4, 3, corridor);
+        assertEquals(3, r);
+        
+        r = map.getRequiredRotation( new Position(4,3), new Position(5,3), deadEnd);
+        deadEnd.rotate(r);
+        map.setTile(5, 3, deadEnd);
+        assertEquals(0, r);
     }
     
     @Test
