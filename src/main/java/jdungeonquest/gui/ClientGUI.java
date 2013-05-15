@@ -124,7 +124,13 @@ public class ClientGUI extends JPanel{
     
     void addChatMessage(String msg, String author) {
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
-        final String text = time + author + ": " + msg;
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(time);
+        sb.append(author);
+        sb.append(": ");
+        sb.append(msg);
+        final String text = sb.toString();
         EventQueue.invokeLater(new Runnable()
         {
             @Override
