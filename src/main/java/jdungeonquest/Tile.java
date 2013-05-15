@@ -258,6 +258,7 @@ public class Tile {
         g.setColor(Color.white);
         g.fillRect(0, 0, wh, wh);
         g.setColor(Color.black);
+        g.drawRect(0, 0, wh, wh);
         g.setStroke( new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         //UP
         if(walls.get(0) != RoomWallType.WALL){
