@@ -5,8 +5,18 @@
  
 - !!jdungeonquest.Tile
  entryDirection: UP
+ isSearchable: false
+ walls: [EXIT, WALL, EXIT, WALL]
+  
+- !!jdungeonquest.Tile
+ entryDirection: UP
  isSearchable: true
  walls: [EXIT, WALL, EXIT, WALL]
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: false
+ walls: [EXIT, EXIT, WALL, WALL]
  
 - !!jdungeonquest.Tile
  entryDirection: UP
@@ -16,6 +26,11 @@
 - !!jdungeonquest.Tile
  entryDirection: UP
  isSearchable: true
+ walls: [EXIT, WALL, WALL, EXIT]
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: false
  walls: [EXIT, WALL, WALL, EXIT]
  
 - !!jdungeonquest.Tile
