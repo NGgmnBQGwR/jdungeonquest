@@ -72,8 +72,9 @@ public class Tile {
         if(!this.isSearchable == other.isSearchable){
             return false;
         }
-            
-        
+        if(!this.getEntryDirection().equals(other.getEntryDirection())){
+            return false;
+        }       
         if(!this.getWalls().equals(other.getWalls())){
             return false;        
         }
