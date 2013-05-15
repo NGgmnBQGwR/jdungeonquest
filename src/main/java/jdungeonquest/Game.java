@@ -197,6 +197,9 @@ public class Game {
     }
 
     private void setUp() {
+        placeTile(4, 6, tileHolder.dragonTileLeft, 0);
+        placeTile(5, 6, tileHolder.dragonTileRight, 0);
+        
         switch(players.size()){
             case 0: endGame(); break;
             case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
@@ -214,7 +217,7 @@ public class Game {
     private void placeTile(int x, int y, Tile tile, int rotation) {
         int tileNumber = tileHolder.getTileNumber(tile);
         tile.rotate(rotation);
-        logger.debug("Placing tile " + tile + " at rotation " + rotation + " at " + x + ":" + y);
+        logger.debug("Placing tile " + tileNumber + " " + tile + " at " + x + ":" + y);
         map.setTile(x, y, tile);
         addMessage( new PlaceTile(x, y, tileNumber, rotation));
     }
