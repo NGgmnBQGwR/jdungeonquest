@@ -122,4 +122,8 @@ public class GameMap {
         setTile(tilePos.getX(), tilePos.getY(), tile);
         return turns;
     }
+
+    Tile getTile(Position position) {
+        return getTile(position.getX(), position.getY());
+    }
 }
