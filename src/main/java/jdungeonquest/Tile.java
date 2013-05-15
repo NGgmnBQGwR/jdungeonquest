@@ -88,8 +88,10 @@ public class Tile {
             s.append(w);
             s.append(" ");
         }
-        s.append("]R");
+        s.append("]R:");
         s.append(rotate);
+        s.append("S:");
+        s.append(isSearchable);
         s.append(" ");
         s.append(entryDirection);
         s.append(" (");
