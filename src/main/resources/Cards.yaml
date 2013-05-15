@@ -35,7 +35,34 @@
 
 #   - !!jdungeonquest.effects.GiveGold {amount: 1}
 #   - !!jdungeonquest.effects.GiveGold {amount: 2}
-#Door
+
+#Door (15)
+
+- !!jdungeonquest.Card
+ description: 
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorOpens {}
+
+- !!jdungeonquest.Card
+ description: 
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorOpens {}
+
+- !!jdungeonquest.Card
+ description: 
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+
+- !!jdungeonquest.Card
+ description: 
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+
+
 #Corpse
 #Crypt
 #Trap

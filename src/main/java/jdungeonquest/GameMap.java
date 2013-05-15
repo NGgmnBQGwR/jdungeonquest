@@ -126,4 +126,45 @@ public class GameMap {
     Tile getTile(Position position) {
         return getTile(position.getX(), position.getY());
     }
+
+    //todo: there's a lot of duplicated code here, need think of a way to fix this
+    int getNumberOfDoorsBetween(Position from, Position to) {
+        int doors = 0;
+        
+        if( from.getY() == to.getY()){ //same column
+            if(from.getX() > to.getX()){ //going left
+                if(getTile(from).getWalls().get(1) == RoomWallType.DOOR){
+                    doors++;
+                }
+                if(getTile(to).getWalls().get(3) == RoomWallType.DOOR){
+                    doors++;
+                }
+            }
+            if(from.getX() < to.getX()){ //going right
+                if(getTile(from).getWalls().get(3) == RoomWallType.DOOR){
+                    doors++;
+                }
+                if(getTile(to).getWalls().get(1) == RoomWallType.DOOR){
+                    doors++;
+                }            }
+        }else if( from.getX() == to.getX()){ //same row
+            if(from.getY() > to.getY()){ //going up
+                if(getTile(from).getWalls().get(0) == RoomWallType.DOOR){
+                    doors++;
+                }
+                if(getTile(to).getWalls().get(2) == RoomWallType.DOOR){
+                    doors++;
+                }
+            }
+            if(from.getY() < to.getY()){ //going down
+                if(getTile(from).getWalls().get(2) == RoomWallType.DOOR){
+                    doors++;
+                }
+                if(getTile(to).getWalls().get(0) == RoomWallType.DOOR){
+                    doors++;
+                }
+            }
+        }        
+        return doors;
+    }
 }

@@ -46,7 +46,8 @@ public class Game {
     private int sunPosition = 1;
     private boolean battleStarted = false;
     private int monsterHP = 0;
-    private boolean usingSecretDoor;
+    private boolean usingSecretDoor = false;
+    private int doorsToOpen = 0;
     
     public List<Message> messageQueue;
     
@@ -285,10 +286,6 @@ public class Game {
             logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
             return;
         }
-        //todo: add check for doors:
-        //if there are doors on either starting and/or ending tile,
-        //then all (0,1,2) doors should give Door Opens results otherwise
-        //player can't move.
         
         //check whether there is something on that tile already
         if(map.isFree(to.getX(), to.getY())){
@@ -304,12 +301,24 @@ public class Game {
             logger.debug("Can't enter " + map.getTile(to.getX(), to.getY()) + " on " + to + " this way. Can't move.");
             return;
         }
-        currentPlayer.setMoved(true);
-        currentPlayer.searchInRow = 0;
-        movePlayer(to.getX(), to.getY(), currentPlayer);
-        usingSecretDoor = false;
+
+        //if there are doors on either starting and/or ending tile,
+        //then all (0,1,2) doors should give Door Opens results otherwise
+        //player can't move.
+        doorsToOpen = map.getNumberOfDoorsBetween(from, to);
+        processDrawDoorCards();
+        if(doorsToOpen > 0 ){
+            logger.debug("There are " + doorsToOpen + " closed doors in the way. Can't move.");
+            currentPlayer.setMoved(true);
+        }else{
+            addMessage(new ChatMessage("You enter another room.", "Game"));            
+            currentPlayer.setMoved(true);
+            currentPlayer.searchInRow = 0;
+            movePlayer(to.getX(), to.getY(), currentPlayer);
+            usingSecretDoor = false;
         
-        processCurrentPlayerTile();
+            processCurrentPlayerTile();
+        }
     }
 
     private void processCurrentPlayerTile() {
@@ -335,6 +344,23 @@ public class Game {
         Card card = cardHolder.roomDeck.takeCard();
         logger.debug("Activating " + card + " card");
         card.activate(this);
+    }
+    
+    private void processDrawDoorCards(){
+        //"If only one card says 'Door Opens', you must follow instructions on the other card"
+        if(doorsToOpen == 2){
+            Card card = cardHolder.doorDeck.takeCard();
+            logger.debug("Activating " + card + " card");
+            card.activate(this);
+            if(doorsToOpen == 2){ //first card said something else, not 'Door Opens'
+                return;
+            }
+        }
+        if (doorsToOpen == 1){ // Either first one opened or there was one door to begin with
+            Card card = cardHolder.doorDeck.takeCard();
+            logger.debug("Activating " + card + " card");
+            card.activate(this);
+        }
     }
     
     public void endTurn(String player) {
@@ -613,5 +639,17 @@ public class Game {
         currentPlayer.setMoved(true);
         currentPlayer.setSearched(true);
         processDrawSearchCard();
+    }
+
+    public void effectDoorOpens() {
+        addMessage(new ChatMessage("Door opens!", "Game"));   
+        doorsToOpen--;
+        if(doorsToOpen == 1){
+            addMessage(new ChatMessage("But there's another one behind it!", "Game"));
+        }
+    }
+
+    public void effectDoorJams() {
+        addMessage(new ChatMessage("Door is jammed and refuses to open!", "Game"));         
     }
 }
