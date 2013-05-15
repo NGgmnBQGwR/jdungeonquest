@@ -141,6 +141,11 @@ public class NetworkServer implements Runnable {
                             processMessageQueue();
                             break;
                             
+                        case SearchRoom:
+                            game.processPlayerSearchRoom();
+                            processMessageQueue();
+                            break;                            
+                            
                         default:
                             logger.debug("Unhandled message found: " + object);
                             break;

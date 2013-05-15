@@ -46,6 +46,7 @@ public class Game {
     private int sunPosition = 1;
     private boolean battleStarted = false;
     private int monsterHP = 0;
+    private boolean usingSecretDoor;
     
     public List<Message> messageQueue;
     
@@ -236,16 +237,6 @@ public class Game {
         addMessage(new EndGame());
     }
 
-    public void processPlayerSearch(String playerName) {
-        if(currentPlayer.searchInRow == 2){
-            logger.debug(playerName + " can't search this room anymore.");
-            return;
-        }
-        currentPlayer.searchInRow++;
-        currentPlayer.setSearched(true);
-        //processDrawSearchCard();
-    }
-    
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
         if(state != GameState.IN_PROGRESS){
             return;
@@ -276,10 +267,6 @@ public class Game {
             logger.debug("Player already moved this turn. Can't move now.");
             return;
         }
-        if(currentPlayer.isSearched()){
-            logger.debug("Player used search this turn. Can't move now.");
-            return;
-        }
         //check that there is no one in that tile
         //add exception for Treasure Chamber, any number of players can fit there
         for (Player p : players) {
@@ -294,10 +281,15 @@ public class Game {
             return;
         }
         //check that you can enter that tile from current one
-        if(!map.canMoveFrom(from, to)){
+        if(!map.canMoveFrom(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
             logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
             return;
         }
+        //todo: add check for doors:
+        //if there are doors on either starting and/or ending tile,
+        //then all (0,1,2) doors should give Door Opens results otherwise
+        //player can't move.
+        
         //check whether there is something on that tile already
         if(map.isFree(to.getX(), to.getY())){
             //if there's nothing there yet, place a tile there
@@ -307,13 +299,15 @@ public class Game {
             int tileRotation = map.getRequiredRotation(from, to, tile);
             placeTile(to.getX(), to.getY(), tile, tileRotation);
             currentPlayer.setPlacedTile(true);
-        }else if(!map.canMoveTo(from, to)){
+        }else if(!map.canMoveTo(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
             //moving in existing tile
             logger.debug("Can't enter " + map.getTile(to.getX(), to.getY()) + " on " + to + " this way. Can't move.");
             return;
         }
         currentPlayer.setMoved(true);
+        currentPlayer.searchInRow = 0;
         movePlayer(to.getX(), to.getY(), currentPlayer);
+        usingSecretDoor = false;
         
         processCurrentPlayerTile();
     }
@@ -330,6 +324,12 @@ public class Game {
         //if it's not a special tile, grab a Room card
         processDrawRoomCard();
     }    
+    
+    private void processDrawSearchCard() {
+        Card card = cardHolder.searchDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);        
+    }
     
     private void processDrawRoomCard() {
         Card card = cardHolder.roomDeck.takeCard();
@@ -583,5 +583,35 @@ public class Game {
         if(playerDamage > 0){
             hurtPlayer(currentPlayer, playerDamage, "Monster lands a hit!");
         }
+    }
+
+    public void processSecretDoor() {
+        usingSecretDoor = true;
+        currentPlayer.setMoved(false);
+    }
+
+    public void processPlayerSearchRoom() {
+        logger.debug(currentPlayer.getName() + " is trying to search this room.");
+        if(currentPlayer.searchInRow == 2){
+            logger.debug(currentPlayer.getName() + " can't search this room anymore.");
+            return;
+        }
+        if(currentPlayer.isMoved()){
+            logger.debug(currentPlayer.getName() + " can't search this turn.");
+            return;
+        }        
+        if(currentPlayer.isSearched()){
+            logger.debug(currentPlayer.getName() + " can't search this room this turn again.");
+            return;
+        }
+        if(!map.getTile( currentPlayer.getPosition()).isIsSearchable()){
+            logger.debug("Can't search here.");
+            addMessage(new ChatMessage("No use to search here. This place is empty.", "Game"));
+            return;
+        }
+        currentPlayer.searchInRow++;
+        currentPlayer.setMoved(true);
+        currentPlayer.setSearched(true);
+        processDrawSearchCard();
     }
 }

@@ -16,5 +16,6 @@ public enum NetworkMessageType {
     KillPlayer,
     StartBattle,
     BattleAction,
-    EndBattle;
+    EndBattle,
+    SearchRoom;
 }

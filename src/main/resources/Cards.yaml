@@ -39,7 +39,44 @@
 #Corpse
 #Crypt
 #Trap
-#Search
+
+#Search (15)
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+
+- !!jdungeonquest.Card
+ description: Found Secret Door!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.SecretDoor {}
+
+- !!jdungeonquest.Card
+ description: Found Secret Door!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.SecretDoor {}
+
+- !!jdungeonquest.Card
+ description: Found Secret Door!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.SecretDoor {}
+
+- !!jdungeonquest.Card
+ description: Found Secret Door!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.SecretDoor {}
+
 #Room
 
 - !!jdungeonquest.Card

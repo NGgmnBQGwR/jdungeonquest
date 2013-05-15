@@ -330,7 +330,7 @@ public class NetworkClient implements Runnable {
     }
 
     public void searchTile() {
-        logger.debug("Searching tile. NOT YET IMPLEMENTED.");
+        client.sendTCP( new SearchRoom() );
     }
 
     class PlayerData {
