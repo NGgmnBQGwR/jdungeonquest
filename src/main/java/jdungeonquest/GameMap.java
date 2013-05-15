@@ -55,12 +55,12 @@ public class GameMap {
         //U[0] L[1] D[2] R[3]
         if( p1.getY() == p2.getY()){ //same column
             if(p1.getX() > p2.getX()){ //going left
-                if(getTile(p1.getX(), p1.getY()).getWalls().get(1) != RoomWallType.WALL){
+                if(getTile(p1).getWalls().get(1) != RoomWallType.WALL){
                     return true;
                 }
             }
             if(p1.getX() < p2.getX()){ //going right
-                if(getTile(p1.getX(), p1.getY()).getWalls().get(3) != RoomWallType.WALL){
+                if(getTile(p1).getWalls().get(3) != RoomWallType.WALL){
                     return true;
                 }
             }
@@ -68,17 +68,17 @@ public class GameMap {
         }
         if( p1.getX() == p2.getX()){ //same row
             if(p1.getY() > p2.getY()){ //going up
-                if(getTile(p1.getX(), p1.getY()).getWalls().get(0) != RoomWallType.WALL){
+                if(getTile(p1).getWalls().get(0) != RoomWallType.WALL){
                     return true;
                 }
             }
             if(p1.getY() < p2.getY()){ //going down
-                if(getTile(p1.getX(), p1.getY()).getWalls().get(2) != RoomWallType.WALL){
+                if(getTile(p1).getWalls().get(2) != RoomWallType.WALL){
                     return true;
                 }
             }
             return false;
-        }    
+        }
         return false;
     }
 
@@ -96,18 +96,18 @@ public class GameMap {
         //U[0] L[1] D[2] R[3]
         EntryDirection direction = null;
         if( playerPos.getY() == tilePos.getY()){ //same column
-            if(playerPos.getX() > tilePos.getX()){ //going right
+            if(playerPos.getX() > tilePos.getX()){ //going left, make sure entry is on the right
                 direction = EntryDirection.RIGHT;
             }
-            if(playerPos.getX() < tilePos.getX()){ //going left
+            if(playerPos.getX() < tilePos.getX()){ //going right
                 direction = EntryDirection.LEFT;
             }
         }
         if( playerPos.getX() == tilePos.getX()){ //same row
-            if(playerPos.getY() > tilePos.getY()){ //going down
+            if(playerPos.getY() > tilePos.getY()){ //going up
                 direction = EntryDirection.DOWN;
             }
-            if(playerPos.getY() < tilePos.getY()){ //going up
+            if(playerPos.getY() < tilePos.getY()){ //going down
                 direction = EntryDirection.UP;
             }
         }
