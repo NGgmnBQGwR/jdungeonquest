@@ -62,11 +62,21 @@ public class Card {
     
     @Override
     public String toString() {
-        String effectss = effects.isEmpty()?"":" Effects:";
-        for(Effect s : effects){
-            effectss += s;
-            effectss += " / ";
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(deckType);
+        sb.append(" Card: ");
+        sb.append(description);
+        sb.append(", ");
+        
+        if (!effects.isEmpty()){
+            sb.append(" Effects:");
+            for (Effect s : effects) {
+                sb.append(s);
+                sb.append("/");
+            }
+            sb.setLength(sb.length()-1);
         }
-        return new String(description + ", " + deckType + (effects.isEmpty()?"":", "+effects.size()+effectss));
+        return sb.toString();
     }    
 }
