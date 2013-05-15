@@ -1,5 +1,6 @@
 package jdungeonquest.gui;
 
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jdungeonquest.Tile;
 import jdungeonquest.network.BattleAction;
@@ -79,10 +81,12 @@ public class GUI extends JFrame {
             remove(recentPanel);
         }
 
-        MigLayout layout = new MigLayout("fill", "[]", "[fill, grow]");
+        MigLayout layout = new MigLayout("fill", "[][]", "[][fill, grow]");
         mainMenuPanel = new JPanel(layout);
         recentPanel = mainMenuPanel;
 
+        JLabel titleLabel = new JLabel("jDungeonQuest");
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 18));
         JButton serverButton = new JButton("Server");
         JButton lobbyButton = new JButton("Client");
 
@@ -100,6 +104,7 @@ public class GUI extends JFrame {
             }
         });
 
+        mainMenuPanel.add(titleLabel, "center, spanx, wrap");
         mainMenuPanel.add(serverButton, "grow");
         mainMenuPanel.add(lobbyButton, "grow");
 
