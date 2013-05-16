@@ -192,7 +192,7 @@ public class ClientGUI extends JPanel{
     public int askForNumber() {
         int value = 0;
         while(value < 1 || value > 6){
-            String result = JOptionPane.showInputDialog("Enter number from 1 to 6:", "1");
+            String result = JOptionPane.showInputDialog("<html>Test your luck in evading falling rocks!<br>Enter number from 1 to 6:<html>", "1");
             try{
                 value = Integer.parseInt(result);
             }catch(java.lang.NumberFormatException a){
