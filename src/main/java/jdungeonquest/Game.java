@@ -319,7 +319,7 @@ public class Game {
         //when in Cave-In room, player is free to backtrack, but must pass
         //Agility test to move anywhere else
         if(currentPlayer.status == PlayerStatus.IN_CAVEIN){
-            if(to != currentPlayer.getPreviousPosition()){
+            if(!to.equals(currentPlayer.getPreviousPosition())){
                 if(testPlayerAgility(12)){
                     addMessage(new ChatMessage("You find a way among the rubble.", "Game"));
                     currentPlayer.status = PlayerStatus.NONE;
