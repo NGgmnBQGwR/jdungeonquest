@@ -255,6 +255,11 @@ public class Game {
     }
 
     private void endGame() {
+        //game could've ended by something else before
+        if(state == GameState.ENDED){
+            return;
+        }
+        
         state = GameState.ENDED;
         logger.debug("EVERYONE DIED. BAD END.");
         addMessage(new ChatMessage("Game ended!", "Game"));
@@ -450,8 +455,10 @@ public class Game {
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
             return;
         }
+        //todo: implement ability for player to end his turn volunarily
         if( !currentPlayer.isMoved() && !currentPlayer.isSearched()){
             logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
+            addMessage(new ChatMessage("You cannot end your turn without moving or searching.", "Game"));
             return;
         }
         resetTurnVariables();
@@ -548,10 +555,7 @@ public class Game {
                 return;
             }
         }
-        //game could've ended by sun before
-        if(state != GameState.ENDED){
-            endGame();
-        }
+        endGame();
     }
 
     public void hurtPlayer(Player player, int value, String description) {
@@ -722,6 +726,9 @@ public class Game {
 
     public void processPlayerSearchRoom() {
         logger.debug(currentPlayer.getName() + " is trying to search room at " + currentPlayer.getPosition());
+        if(state != GameState.IN_PROGRESS){
+            return;
+        }
         if(currentPlayer.searchInRow == 2){
             logger.debug(currentPlayer.getName() + " can't search this room anymore.");
             addMessage(new ChatMessage("You can't search this room anymore this turn.", "Game"));
