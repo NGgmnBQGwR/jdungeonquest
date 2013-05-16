@@ -700,10 +700,19 @@ public class Game {
 
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
-            addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip turn.", "Game"));
+            addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip your turn.", "Game"));
             currentPlayer.turnsSkipReason = "Your head is still ringing after explosion.";        
             currentPlayer.turnsToSkip--;
             currentPlayer.setMoved(true);
+        }else if(currentPlayer.status == PlayerStatus.IN_PIT){
+            addMessage(new ChatMessage("You try to escape from the pit..", "Game"));
+            if(testPlayerAgility(12)){
+                addMessage(new ChatMessage("..And succeed!", "Game"));
+                currentPlayer.status = PlayerStatus.NONE;
+            }else{
+                addMessage(new ChatMessage("..But you fall back into it. You skip your turn.", "Game"));
+                currentPlayer.setMoved(true);
+            }
         }
     }
 
@@ -731,7 +740,7 @@ public class Game {
             res += random.nextInt(d2);
         }
         res += mod;
-        logger.debug("Rolled " + d1 + "d" + d2 + (mod>0?"+":"") + mod + "=" + res);
+        logger.debug("Rolled " + d1 + "d" + d2 + (mod==0?"":((mod>0?"+":"") + mod)) + "=" + res);
         return res;
     }
 
@@ -743,5 +752,17 @@ public class Game {
         hurtPlayer(currentPlayer, 4, "You are hurt by explosion!");
         currentPlayer.turnsToSkip = 1;
         currentPlayer.turnsSkipReason = "Your head is still ringing after explosion.";
+    }
+
+    public void processTrapdoor() {
+        addMessage(new ChatMessage("Floor below you disappears!..", "Game"));
+        if(testPlayerAgility(12)){
+            addMessage(new ChatMessage("..But you're fast enough to avoid falling!", "Game"));
+        }else{
+            addMessage(new ChatMessage("..And you fall into a pit!", "Game"));
+            currentPlayer.setMoved(true);
+            currentPlayer.status = PlayerStatus.IN_PIT;
+            hurtPlayer(currentPlayer, diceRoll(1, 6, 0), "This hurts!");
+        }
     }
 }

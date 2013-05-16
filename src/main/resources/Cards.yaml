@@ -103,6 +103,35 @@
  effects:
  - !!jdungeonquest.effects.Explosion {}
 
+- !!jdungeonquest.Card
+ description: Trapdoor
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
+
+- !!jdungeonquest.Card
+ description: Trapdoor
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
+
+- !!jdungeonquest.Card
+ description: Trapdoor
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
+
+- !!jdungeonquest.Card
+ description: Trapdoor
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
+
+- !!jdungeonquest.Card
+ description: Trapdoor
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
 #Search (15)
 - !!jdungeonquest.Card
  description: Nothing Found!
