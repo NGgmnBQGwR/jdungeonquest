@@ -611,6 +611,10 @@ public class Game {
             logger.debug("Not in combat");
             return;
         }
+        if(monsterHP <= 0){
+            logger.debug("Stop fighting, he's dead already.");
+            return;
+        }
         int pa = ba.action;
         int ma = 1 + random.nextInt(3);
         logger.debug("Player chose action " + pa);
@@ -678,6 +682,7 @@ public class Game {
         if(monsterHP <= 0){
             addMessage(new ChatMessage(currentPlayer.getName() + " emerged victorious!", "Game"));
             addMessage(new EndBattle());
+            return;
         }
         if(playerDamage > 0){
             hurtPlayer(currentPlayer, playerDamage, "Monster lands a hit!");
