@@ -215,13 +215,13 @@ class LobbyGUI extends JPanel{
             });
             
             add(nameField);
-            add(heroComboBox);
+//            add(heroComboBox);
             add(addHero);
         }
         
         private void setHero(){
             remove(nameField);
-            remove(heroComboBox);
+//            remove(heroComboBox);
             remove(addHero);
             
             nameLabel.setText(nameField.getText());
@@ -237,7 +237,7 @@ class LobbyGUI extends JPanel{
             remove(removeHero);
             
             add(nameField);
-            add(heroComboBox);
+//            add(heroComboBox);
             add(addHero);
             revalidate();
             repaint();
