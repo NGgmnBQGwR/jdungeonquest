@@ -46,6 +46,7 @@ public class Game {
     
     private int turn = 1;
     private int sunPosition = 1;
+    private final int sunMaxPosition = 26;
     private boolean battleStarted = false;
     private int monsterHP = 0;
     private boolean usingSecretDoor = false;
@@ -480,9 +481,16 @@ public class Game {
         addMessage(new ChatMessage("Turn " + turn, "Game"));
         if(currentPlayer == players.get(0)){
             sunPosition++;
-            addMessage(new ChatMessage("Current sun position: " + sunPosition, "Game"));
+            addMessage(new ChatMessage("Current sun position: " + sunPosition + "/" + sunMaxPosition, "Game"));
         }
-        if(sunPosition == 26){
+        if(sunPosition == sunMaxPosition-10){
+            addMessage(new ChatMessage("10 turns left until the dawn!", "Game"));
+        }
+        if(sunPosition == sunMaxPosition-5){
+            addMessage(new ChatMessage("5 turns left until the dawn!", "Game"));
+        }
+        if(sunPosition == sunMaxPosition){
+            processSun();
             endGame();
         }
         
@@ -540,7 +548,10 @@ public class Game {
                 return;
             }
         }
-        endGame();
+        //game could've ended by sun before
+        if(state != GameState.ENDED){
+            endGame();
+        }
     }
 
     public void hurtPlayer(Player player, int value, String description) {
@@ -891,5 +902,20 @@ public class Game {
         movePlayer(currentPlayer.getPreviousPosition(), currentPlayer);
         
         ShuffleDeck(DeckType.Dragon);
+    }
+
+    private void processSun() {
+        for(Player p : players){
+            if(p.isDead()){
+                continue;
+            }
+            //player is safe only when he's in one of the four starting tiles
+            if(!p.getPosition().equals(startingUpLeftPosition) &&
+               !p.getPosition().equals(startingUpRightPosition) &&
+               !p.getPosition().equals(startingDownLeftPosition) &&
+               !p.getPosition().equals(startingDownRightPosition)){
+                killPlayer(p, "With the sunlight gone, so is any hope of escaping.");
+            }
+        }
     }
 }
