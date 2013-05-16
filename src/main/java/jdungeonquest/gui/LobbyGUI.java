@@ -50,7 +50,7 @@ class LobbyGUI extends JPanel{
     }
     
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[grow 25][grow 75]", "[grow 0][grow 50]");
+        MigLayout layout = new MigLayout("fill", "[][grow 70][]", "[grow 0][grow][grow 30][grow 0]");
         this.setLayout(layout);
 
         textField = new JTextField("");
@@ -105,11 +105,11 @@ class LobbyGUI extends JPanel{
         JLabel playersLabel = new JLabel("Player list");
         
         add(textField, "grow, push");
-        add(sendButton, "w 70!");
+        add(sendButton, "w :70:, grow");
         add(readyButton, "wrap");
         
         add(playersLabel);
-        add(new JScrollPane(messageList), "grow, spany 2, wrap");
+        add(new JScrollPane(messageList), "grow, spany 2, spanx, wrap");
         heroHolder.setLayout(new MigLayout("", "[]"));
         heroHolder.add( new HeroPanel(this),"wrap" );
         add(heroHolder);
