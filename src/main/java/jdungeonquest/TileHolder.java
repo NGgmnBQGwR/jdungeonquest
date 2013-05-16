@@ -85,6 +85,8 @@ public class TileHolder {
         tileMap.put(currentTile++, startingTile);
         tileMap.put(currentTile++, dragonTileLeft);
         tileMap.put(currentTile++, dragonTileRight);
+        
+        Collections.shuffle(allTiles);
     }
 
     int getTileNumber(Tile tile) {
