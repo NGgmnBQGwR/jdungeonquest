@@ -56,6 +56,11 @@ public class Game {
     private final Position treasureChamberPositionLeft = new Position (4, 6);
     private final Position treasureChamberPositionRight = new Position (5, 6);
     
+    private final Position startingUpLeftPosition = new Position (0, 0);
+    private final Position startingUpRightPosition = new Position (0, GameMap.MAX_Y-1);
+    private final Position startingDownLeftPosition = new Position (GameMap.MAX_X-1, 0);
+    private final Position startingDownRightPosition = new Position (GameMap.MAX_X-1, GameMap.MAX_Y-1);
+
     public Game() {
         playerClasses.put("A", false);
         playerClasses.put("B", false);
@@ -203,23 +208,27 @@ public class Game {
     }
 
     private void setUp() {
-        placeTile(treasureChamberPositionLeft.getX(), treasureChamberPositionLeft.getY(), tileHolder.dragonTileLeft, 0);
-        placeTile(treasureChamberPositionRight.getX(), treasureChamberPositionRight.getY(), tileHolder.dragonTileRight, 0);
+        placeTile(treasureChamberPositionLeft, tileHolder.dragonTileLeft, 0);
+        placeTile(treasureChamberPositionRight, tileHolder.dragonTileRight, 0);
         
         switch(players.size()){
             case 0: endGame(); break;
-            case 4: placeTile(GameMap.MAX_X-1, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
-                    movePlayer(GameMap.MAX_X-1, GameMap.MAX_Y-1, players.get(3));
-            case 3: placeTile(0, GameMap.MAX_Y-1, tileHolder.startingTile, 0);
-                    movePlayer(0, GameMap.MAX_Y-1, players.get(2));
-            case 2: placeTile(GameMap.MAX_X-1, 0, tileHolder.startingTile, 0);
-                    movePlayer(GameMap.MAX_X-1, 0, players.get(1));
-            case 1: placeTile(0, 0, tileHolder.startingTile, 0);
-                    movePlayer(0, 0, players.get(0)); break;
+            case 4: placeTile(startingUpLeftPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingUpLeftPosition, players.get(3));
+            case 3: placeTile(startingUpRightPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingUpRightPosition, players.get(2));
+            case 2: placeTile(startingDownLeftPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingDownLeftPosition, players.get(1));
+            case 1: placeTile(startingDownRightPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingDownRightPosition, players.get(0)); break;
             default: break; //only 4 players are supported right now
         }
     }
 
+    private void placeTile(Position p, Tile t, int r) {
+        placeTile(p.getX(), p.getY(), t, r);
+    }
+    
     private void placeTile(int x, int y, Tile tile, int rotation) {
         int tileNumber = tileHolder.getTileNumber(tile);
         tile.rotate(rotation);
@@ -228,6 +237,10 @@ public class Game {
         addMessage( new PlaceTile(x, y, tileNumber, rotation));
     }
 
+    private void movePlayer(Position p, Player pl) {
+        movePlayer(p.getX(), p.getY(), pl);
+    }    
+    
     private void movePlayer(int x, int y, Player player) {
         logger.debug("Moving " + player.getName() + " from " + player.getPosition() + " to " + new Position(x,y));
         player.setPreviousPosition(player.getPosition());
@@ -313,7 +326,7 @@ public class Game {
 
             Tile tile = tileHolder.takeTile();
             int tileRotation = map.getRequiredRotation(from, to, tile);
-            placeTile(to.getX(), to.getY(), tile, tileRotation);
+            placeTile(to, tile, tileRotation);
             currentPlayer.setPlacedTile(true);
         }else if(!map.canMoveTo(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
             //moving in existing tile
@@ -358,7 +371,7 @@ public class Game {
             addMessage(new ChatMessage("You enter another room.", "Game"));            
             currentPlayer.setMoved(true);
             currentPlayer.searchInRow = 0;
-            movePlayer(to.getX(), to.getY(), currentPlayer);
+            movePlayer(to, currentPlayer);
             usingSecretDoor = false;
         
             processCurrentPlayerTile();
@@ -588,9 +601,7 @@ public class Game {
         if (playerDecision == 3) {
             //player escapes
             Position prevPos = currentPlayer.getPreviousPosition();
-            int prev_x = prevPos.getX();
-            int prev_y = prevPos.getY();
-            movePlayer(prev_x, prev_y, currentPlayer);
+            movePlayer(prevPos, currentPlayer);
             addMessage(new ChatMessage(currentPlayer.getName() + " escaped!", "Game"));
             if(currentPlayer.status == PlayerStatus.IN_CAVEIN){
                 currentPlayer.status = PlayerStatus.NONE;                
@@ -877,7 +888,7 @@ public class Game {
         addMessage(new ChatMessage("Drop all your gold and run while you still can!.", "Game"));
         changePlayerAttribute(currentPlayer, PlayerAttributes.Gold, 0);
         hurtPlayer(currentPlayer, diceRoll(1, 12, 0), "Dragon breathes fire at you!");
-        movePlayer(currentPlayer.getPreviousPosition().getX(), currentPlayer.getPreviousPosition().getY(), currentPlayer);
+        movePlayer(currentPlayer.getPreviousPosition(), currentPlayer);
         
         ShuffleDeck(DeckType.Dragon);
     }
