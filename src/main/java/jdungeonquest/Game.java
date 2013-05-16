@@ -682,6 +682,7 @@ public class Game {
         logger.debug(currentPlayer.getName() + " is trying to search room at " + currentPlayer.getPosition());
         if(currentPlayer.searchInRow == 2){
             logger.debug(currentPlayer.getName() + " can't search this room anymore.");
+            addMessage(new ChatMessage("You can't search this room anymore this turn.", "Game"));
             return;
         }
         if(currentPlayer.isMoved()){
