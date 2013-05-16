@@ -190,8 +190,8 @@ public class NetworkServer implements Runnable {
             logger.debug("Everyone is ready. Starting game.");
             server.sendToAllTCP(new Message(NetworkMessageType.StartGame));
             game.startGame();
-            processMessageQueue();
         }
+        processMessageQueue();
     }
 
     private void registerPlayer(Connection conn, String playerName, String playerClass) {

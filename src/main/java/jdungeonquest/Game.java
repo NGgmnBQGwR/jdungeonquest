@@ -98,6 +98,7 @@ public class Game {
     public boolean toggleReadyPlayer(String playerName) {
         boolean value = !(playerReadyStatus.get(playerName));
         playerReadyStatus.put(playerName, value);
+        addMessage(new ChatMessage(playerName + (value?" is ":" is not ") + "ready to start.", "Game"));
         logger.debug("Player " + playerName + " ready status:" + value);
 //        if ( isEveryoneReady() ) {
 //            return true;
