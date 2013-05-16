@@ -62,9 +62,9 @@ public class ConnectGUI extends JPanel {
         
         add(infoLabel, "grow, span");
         add(ipLabel);
-        add(ipTextField, "wrap");
+        add(ipTextField, "w :100:, wrap");
         add(portLabel);
-        add(portTextField, "wrap");
+        add(portTextField, "w :50:, wrap");
         add(connectButton, "grow, span");
         add(goBackButton, "grow, span");
     }

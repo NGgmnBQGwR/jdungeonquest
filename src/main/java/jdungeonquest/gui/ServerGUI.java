@@ -47,7 +47,7 @@ class ServerGUI extends JPanel {
         });
         add(infoLabel, "span");
         add(portLabel);
-        add(portTextField, "wrap");
+        add(portTextField, "w :50:, wrap");
 
         add(startButton);
         add(stopButton, "wrap");
