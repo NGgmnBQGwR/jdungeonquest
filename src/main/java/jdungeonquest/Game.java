@@ -696,7 +696,12 @@ public class Game {
     }
 
     private void processCurrentPlayerStatus() {
-        
+        if(currentPlayer.turnsToSkip > 0){
+            addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip turn.", "Game"));
+            currentPlayer.turnsSkipReason = "Your head is still ringing after explosion.";        
+            currentPlayer.turnsToSkip--;
+            currentPlayer.setMoved(true);
+        }
     }
 
     private boolean testPlayerAgility(int i) {
@@ -725,5 +730,15 @@ public class Game {
         res += mod;
         logger.debug("Rolled " + d1 + "d" + d2 + (mod>0?"+":"") + mod + "=" + res);
         return res;
+    }
+
+    public void effectExplosion() {
+        addMessage(new ChatMessage("As you step on a loose stone, an explosion occurs!", "Game"));
+//        if(currentPlayer.armor > 0){
+//            addMessage(new ChatMessage("Your armor partially saves you from the damage.", "Game"));
+//        }
+        hurtPlayer(currentPlayer, 4, "You are hurt by explosion!");
+        currentPlayer.turnsToSkip = 1;
+        currentPlayer.turnsSkipReason = "Your head is still ringing after explosion.";
     }
 }

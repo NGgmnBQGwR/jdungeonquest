@@ -79,6 +79,30 @@
  effects:
  - !!jdungeonquest.effects.CrossfireTrap {}
 
+- !!jdungeonquest.Card
+ description: Cave-In
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.CaveIn {}
+
+- !!jdungeonquest.Card
+ description: Cave-In
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.CaveIn {}
+
+- !!jdungeonquest.Card
+ description: Explosion
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Explosion {}
+
+- !!jdungeonquest.Card
+ description: Explosion
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Explosion {}
+
 #Search (15)
 - !!jdungeonquest.Card
  description: Nothing Found!
