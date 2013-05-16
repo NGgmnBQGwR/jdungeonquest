@@ -10,7 +10,7 @@ public class Empty implements Effect {
     
     @Override
     public void doAction(Game game) {
-        game.addMessage(new ChatMessage("There's nothing in this room.", "Game"));
+        game.addMessage(new ChatMessage("You search the room, but find nothing.", "Game"));
     }
     
     @Override
