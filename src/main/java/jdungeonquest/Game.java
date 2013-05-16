@@ -213,14 +213,14 @@ public class Game {
         
         switch(players.size()){
             case 0: endGame(); break;
-            case 4: placeTile(startingUpLeftPosition, tileHolder.startingTile, 0);
-                    movePlayer(startingUpLeftPosition, players.get(3));
-            case 3: placeTile(startingUpRightPosition, tileHolder.startingTile, 0);
-                    movePlayer(startingUpRightPosition, players.get(2));
-            case 2: placeTile(startingDownLeftPosition, tileHolder.startingTile, 0);
-                    movePlayer(startingDownLeftPosition, players.get(1));
-            case 1: placeTile(startingDownRightPosition, tileHolder.startingTile, 0);
-                    movePlayer(startingDownRightPosition, players.get(0)); break;
+            case 4: placeTile(startingDownRightPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingDownRightPosition, players.get(3));
+            case 3: placeTile(startingDownLeftPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingDownLeftPosition, players.get(2));
+            case 2: placeTile(startingUpRightPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingUpRightPosition, players.get(1));
+            case 1: placeTile(startingUpLeftPosition, tileHolder.startingTile, 0);
+                    movePlayer(startingUpLeftPosition, players.get(0)); break;
             default: break; //only 4 players are supported right now
         }
     }
