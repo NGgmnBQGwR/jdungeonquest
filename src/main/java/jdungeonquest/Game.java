@@ -454,7 +454,7 @@ public class Game {
         currentPlayer = players.get(currentPlayerIndex);
         
         turn++;
-        addMessage(new ChatMessage("Turn: " + turn, "Game"));
+        addMessage(new ChatMessage("Turn " + turn, "Game"));
         if(currentPlayer == players.get(0)){
             sunPosition++;
             addMessage(new ChatMessage("Current sun position: " + sunPosition, "Game"));

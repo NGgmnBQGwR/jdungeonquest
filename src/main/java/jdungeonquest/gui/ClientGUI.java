@@ -126,10 +126,20 @@ public class ClientGUI extends JPanel{
         String time = new SimpleDateFormat("[HH:mm:ss] ").format(new Date());
         
         StringBuilder sb = new StringBuilder();
-        sb.append(time);
-        sb.append(author);
-        sb.append(": ");
-        sb.append(msg);
+        if(author.equals("Game") && msg.substring(0, 4).equals("Turn")){
+            sb.append("<html>");
+            sb.append("<h3>");
+            sb.append(msg);
+            sb.append("</h3>");
+            sb.append("</html>");
+        }else{
+            sb.append("<html>");
+            sb.append(time);
+            sb.append(author);
+            sb.append(": ");
+            sb.append(msg);
+            sb.append("</html>");
+        }
         final String text = sb.toString();
         EventQueue.invokeLater(new Runnable()
         {
