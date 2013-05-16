@@ -22,7 +22,7 @@ public class Player {
     public PlayerStatus status = PlayerStatus.NONE;
     
     public int agility = 5;
-    public int armor = 1;
+    public int armor = 5;
     
     private boolean moved = false;
     private boolean placedTile = false;
