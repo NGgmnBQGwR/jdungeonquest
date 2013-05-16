@@ -241,6 +241,10 @@ public class Tile {
     private void drawSpecialIcon(BufferedImage img) {
         Graphics2D g = (Graphics2D) img.createGraphics();
         int wh = img.getHeight();
+        //clear place in center for a 40x40 icon
+        g.setColor(Color.white);
+        g.fillOval(wh/2-20, wh/2-20, 40, 40);
+        g.setColor(Color.black);
         for(Effect e : effects){
             if(e instanceof CaveInTile){
                 g.drawImage(caveInIcon, wh/2-20, wh/2-20, null);
@@ -312,7 +316,9 @@ public class Tile {
         image = createBasicTileImage();
         drawDoorIcons(image);
         drawEntryTriangle(image);
-        drawSpecialIcon(image);
+        if(!effects.isEmpty()){
+            drawSpecialIcon(image);
+        }
     }
 
     /**
