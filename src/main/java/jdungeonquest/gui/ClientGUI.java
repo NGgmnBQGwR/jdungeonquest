@@ -168,7 +168,14 @@ public class ClientGUI extends JPanel{
             endTurnButton.setEnabled(false);
             searchButton.setEnabled(false);
             LobbyGUI.enableComponents(mapPanel, false);
-        }        
+        }
+        
+        int[] xy = playerPosition.get(player);
+        int tile_x = (xy[0]-2)*150;
+        int tile_y = (xy[1]-2)*150;
+        mapScrollPane.getVerticalScrollBar().setValue(tile_y);
+        mapScrollPane.getHorizontalScrollBar().setValue(tile_x);
+        repaint();
     }
 
     void changeAttribute(ChangePlayerAttribute changeAtt) {
