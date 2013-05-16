@@ -276,12 +276,14 @@ public class Game {
         //check that he haven't moved this turn yet
         if(currentPlayer.isMoved()){
             logger.debug("Player already moved this turn. Can't move now.");
+            addMessage(new ChatMessage("You already moved this turn. Can't move again.", "Game"));
             return;
         }
         
         //check that tile is adjacent
         if(!map.isAdjacent(from, to)){
             logger.debug("Not adjacent. Can't move.");
+            addMessage(new ChatMessage("This tile is not adjacent. You cannot move there.", "Game"));
             return;
         }
         
@@ -291,6 +293,7 @@ public class Game {
             for (Player p : players) {
                 if (p.getPosition().equals(to)) {
                     logger.debug("There's " + p.getName() + " on that tile. Can't move.");
+                    addMessage(new ChatMessage("There's " + p.getName() + " on that tile. Can't move there.", "Game"));
                     return;
                 }
             }
@@ -298,6 +301,7 @@ public class Game {
         
         //check that you can enter that tile from current one
         if(!map.canMoveFrom(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
+            addMessage(new ChatMessage("You cannot leave this way.", "Game"));
             logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
             return;
         }
@@ -314,6 +318,7 @@ public class Game {
         }else if(!map.canMoveTo(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
             //moving in existing tile
             logger.debug("Can't enter " + map.getTile(to.getX(), to.getY()) + " on " + to + " this way. Can't move.");
+            addMessage(new ChatMessage("There is no way to enter this way.", "Game"));
             return;
         }
 
@@ -693,10 +698,12 @@ public class Game {
         }
         if(currentPlayer.isMoved()){
             logger.debug(currentPlayer.getName() + " can't search this turn.");
+            addMessage(new ChatMessage("You can't search this turn.", "Game"));
             return;
         }        
         if(currentPlayer.isSearched()){
             logger.debug(currentPlayer.getName() + " can't search this room this turn again.");
+            addMessage(new ChatMessage("You can't search again this turn.", "Game"));
             return;
         }
         if(currentPlayer.getPosition().equals(treasureChamberPositionLeft) || currentPlayer.getPosition().equals(treasureChamberPositionRight)){
