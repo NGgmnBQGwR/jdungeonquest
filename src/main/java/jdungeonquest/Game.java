@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import jdungeonquest.effects.Effect;
+import jdungeonquest.enums.DeckType;
 import jdungeonquest.enums.GameState;
 import jdungeonquest.enums.MonsterType;
 import jdungeonquest.enums.PlayerAttributes;
@@ -780,6 +781,22 @@ public class Game {
             addMessage(new ChatMessage("You fall unconscious.", "Game"));
         }else{
             addMessage(new ChatMessage("Gas wasn't strong enough to knock you out.", "Game"));
+        }
+    }
+
+    public void ShuffleDeck(DeckType type) {
+        logger.debug("Shuffling Deck " + type);
+        switch(type){
+            default:
+            case Corpse: cardHolder.corpseDeck.shuffle(); break;
+            case Crypt: cardHolder.cryptDeck.shuffle(); break;
+            case Door: cardHolder.doorDeck.shuffle(); break;
+            case Dragon: cardHolder.dragonDeck.shuffle(); break;
+            case Monster: cardHolder.monsterDeck.shuffle(); break;
+            case Room: cardHolder.roomDeck.shuffle(); break;
+            case Search: cardHolder.searchDeck.shuffle(); break;
+            case Trap: cardHolder.trapDeck.shuffle(); break;
+            case Treasure: cardHolder.treasureDeck.shuffle(); break;
         }
     }
 }

@@ -115,7 +115,7 @@ public class CardDeckTest {
 //        assertEquals(0, holder.doorDeck.size());
 //        assertEquals(0, holder.corpseDeck.size());
 //        assertEquals(0, holder.cryptDeck.size());
-//        assertEquals(0, holder.trapDeck.size());
+        assertEquals(15, holder.trapDeck.size());
 //        assertEquals(0, holder.searchDeck.size());
 //        assertEquals(0, holder.roomDeck.size());
         assertEquals(32, holder.treasureDeck.size());

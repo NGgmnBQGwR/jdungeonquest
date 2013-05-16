@@ -68,13 +68,13 @@
 #Trap (15)
 
 - !!jdungeonquest.Card
- description: Corrosive Trap
+ description: Crossfire Trap
  deckType: Trap
  effects:
  - !!jdungeonquest.effects.CrossfireTrap {}
 
 - !!jdungeonquest.Card
- description: Corrosive Trap
+ description: Crossfire Trap
  deckType: Trap
  effects:
  - !!jdungeonquest.effects.CrossfireTrap {}
@@ -128,12 +128,6 @@
  - !!jdungeonquest.effects.Trapdoor {}
 
 - !!jdungeonquest.Card
- description: Trapdoor
- deckType: Trap
- effects:
- - !!jdungeonquest.effects.Trapdoor {}
-
-- !!jdungeonquest.Card
  description: Snakes
  deckType: Trap
  effects:
@@ -156,6 +150,12 @@
  deckType: Trap
  effects:
  - !!jdungeonquest.effects.PoisonGas {}
+
+- !!jdungeonquest.Card
+ description: Shuffle
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Trap}
 
 #Search (15)
 - !!jdungeonquest.Card
@@ -238,6 +238,12 @@
  deckType: Room
  effects:
  - !!jdungeonquest.effects.GiveGold {amount: 30}
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
 
 #Treasure (32)
 
