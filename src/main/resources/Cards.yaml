@@ -104,6 +104,18 @@
  effects:
  - !!jdungeonquest.effects.SecretDoor {}
 
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 10}
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 200}
+
 #Room
 
 - !!jdungeonquest.Card
@@ -125,7 +137,212 @@
  - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
 
 
-#Treasure
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 40}
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 30}
+
+#Treasure (32)
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 200}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 200}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 220}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 230}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 240}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 250}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 260}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 270}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 280}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 300}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 4000}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 500}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 700}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 2000}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 800}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 1800}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 1500}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 1100}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 4500}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 2200}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 100}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 110}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 120}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 130}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 140}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 150}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 160}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 170}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 180}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 190}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 3800}
+    
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Treasure
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 3200}
+    
 #Monster
 
 #- !!jdungeonquest.Card

@@ -33,7 +33,7 @@ public class Game {
     Logger logger = LoggerFactory.getLogger(Game.class);
     Map<String, Boolean> playerClasses = new HashMap();
     Map<String, Boolean> playerReadyStatus = new HashMap();
-    Player currentPlayer;
+    public Player currentPlayer;
     PlayerState currentPlayerState;
     int currentPlayerContextValue;
     GameMap map;
