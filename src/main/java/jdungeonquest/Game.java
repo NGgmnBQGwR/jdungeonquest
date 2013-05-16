@@ -734,12 +734,15 @@ public class Game {
         }
     }
 
-    private int diceRoll(int d1, int d2, int mod) {
+    public int diceRoll(int d1, int d2, int mod) {
         int res = 0;
         for(int i = 0; i < d1; i++){
             res += random.nextInt(d2);
         }
         res += mod;
+        if(res < 0){
+            res = 0;
+        }
         logger.debug("Rolled " + d1 + "d" + d2 + (mod==0?"":((mod>0?"+":"") + mod)) + "=" + res);
         return res;
     }
