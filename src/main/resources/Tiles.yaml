@@ -43,3 +43,32 @@
  isSearchable: true
  walls: [EXIT, EXIT, WALL, EXIT]
  
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects:
+ - !!jdungeonquest.effects.CaveInTile {}
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects:
+ - !!jdungeonquest.effects.CaveInTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects:
+  - !!jdungeonquest.effects.CaveInTile {}
+
+ 
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: true
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects:
+ - !!jdungeonquest.effects.CaveInTile {}
+   

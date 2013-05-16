@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import jdungeonquest.effects.CaveInTile;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
@@ -21,15 +22,17 @@ public class Tile {
     private EntryDirection entryDirection;
     private List<RoomWallType> walls;
     private boolean isSearchable;
-    private List<Effect> effects = new ArrayList<>();
+    private List<Effect> effects;
     
     private BufferedImage image;
     private int rotate;
     private static BufferedImage doorIcon;
+    private static BufferedImage caveInIcon;
 
     {
         try {
             doorIcon = ImageIO.read(getClass().getResourceAsStream("/doorIcon.png"));
+            caveInIcon = ImageIO.read(getClass().getResourceAsStream("/cavein.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -40,6 +43,7 @@ public class Tile {
         entryDirection = EntryDirection.UP;
         walls = new ArrayList<>( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL} ) );
         rotate = 0;
+        effects = new ArrayList<>();
         refreshImage();
     }
     
@@ -48,6 +52,7 @@ public class Tile {
         this.entryDirection = another.entryDirection; //enum
         this.rotate = another.rotate; //int
         this.walls = new ArrayList(another.walls);
+        this.effects = new ArrayList(another.effects);
         this.refreshImage();
     }
 
@@ -78,6 +83,9 @@ public class Tile {
         if(!this.getWalls().equals(other.getWalls())){
             return false;        
         }
+        if(this.getEffects().size() != other.getEffects().size()){
+            return false;        
+        }        
         return true;
     }
 
@@ -227,6 +235,18 @@ public class Tile {
         g.dispose();        
     }    
 
+    private void drawSpecialIcon(BufferedImage img) {
+        Graphics2D g = (Graphics2D) img.createGraphics();
+        int wh = img.getHeight();
+        for(Effect e : effects){
+            if(e instanceof CaveInTile){
+                g.drawImage(caveInIcon, wh/2-20, wh/2-20, null);
+                break;
+            }
+        }
+        g.dispose();        
+    }    
+    
     private void drawDoorIcons(BufferedImage img){
         Graphics2D g = (Graphics2D) img.createGraphics();
         int wh = img.getHeight();
@@ -285,6 +305,7 @@ public class Tile {
         image = createBasicTileImage();
         drawDoorIcons(image);
         drawEntryTriangle(image);
+        drawSpecialIcon(image);
     }
 
     /**

@@ -11,6 +11,7 @@ import jdungeonquest.enums.GameState;
 import jdungeonquest.enums.MonsterType;
 import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.enums.PlayerState;
+import jdungeonquest.enums.PlayerStatus;
 import jdungeonquest.network.BattleAction;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
@@ -305,6 +306,22 @@ public class Game {
             return;
         }
 
+        //when in Cave-In room, player is free to backtrack, but must pass
+        //Agility test to move anywhere else
+        if(currentPlayer.status == PlayerStatus.IN_CAVEIN){
+            if(to != currentPlayer.getPreviousPosition()){
+                if(testPlayerAgility(12)){
+                    addMessage(new ChatMessage("You find a way among the rubble.", "Game"));
+                    currentPlayer.status = PlayerStatus.NONE;
+                }else{
+                    addMessage(new ChatMessage("You fail to move past the rubble.", "Game"));
+                    currentPlayer.setMoved(true);
+                    return;
+                }
+            }
+        }
+        
+        
         //if there are doors on either starting and/or ending tile,
         //then all (0,1,2) doors should give Door Opens results otherwise
         //player can't move.
@@ -332,9 +349,15 @@ public class Game {
         //get effects from this tile
         List<Effect> tileEffects = tile.getEffects();
         logger.debug("Found " + tileEffects.size() + " effects on Tile " + tile + " on " + playerPosition);
-        //TODO: actual check
-        //if it's not a special tile, grab a Room card
-        processDrawRoomCard();
+
+        if(tileEffects.size() > 0){
+            for(Effect e : tileEffects){
+                logger.debug("Activating effect: " + e);
+                e.doAction(this);
+            }
+        }else{
+            processDrawRoomCard();
+        }
     }    
     
     private void processDrawSearchCard() {
@@ -412,6 +435,8 @@ public class Game {
         addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
         addMessage(new NewTurn(currentPlayer.getName()));
         currentPlayer.resetTurnVariables();
+        
+        processCurrentPlayerStatus();
     }
 
     public void effectCaveIn() {
@@ -521,6 +546,9 @@ public class Game {
             int prev_y = prevPos.getY();
             movePlayer(prev_x, prev_y, currentPlayer);
             addMessage(new ChatMessage(currentPlayer.getName() + " escaped!", "Game"));
+            if(currentPlayer.status == PlayerStatus.IN_CAVEIN){
+                currentPlayer.status = PlayerStatus.NONE;                
+            }
         }        
         
         //list of possible outcomes:
@@ -654,5 +682,22 @@ public class Game {
 
     public void effectDoorJams() {
         addMessage(new ChatMessage("Door is jammed and refuses to open!", "Game"));         
+    }
+
+    public void processCaveInTile() {
+        addMessage(new ChatMessage("This room is partially collapsed. Moving forward is difficult.", "Game"));         
+        processDrawRoomCard(); //"Take a Room card as usual"
+        currentPlayer.status = PlayerStatus.IN_CAVEIN;
+    }
+
+    private void processCurrentPlayerStatus() {
+        
+    }
+
+    private boolean testPlayerAgility(int i) {
+        if(random.nextInt(i) > currentPlayer.agility){
+            return false;
+        }
+        return true;
     }
 }

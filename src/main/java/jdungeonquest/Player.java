@@ -1,6 +1,9 @@
 package jdungeonquest;
 
 //Stuff to add:
+
+import jdungeonquest.enums.PlayerStatus;
+
 //isConnected
 //players ID given from server to differentiate clients
 //convinient data structure to hold all known stuff about player
@@ -14,6 +17,11 @@ public class Player {
     private Position position = new Position();
 
     public int searchInRow = 0; //player may search a room only 2 times in a row
+    public int turnsToSkip = 0;
+    public String turnsSkipReason = "";
+    public PlayerStatus status = PlayerStatus.NONE;
+    
+    public int agility = 5;
     
     private boolean moved = false;
     private boolean placedTile = false;
