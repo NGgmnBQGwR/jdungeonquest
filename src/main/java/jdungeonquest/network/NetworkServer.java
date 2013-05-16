@@ -171,6 +171,7 @@ public class NetworkServer implements Runnable {
     private boolean havePlayer(int id, String player) {
         if(!clientPlayersMap.containsKey(id)){
             logger.debug("There is no client " + id + " (anymore?)");
+            return false;
         }
         for(String clientPlayer : clientPlayersMap.get(id)){
             if(player.equals(clientPlayer)){
