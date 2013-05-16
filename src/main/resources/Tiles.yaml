@@ -72,3 +72,16 @@
  effects:
  - !!jdungeonquest.effects.CaveInTile {}
    
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: false
+ walls: [DOOR, DOOR, DOOR, DOOR]
+ effects:
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: false
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects:
+ - !!jdungeonquest.effects.TrapTile {}
