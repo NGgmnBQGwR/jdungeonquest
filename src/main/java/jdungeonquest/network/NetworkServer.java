@@ -50,7 +50,9 @@ public class NetworkServer implements Runnable {
             @Override
             public void disconnected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " disconnected");
-                broadcast("Client " + connection.toString() + " has quit.");
+                if(clientPlayersMap.containsKey(connection.getID())){
+                    broadcast("Client " + connection.toString() + " has quit.");
+                }
                 if(!clientPlayersMap.containsKey(connection.getID())){
                     logger.debug("There is no client " + connection.getID() + " (anymore?)");
                     return;
