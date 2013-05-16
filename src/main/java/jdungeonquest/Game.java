@@ -496,7 +496,7 @@ public class Game {
         endGame();
     }
 
-    private void hurtPlayer(Player player, int value, String description) {
+    public void hurtPlayer(Player player, int value, String description) {
         logger.debug(" Hurting " + player + " for " + value + " he " + description);
         int newHealth = currentPlayer.getHp() - value;
         addMessage(new ChatMessage(description + " " + player.getName() + " was hurt for " + value + " HP!", "Game"));
@@ -701,7 +701,6 @@ public class Game {
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
             addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip your turn.", "Game"));
-            currentPlayer.turnsSkipReason = "Your head is still ringing after explosion.";        
             currentPlayer.turnsToSkip--;
             currentPlayer.setMoved(true);
         }else if(currentPlayer.status == PlayerStatus.IN_PIT){
@@ -766,6 +765,21 @@ public class Game {
             currentPlayer.setMoved(true);
             currentPlayer.status = PlayerStatus.IN_PIT;
             hurtPlayer(currentPlayer, diceRoll(1, 6, 0), "This hurts!");
+        }
+    }
+
+    public void effectPoisonGas() {
+        addMessage(new ChatMessage("The air here is poisoned!", "Game"));
+        int dmg = diceRoll(1, 6, -3);
+        if(dmg > 0){
+            hurtPlayer(currentPlayer, dmg, "Your lungs are burning!");
+        }
+        currentPlayer.turnsToSkip = diceRoll(1, 6, -3);
+        currentPlayer.turnsSkipReason = "You are unconscious from the gas.";
+        if(currentPlayer.turnsToSkip > 0){
+            addMessage(new ChatMessage("You fall unconscious.", "Game"));
+        }else{
+            addMessage(new ChatMessage("Gas wasn't strong enough to knock you out.", "Game"));
         }
     }
 }

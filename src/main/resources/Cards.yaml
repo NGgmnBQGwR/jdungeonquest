@@ -145,6 +145,18 @@
  effects:
  - !!jdungeonquest.effects.Snakes {}
 
+- !!jdungeonquest.Card
+ description: Poison Gas
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.PoisonGas {}
+
+- !!jdungeonquest.Card
+ description: Poison Gas
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.PoisonGas {}
+
 #Search (15)
 - !!jdungeonquest.Card
  description: Nothing Found!
