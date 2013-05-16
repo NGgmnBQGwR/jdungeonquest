@@ -65,7 +65,7 @@ public class ClientGUI extends JPanel{
         playerPosition = new HashMap<>();
         
         try {
-            blankTileImage = ImageIO.read(getClass().getResourceAsStream("/tiles/empty.png"));
+            blankTileImage = ImageIO.read(getClass().getResourceAsStream("/empty.png"));
         } catch (IOException ex) {
             Logger.getLogger(ClientGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
