@@ -359,6 +359,11 @@ public class Game {
             processDrawRoomCard();
         }
     }    
+    public void processDrawTrapCard() {
+        Card card = cardHolder.trapDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);
+    }
     
     private void processDrawSearchCard() {
         Card card = cardHolder.searchDeck.takeCard();
@@ -699,5 +704,26 @@ public class Game {
             return false;
         }
         return true;
+    }
+
+    public void effectCrossfireTrap() {
+        addMessage(new ChatMessage("Arrows are shooting out of the walls!", "Game"));
+//        if(currentPlayer.armor > 0){
+//            addMessage(new ChatMessage("Your armor partially saves you from the damage.", "Game"));
+//        }
+        int damage = diceRoll(1,12, -currentPlayer.armor);
+        if(damage > 0){
+            hurtPlayer(currentPlayer, damage, "You are hurt by arrows!");
+        }
+    }
+
+    private int diceRoll(int d1, int d2, int mod) {
+        int res = 0;
+        for(int i = 0; i < d1; i++){
+            res += random.nextInt(d2);
+        }
+        res += mod;
+        logger.debug("Rolled " + d1 + "d" + d2 + (mod>0?"+":"") + mod + "=" + res);
+        return res;
     }
 }

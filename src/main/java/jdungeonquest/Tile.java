@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import jdungeonquest.effects.CaveInTile;
 import jdungeonquest.effects.Effect;
+import jdungeonquest.effects.TrapTile;
 import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.RoomWallType;
 
@@ -28,11 +29,13 @@ public class Tile {
     private int rotate;
     private static BufferedImage doorIcon;
     private static BufferedImage caveInIcon;
+    private static BufferedImage trapIcon;
 
     {
         try {
             doorIcon = ImageIO.read(getClass().getResourceAsStream("/doorIcon.png"));
             caveInIcon = ImageIO.read(getClass().getResourceAsStream("/cavein.png"));
+            trapIcon = ImageIO.read(getClass().getResourceAsStream("/trap.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -241,6 +244,10 @@ public class Tile {
         for(Effect e : effects){
             if(e instanceof CaveInTile){
                 g.drawImage(caveInIcon, wh/2-20, wh/2-20, null);
+                break;
+            }
+            if(e instanceof TrapTile){
+                g.drawImage(trapIcon, wh/2-20, wh/2-20, null);
                 break;
             }
         }

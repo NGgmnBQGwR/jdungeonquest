@@ -65,7 +65,19 @@
 
 #Corpse
 #Crypt
-#Trap
+#Trap (15)
+
+- !!jdungeonquest.Card
+ description: Corrosive Trap
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.CrossfireTrap {}
+
+- !!jdungeonquest.Card
+ description: Corrosive Trap
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.CrossfireTrap {}
 
 #Search (15)
 - !!jdungeonquest.Card
