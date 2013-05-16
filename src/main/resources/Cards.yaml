@@ -132,6 +132,19 @@
  deckType: Trap
  effects:
  - !!jdungeonquest.effects.Trapdoor {}
+
+- !!jdungeonquest.Card
+ description: Snakes
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Snakes {}
+
+- !!jdungeonquest.Card
+ description: Snakes
+ deckType: Trap
+ effects:
+ - !!jdungeonquest.effects.Snakes {}
+
 #Search (15)
 - !!jdungeonquest.Card
  description: Nothing Found!
