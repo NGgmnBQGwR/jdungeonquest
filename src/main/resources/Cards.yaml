@@ -54,25 +54,25 @@
 #Door (15)
 
 - !!jdungeonquest.Card
- description: 
+ description: Door opens
  deckType: Door
  effects:
  - !!jdungeonquest.effects.DoorOpens {}
 
 - !!jdungeonquest.Card
- description: 
+ description: Door opens
  deckType: Door
  effects:
  - !!jdungeonquest.effects.DoorOpens {}
 
 - !!jdungeonquest.Card
- description: 
+ description: Door jams
  deckType: Door
  effects:
  - !!jdungeonquest.effects.DoorJams {}
 
 - !!jdungeonquest.Card
- description: 
+ description: Door jams
  deckType: Door
  effects:
  - !!jdungeonquest.effects.DoorJams {}
