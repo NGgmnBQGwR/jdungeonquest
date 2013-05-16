@@ -533,7 +533,11 @@ public class Game {
     public void hurtPlayer(Player player, int value, String description) {
         logger.debug(" Hurting " + player + " for " + value + " he " + description);
         int newHealth = currentPlayer.getHp() - value;
-        addMessage(new ChatMessage(description + " " + player.getName() + " was hurt for " + value + " HP!", "Game"));
+        if(value > 0){
+            addMessage(new ChatMessage(description + " " + player.getName() + " was hurt for " + value + " HP!", "Game"));
+        }else{
+            addMessage(new ChatMessage(description + " " + player.getName() + " left unscratched!", "Game"));
+        }
         changePlayerAttribute(player, PlayerAttributes.HP, newHealth);
         if(newHealth < 1){
             killPlayer(currentPlayer, "");
