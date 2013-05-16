@@ -74,7 +74,7 @@ public class ClientGUI extends JPanel{
     }
 
     private void initGUI() {
-        MigLayout layout = new MigLayout("fill", "[][]", "[][]");
+        MigLayout layout = new MigLayout("fill", "[][][]", "[grow 0][grow 0][grow 0][]");
         this.setLayout(layout);
         
         playerHolderPanel = new JPanel();
@@ -109,11 +109,11 @@ public class ClientGUI extends JPanel{
         });        
         
         mapScrollPane = new JScrollPane(mapPanel);
-        add(mapScrollPane, "w 200:600:1000, h 200:600:1000, grow, spany");
-        add(playerHolderPanel, "wrap");
-        add(chatPanel, "spanx, grow, wrap");
-        add(endTurnButton);
-        add(searchButton);
+        add(mapScrollPane, "w 200:600:1000, h 200:600:1000, grow, spany, wrap");
+        add(playerHolderPanel, "spanx, wrap");
+        add(endTurnButton, "grow");
+        add(searchButton, "grow, wrap");
+        add(chatPanel, "spanx, spany, grow, wrap");
     }
 
     void processMouseClick(int x, int y){
