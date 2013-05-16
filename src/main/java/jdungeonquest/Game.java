@@ -493,7 +493,7 @@ public class Game {
         if(guessNumber.value == currentPlayerContextValue){
             killPlayer(currentPlayer, "A giant boulder falls on his head!");
         }else{
-            hurtPlayer(currentPlayer, 2, "He is battered by falling rocks!");
+            hurtPlayer(currentPlayer, 2, "You are battered by falling rocks!");
         }
         currentPlayerContextValue = 0;
     }
