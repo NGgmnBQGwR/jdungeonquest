@@ -2,36 +2,51 @@
 - !!jdungeonquest.Card
  description: Dragon Awakens
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonAwakens {}
 
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 - !!jdungeonquest.Card
  description: Dragon Sleeps
  deckType: Dragon
- effects: []
+ effects:
+ - !!jdungeonquest.effects.DragonSleeps {}
+
 
 #   - !!jdungeonquest.effects.GiveGold {amount: 1}
 #   - !!jdungeonquest.effects.GiveGold {amount: 2}

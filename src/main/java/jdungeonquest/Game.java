@@ -53,6 +53,9 @@ public class Game {
     
     public List<Message> messageQueue;
     
+    private final Position treasureChamberPositionLeft = new Position (4, 6);
+    private final Position treasureChamberPositionRight = new Position (5, 6);
+    
     public Game() {
         playerClasses.put("A", false);
         playerClasses.put("B", false);
@@ -199,8 +202,8 @@ public class Game {
     }
 
     private void setUp() {
-        placeTile(4, 6, tileHolder.dragonTileLeft, 0);
-        placeTile(5, 6, tileHolder.dragonTileRight, 0);
+        placeTile(treasureChamberPositionLeft.getX(), treasureChamberPositionLeft.getY(), tileHolder.dragonTileLeft, 0);
+        placeTile(treasureChamberPositionRight.getX(), treasureChamberPositionRight.getY(), tileHolder.dragonTileRight, 0);
         
         switch(players.size()){
             case 0: endGame(); break;
@@ -268,24 +271,30 @@ public class Game {
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + playerName +" can't do anyting now.");
             return;
         }
+        
         //check that he haven't moved this turn yet
         if(currentPlayer.isMoved()){
             logger.debug("Player already moved this turn. Can't move now.");
             return;
         }
-        //check that there is no one in that tile
-        //add exception for Treasure Chamber, any number of players can fit there
-        for (Player p : players) {
-            if (p.getPosition().equals(to)) {
-                logger.debug("There's " + p.getName() + " on that tile. Can't move.");
-                return;
-            }
-        }
+        
         //check that tile is adjacent
         if(!map.isAdjacent(from, to)){
             logger.debug("Not adjacent. Can't move.");
             return;
         }
+        
+        //check that there is no one in that tile
+        //add exception for Treasure Chamber, any number of players can fit there
+        if( !to.equals(treasureChamberPositionLeft) && !to.equals(treasureChamberPositionRight)){
+            for (Player p : players) {
+                if (p.getPosition().equals(to)) {
+                    logger.debug("There's " + p.getName() + " on that tile. Can't move.");
+                    return;
+                }
+            }
+        }
+        
         //check that you can enter that tile from current one
         if(!map.canMoveFrom(from, to) && !usingSecretDoor){ //when using Secret Door card player can move anywhere
             logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
@@ -362,7 +371,20 @@ public class Game {
         }else{
             processDrawRoomCard();
         }
-    }    
+    }
+
+    private void processDrawDragonCard() {
+        Card card = cardHolder.dragonDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);
+    }      
+    
+    private void processDrawTreasureCard() {
+        Card card = cardHolder.treasureDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);
+    }            
+    
     public void processDrawTrapCard() {
         Card card = cardHolder.trapDeck.takeCard();
         logger.debug("Activating " + card + " card");
@@ -657,7 +679,7 @@ public class Game {
     }
 
     public void processPlayerSearchRoom() {
-        logger.debug(currentPlayer.getName() + " is trying to search this room.");
+        logger.debug(currentPlayer.getName() + " is trying to search room at " + currentPlayer.getPosition());
         if(currentPlayer.searchInRow == 2){
             logger.debug(currentPlayer.getName() + " can't search this room anymore.");
             return;
@@ -668,6 +690,15 @@ public class Game {
         }        
         if(currentPlayer.isSearched()){
             logger.debug(currentPlayer.getName() + " can't search this room this turn again.");
+            return;
+        }
+        if(currentPlayer.getPosition().equals(treasureChamberPositionLeft) || currentPlayer.getPosition().equals(treasureChamberPositionRight)){
+            logger.debug("Searching Treasure Chamber.");
+            currentPlayer.setMoved(true);
+            currentPlayer.setSearched(true);
+            processDrawTreasureCard();
+            processDrawTreasureCard();
+            processDrawDragonCard();
             return;
         }
         if(!map.getTile( currentPlayer.getPosition()).isIsSearchable()){
@@ -798,5 +829,33 @@ public class Game {
             case Trap: cardHolder.trapDeck.shuffle(); break;
             case Treasure: cardHolder.treasureDeck.shuffle(); break;
         }
+    }
+
+    public void effectTreasureChamber() {
+        logger.debug("You enter the treasure chamber! It's hoarding time!");
+        addMessage(new ChatMessage("You enter the treasure chamber!", "Game"));
+        
+        processDrawTreasureCard();
+        processDrawTreasureCard();
+        
+        Card card = cardHolder.dragonDeck.takeCard();
+        logger.debug("Activating " + card + " card");
+        card.activate(this);
+    }
+
+    public void effectDragonSleeps() {
+        logger.debug("Dragon sleeps. " + cardHolder.dragonDeck.size() + " tries left.");
+        addMessage(new ChatMessage("The Dragon is asleep.", "Game"));
+    }
+
+    public void effectDragonAwakens() {
+        logger.debug("Dragon awakens!");
+        addMessage(new ChatMessage("To your horror, the Dragon awakens!", "Game"));
+        addMessage(new ChatMessage("Drop all your gold and run while you still can!.", "Game"));
+        changePlayerAttribute(currentPlayer, PlayerAttributes.Gold, 0);
+        hurtPlayer(currentPlayer, diceRoll(1, 12, 0), "Dragon breathes fire at you!");
+        movePlayer(currentPlayer.getPreviousPosition().getX(), currentPlayer.getPreviousPosition().getY(), currentPlayer);
+        
+        ShuffleDeck(DeckType.Dragon);
     }
 }

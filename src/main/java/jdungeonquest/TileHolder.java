@@ -30,13 +30,18 @@ public class TileHolder {
             "!!jdungeonquest.Tile\n"
             + "entryDirection: RIGHT\n"
             + "isSearchable: false\n"
-            + "walls: [EXIT, EXIT, EXIT, EXIT]\n";    
+            + "walls: [EXIT, EXIT, EXIT, EXIT]\n"
+            + "effects:\n"
+            + "- !!jdungeonquest.effects.TreasureChamber {}\n";    
 
     final static String dragonTileRightYaml =
             "!!jdungeonquest.Tile\n"
             + "entryDirection: LEFT\n"
             + "isSearchable: false\n"
-            + "walls: [EXIT, EXIT, EXIT, EXIT]\n";    
+            + "walls: [EXIT, EXIT, EXIT, EXIT]\n"
+            + "effects:\n"
+            + "- !!jdungeonquest.effects.TreasureChamber {}\n";    
+            
     
     public TileHolder(){
         initializeTiles();
