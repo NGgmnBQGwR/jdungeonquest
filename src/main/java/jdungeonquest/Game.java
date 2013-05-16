@@ -321,12 +321,15 @@ public class Game {
             }
         }
         
-        
         //if there are doors on either starting and/or ending tile,
         //then all (0,1,2) doors should give Door Opens results otherwise
         //player can't move.
-        doorsToOpen = map.getNumberOfDoorsBetween(from, to);
-        processDrawDoorCards();
+        if(usingSecretDoor){
+            doorsToOpen = 0;
+        }else{
+            doorsToOpen = map.getNumberOfDoorsBetween(from, to);
+            processDrawDoorCards();
+        }
         if(doorsToOpen > 0 ){
             logger.debug("There are " + doorsToOpen + " closed doors in the way. Can't move.");
             currentPlayer.setMoved(true);
