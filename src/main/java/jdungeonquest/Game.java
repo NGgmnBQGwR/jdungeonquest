@@ -798,7 +798,7 @@ public class Game {
             addMessage(new ChatMessage("..And you fall into a pit!", "Game"));
             currentPlayer.setMoved(true);
             currentPlayer.status = PlayerStatus.IN_PIT;
-            hurtPlayer(currentPlayer, diceRoll(1, 6, 0), "This hurts!");
+            hurtPlayer(currentPlayer, diceRoll(1, 6, 0), "That hurts!");
         }
     }
 
