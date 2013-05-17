@@ -1,6 +1,8 @@
 package jdungeonquest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -264,6 +266,59 @@ public class Game {
         logger.debug("EVERYONE DIED. BAD END.");
         addMessage(new ChatMessage("Game ended!", "Game"));
         addMessage(new EndGame());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("<html>");
+        sb.append("<h2>Top Players:</h2>");
+        //we mess with the actual Players list because it shouldn't be used now anyway
+        Collections.sort(players, new Comparator<Player>() {
+
+            @Override
+            public int compare(Player a, Player b) {
+                //being rich is useless when you're dead and can't use any of it
+                //because of this living players are being ranked higher
+                if(!a.isDead() && b.isDead()){
+                    return -1;
+                }
+                if(a.isDead() && !b.isDead()){
+                    return 1;
+                }
+                //if they are both dead or both alive
+                if(a.getGold() > b.getGold()){
+                    return -1;
+                }
+                if(a.getGold() < b.getGold()){
+                    return 1;
+                }
+                //if their gold amount is the same
+                if(a.getHp() > b.getHp()){
+                    return -1;
+                }
+                if(a.getHp() < b.getHp()){
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        sb.append("<ol>");
+        for(Player p : players){
+            sb.append("<li>");
+            sb.append(p.getName());
+            if(!p.isDead()){
+                sb.append( ". He escaped from dungeon");
+            }else{
+                sb.append( ". He died");
+            }
+            sb.append( " with ");
+            sb.append(p.getGold());
+            sb.append( " gold.");
+            sb.append("</li>");
+        }        
+        sb.append("</ol>");
+        sb.append("</html>");
+        
+        addMessage(new ChatMessage( sb.toString(), "Game"));
     }
 
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
