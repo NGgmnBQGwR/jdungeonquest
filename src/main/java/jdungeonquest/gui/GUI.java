@@ -39,7 +39,7 @@ public class GUI extends JFrame {
     JComponent recentPanel;
     
     public GUI() {
-        super("JDungeonQuest Main Menu");
+        super("JDungeonQuest");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logger.info("GUI created");
     }
