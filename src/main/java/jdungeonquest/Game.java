@@ -460,8 +460,11 @@ public class Game {
         }
         //todo: implement ability for player to end his turn volunarily
         if( !currentPlayer.isMoved() && !currentPlayer.isSearched()){
-            logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
-            addMessage(new ChatMessage("You cannot end your turn without moving or searching.", "Game"));
+            logger.debug("Player " + currentPlayer.getName() + " ended his turn without doing anything.");
+            addMessage(new ChatMessage("You wait and do nothing.", "Game"));
+            currentPlayer.setMoved(true);
+//            logger.debug("Player " + currentPlayer.getName() + " can't end his turn yet.");
+//            addMessage(new ChatMessage("You cannot end your turn without moving or searching.", "Game"));
             return;
         }
         resetTurnVariables();
