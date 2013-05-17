@@ -546,7 +546,11 @@ public class Game {
     
     private void killPlayer(Player player, String cause) {
         logger.debug("Killing " + player + " because " + cause);
-        currentPlayer.setDead(true);
+        if(player.isDead()){
+            logger.debug("Tried to kill " + player + " because " + cause + " but he's dead already.");
+        }
+        
+        player.setDead(true);
         //end combat if player was killed in it
         if(currentPlayerState == PlayerState.InCombat){
             addMessage(new EndBattle());
@@ -554,7 +558,7 @@ public class Game {
         
         changePlayerAttribute(player, PlayerAttributes.HP, 0);
         addMessage(new ChatMessage(cause + " " + player.getName() + " was killed!", "Game"));
-        addMessage(new KillPlayer(currentPlayer.getName()));
+        addMessage(new KillPlayer(player.getName()));
         //end game if there's no one left alive
         for(Player p : players){
             if(!p.isDead()){
