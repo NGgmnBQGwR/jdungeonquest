@@ -497,10 +497,10 @@ public class Game {
             addMessage(new ChatMessage("Current sun position: " + sunPosition + "/" + sunMaxPosition, "Game"));
         }
         if(sunPosition == sunMaxPosition-10){
-            addMessage(new ChatMessage("10 turns left until the dawn!", "Game"));
+            addMessage(new ChatMessage("10 turns left until the night comes!", "Game"));
         }
         if(sunPosition == sunMaxPosition-5){
-            addMessage(new ChatMessage("5 turns left until the dawn!", "Game"));
+            addMessage(new ChatMessage("5 turns left until the night comes!", "Game"));
         }
         if(sunPosition == sunMaxPosition){
             processSun();
