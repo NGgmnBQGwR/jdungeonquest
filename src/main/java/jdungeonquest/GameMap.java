@@ -32,6 +32,9 @@ public class GameMap {
      * @return 
      */
     public boolean isFree(int x, int y) {
+        if(x < 0 || y < 0){
+            return false;
+        }
         if (tiles[x][y] == null) {
             return true;
         }
@@ -52,6 +55,9 @@ public class GameMap {
     }
     
     public boolean canMoveFrom(Position p1, Position p2){
+        if(p1.getX() < 0 || p1.getY() < 0 || p2.getX() < 0 || p2.getY() < 0){
+            return false;
+        }        
         //U[0] L[1] D[2] R[3]
         if( p1.getY() == p2.getY()){ //same column
             if(p1.getX() > p2.getX()){ //going left
