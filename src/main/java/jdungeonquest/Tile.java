@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import jdungeonquest.effects.CaveInTile;
+import jdungeonquest.effects.CorridorTile;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.effects.TrapTile;
 import jdungeonquest.effects.TreasureChamber;
@@ -32,6 +33,7 @@ public class Tile {
     private static BufferedImage caveInIcon;
     private static BufferedImage trapIcon;
     private static BufferedImage treasureIcon;
+    private static BufferedImage corridorIcon;
 
     {
         try {
@@ -39,6 +41,7 @@ public class Tile {
             caveInIcon = ImageIO.read(getClass().getResourceAsStream("/cavein.png"));
             trapIcon = ImageIO.read(getClass().getResourceAsStream("/trap.png"));
             treasureIcon = ImageIO.read(getClass().getResourceAsStream("/treasure.png"));
+            corridorIcon = ImageIO.read(getClass().getResourceAsStream("/corridor.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -259,6 +262,10 @@ public class Tile {
             }
             if(e instanceof TreasureChamber){
                 g.drawImage(treasureIcon, wh/2-20, wh/2-20, null);
+                break;
+            }
+            if(e instanceof CorridorTile){
+                g.drawImage(corridorIcon, wh/2-20, wh/2-20, null);
                 break;
             }
         }

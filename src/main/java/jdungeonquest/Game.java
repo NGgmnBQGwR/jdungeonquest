@@ -848,6 +848,12 @@ public class Game {
         currentPlayer.status = PlayerStatus.IN_CAVEIN;
     }
 
+    public void processCorridorTile() {
+        addMessage(new ChatMessage("This room is empty and you quickly pass through it. You can move again.", "Game"));         
+        currentPlayer.setMoved(false);
+    }
+
+    
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
             addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip your turn.", "Game"));
