@@ -800,7 +800,7 @@ public class Game {
             //player escapes
             Position prevPos = currentPlayer.getPreviousPosition();
             movePlayer(prevPos, currentPlayer);
-            addMessage(new ChatMessage(currentPlayer.getName() + " escaped!", "Game"));
+            addMessage(new ChatMessage(currentPlayer.getName() + " retreated to previous room!", "Game"));
             if(currentPlayer.status == PlayerStatus.IN_CAVEIN){
                 currentPlayer.status = PlayerStatus.NONE;                
             }
