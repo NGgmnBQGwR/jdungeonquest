@@ -100,7 +100,12 @@ public class Tile {
         }
         if(this.getEffects().size() != other.getEffects().size()){
             return false;        
-        }        
+        }
+        for(int i = 0; i < this.getEffects().size(); i++){
+            if(!(this.getEffects().get(i).getClass() == other.getEffects().get(i).getClass())){
+                return false;
+            }
+        }
         return true;
     }
 
