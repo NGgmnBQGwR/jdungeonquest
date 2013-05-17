@@ -505,6 +505,7 @@ public class Game {
         if(sunPosition == sunMaxPosition){
             processSun();
             endGame();
+            return;
         }
         
         logger.debug("Current player: " + currentPlayer.getName());
