@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import jdungeonquest.effects.BottomlessPit;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.DeckType;
 import jdungeonquest.enums.GameState;
@@ -415,6 +416,24 @@ public class Game {
                 }
             }
         }
+
+        //when in Bottomless Pit room, player is free to backtrack, but must pass
+        //Agility test to move anywhere else
+        //secret room is unavailable since you can't search in Bottomless Pit
+        if(currentPlayer.status == PlayerStatus.BOTTOMLESS_PIT){
+            if(to.equals(currentPlayer.getPreviousPosition())){
+                currentPlayer.status = PlayerStatus.NONE;
+            }else{
+                if(testPlayerAgility(12)){
+                    addMessage(new ChatMessage("You jump across the bottomless pit!", "Game"));
+                    currentPlayer.status = PlayerStatus.NONE;
+                }else{
+                    addMessage(new ChatMessage("You fall down the bottomless pit!", "Game"));
+                    killPlayer(currentPlayer, "Your screams echo in the dungeon for some time.");
+                    return;
+                }
+            }
+        }        
         
         //if there are doors on either starting and/or ending tile,
         //then all (0,1,2) doors should give Door Opens results otherwise
@@ -515,6 +534,15 @@ public class Game {
         }
         //todo: implement ability for player to end his turn volunarily
         if( !currentPlayer.isMoved() && !currentPlayer.isSearched()){
+            //can't skip turns in some special rooms
+            if( map.getTile(currentPlayer.getPosition()).getEffects().size() > 0){
+                 for(Effect e : map.getTile(currentPlayer.getPosition()).getEffects()){
+                     if(e instanceof BottomlessPit){
+                        addMessage(new ChatMessage("This place is too dangerous to wait here.", "Game"));
+                         return;
+                     }
+                 }
+            }
             logger.debug("Player " + currentPlayer.getName() + " ended his turn without doing anything.");
             addMessage(new ChatMessage("You wait and do nothing.", "Game"));
             currentPlayer.setMoved(true);
@@ -853,6 +881,10 @@ public class Game {
         currentPlayer.setMoved(false);
     }
 
+    public void processBottomlessPitTile() {
+        addMessage(new ChatMessage("There is a giant hole in the ground. You will need to jump to cross it.", "Game"));
+        currentPlayer.status = PlayerStatus.BOTTOMLESS_PIT;        
+    }
     
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
