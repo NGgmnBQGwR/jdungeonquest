@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import jdungeonquest.effects.BottomlessPit;
 import jdungeonquest.effects.CaveInTile;
+import jdungeonquest.effects.ChamberOfDarkness;
 import jdungeonquest.effects.CorridorTile;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.effects.TrapTile;
@@ -36,6 +37,7 @@ public class Tile {
     private static BufferedImage treasureIcon;
     private static BufferedImage corridorIcon;
     private static BufferedImage bottomlessIcon;
+    private static BufferedImage darknessIcon;
 
     {
         try {
@@ -45,6 +47,7 @@ public class Tile {
             treasureIcon = ImageIO.read(getClass().getResourceAsStream("/treasure.png"));
             corridorIcon = ImageIO.read(getClass().getResourceAsStream("/corridor.png"));
             bottomlessIcon = ImageIO.read(getClass().getResourceAsStream("/bpit.png"));
+            darknessIcon = ImageIO.read(getClass().getResourceAsStream("/darkness.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,6 +278,10 @@ public class Tile {
                 g.drawImage(bottomlessIcon, wh/2-20, wh/2-20, null);
                 break;
             }            
+            if(e instanceof ChamberOfDarkness){
+                g.drawImage(darknessIcon, wh/2-20, wh/2-20, null);
+                break;
+            }         
         }
         g.dispose();        
     }    

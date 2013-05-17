@@ -16,6 +16,7 @@ import jdungeonquest.enums.MonsterType;
 import jdungeonquest.enums.PlayerAttributes;
 import jdungeonquest.enums.PlayerState;
 import jdungeonquest.enums.PlayerStatus;
+import jdungeonquest.enums.RoomWallType;
 import jdungeonquest.network.BattleAction;
 import jdungeonquest.network.ChangePlayerAttribute;
 import jdungeonquest.network.ChatMessage;
@@ -342,6 +343,7 @@ public class Game {
         Position from = player.getPosition();
         Position to = new Position(movePlayer.getX(), movePlayer.getY());
         logger.debug("Processing move of " + playerName + " from " + from + " to " + to);
+        
         //check that it is this player's turn
         if(!currentPlayer.getName().equals(playerName)){
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + playerName +" can't do anyting now.");
@@ -360,6 +362,29 @@ public class Game {
             logger.debug("Not adjacent. Can't move.");
             addMessage(new ChatMessage("This tile is not adjacent. You cannot move there.", "Game"));
             return;
+        }
+        
+        //Chamber of Darkness effect:
+        //"If the exit you have rolled is impassible, you must miss your turn"
+        if(currentPlayer.status == PlayerStatus.DARKNESS){
+            addMessage(new ChatMessage("You blindly move into the darkness.", "Game"));
+            List<Position> possiblePositions = new ArrayList<>();
+            List<RoomWallType> walls = map.getTile(from).getWalls();
+            if( walls.get(0) != RoomWallType.WALL ){ //UP
+                possiblePositions.add( new Position(from.getX(),from.getY()-1));
+            }
+            if( walls.get(1) != RoomWallType.WALL ){ //LEFT
+                possiblePositions.add( new Position(from.getX()-1,from.getY()));
+            }
+            if( walls.get(2) != RoomWallType.WALL ){ //DOWN
+                possiblePositions.add( new Position(from.getX(),from.getY()+1));
+            }
+            if( walls.get(3) != RoomWallType.WALL ){ //RIGHT
+                possiblePositions.add( new Position(from.getX()+1,from.getY()));
+            }
+            
+            to = possiblePositions.get(random.nextInt(possiblePositions.size()));
+            currentPlayer.setMoved(true);
         }
         
         //check that there is no one in that tile
@@ -448,6 +473,9 @@ public class Game {
             logger.debug("There are " + doorsToOpen + " closed doors in the way. Can't move.");
             currentPlayer.setMoved(true);
         }else{
+            if(currentPlayer.status == PlayerStatus.DARKNESS){
+                currentPlayer.status = PlayerStatus.NONE;
+            }
             addMessage(new ChatMessage("You enter another room.", "Game"));            
             currentPlayer.setMoved(true);
             currentPlayer.searchInRow = 0;
@@ -885,6 +913,11 @@ public class Game {
         addMessage(new ChatMessage("There is a giant hole in the ground. You will need to jump to cross it.", "Game"));
         currentPlayer.status = PlayerStatus.BOTTOMLESS_PIT;        
     }
+    
+    public void processChamberOfDarknessTile() {
+        addMessage(new ChatMessage("This room is filled with darkness - you can't see where you're going!", "Game"));
+        currentPlayer.status = PlayerStatus.DARKNESS;
+    }    
     
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
