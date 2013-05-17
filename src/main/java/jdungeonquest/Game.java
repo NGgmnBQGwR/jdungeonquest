@@ -825,6 +825,8 @@ public class Game {
         int damage = diceRoll(1,12, -currentPlayer.armor);
         if(damage > 0){
             hurtPlayer(currentPlayer, damage, "You are hurt by arrows!");
+        }else{
+            addMessage(new ChatMessage("You evade all of them!", "Game"));
         }
     }
 
