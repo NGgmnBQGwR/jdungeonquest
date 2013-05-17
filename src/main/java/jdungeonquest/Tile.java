@@ -19,6 +19,7 @@ import jdungeonquest.effects.ChamberOfDarkness;
 import jdungeonquest.effects.Chasm;
 import jdungeonquest.effects.CorridorTile;
 import jdungeonquest.effects.Effect;
+import jdungeonquest.effects.StartingTile;
 import jdungeonquest.effects.TrapTile;
 import jdungeonquest.effects.TreasureChamber;
 import jdungeonquest.enums.EntryDirection;
@@ -40,6 +41,7 @@ public class Tile {
     private static BufferedImage bottomlessIcon;
     private static BufferedImage darknessIcon;
     private static BufferedImage chasmIcon;
+    private static BufferedImage startingIcon;
 
     {
         try {
@@ -51,6 +53,7 @@ public class Tile {
             bottomlessIcon = ImageIO.read(getClass().getResourceAsStream("/bpit.png"));
             darknessIcon = ImageIO.read(getClass().getResourceAsStream("/darkness.png"));
             chasmIcon = ImageIO.read(getClass().getResourceAsStream("/chasm.png"));
+            startingIcon = ImageIO.read(getClass().getResourceAsStream("/stairs.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -294,6 +297,10 @@ public class Tile {
                 g.drawImage(chasmIcon, wh/2-20, wh/2-20, null);
                 break;
             }
+            if(e instanceof StartingTile){
+                g.drawImage(startingIcon, wh/2-20, wh/2-20, null);
+                break;
+            }            
         }
         g.dispose();        
     }    

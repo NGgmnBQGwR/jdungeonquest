@@ -24,7 +24,9 @@ public class TileHolder {
             "!!jdungeonquest.Tile\n"
             + "entryDirection: RIGHT\n"
             + "isSearchable: false\n"
-            + "walls: [EXIT, EXIT, EXIT, EXIT]\n";
+            + "walls: [EXIT, EXIT, EXIT, EXIT]\n"
+            + "effects:\n"
+            + "- !!jdungeonquest.effects.StartingTile {}\n";
     
     final static String dragonTileLeftYaml =
             "!!jdungeonquest.Tile\n"

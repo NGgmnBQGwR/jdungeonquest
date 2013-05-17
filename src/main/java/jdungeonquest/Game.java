@@ -984,6 +984,12 @@ public class Game {
         addMessage(new ChatMessage("An impassable rift separates this room in half.", "Game"));
         currentPlayer.status = PlayerStatus.CHASM;
     }
+
+    public void processStartingTile() {
+        addMessage(new ChatMessage("You arrive at the Dungeon entrance. You can move again.", "Game"));         
+        currentPlayer.setMoved(false);
+    }
+    
     
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
