@@ -930,10 +930,10 @@ public class Game {
                 continue;
             }
             //player is safe only when he's in one of the four starting tiles
-            if(!p.getPosition().equals(startingUpLeftPosition) &&
-               !p.getPosition().equals(startingUpRightPosition) &&
-               !p.getPosition().equals(startingDownLeftPosition) &&
-               !p.getPosition().equals(startingDownRightPosition)){
+            if (!p.getPosition().equals(startingUpLeftPosition)
+                    && !p.getPosition().equals(startingUpRightPosition)
+                    && !p.getPosition().equals(startingDownLeftPosition)
+                    && !p.getPosition().equals(startingDownRightPosition)) {
                 killPlayer(p, "With the sunlight gone, so is any hope of escaping.");
             }
         }
