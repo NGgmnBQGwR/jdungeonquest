@@ -5,5 +5,6 @@ public enum PlayerStatus {
     IN_CAVEIN,
     IN_PIT,
     BOTTOMLESS_PIT,
-    DARKNESS;
+    DARKNESS,
+    CHASM;
 }

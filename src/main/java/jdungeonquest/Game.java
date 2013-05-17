@@ -11,6 +11,7 @@ import java.util.Random;
 import jdungeonquest.effects.BottomlessPit;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.DeckType;
+import jdungeonquest.enums.EntryDirection;
 import jdungeonquest.enums.GameState;
 import jdungeonquest.enums.MonsterType;
 import jdungeonquest.enums.PlayerAttributes;
@@ -323,6 +324,57 @@ public class Game {
         addMessage(new ChatMessage( sb.toString(), "Game"));
     }
 
+    private boolean correctChasmExit(Position prev, Position from, Position to) {
+        //todo: refactor to remove duplicated code
+        EntryDirection d1 = null;
+        EntryDirection d2 = null;
+
+        if( prev.getY() == from.getY()){
+            if(prev.getX() > from.getX()){
+                d1 = EntryDirection.RIGHT;
+            }
+            if(prev.getX() < from.getX()){
+                d1 = EntryDirection.LEFT;
+            }
+        }
+        if( prev.getX() == from.getX()){
+            if(prev.getY() > from.getY()){
+                d1 = EntryDirection.DOWN;
+            }
+            if(prev.getY() < from.getY()){
+                d1 = EntryDirection.UP;
+            }
+        }
+        
+        if( from.getY() == to.getY()){
+            if(from.getX() > to.getX()){
+                d2 = EntryDirection.LEFT;
+            }
+            if(from.getX() < to.getX()){
+                d2 = EntryDirection.RIGHT;
+            }
+        }
+        if( from.getX() == to.getX()){
+            if(from.getY() > to.getY()){
+                d2 = EntryDirection.UP;
+            }
+            if(from.getY() < to.getY()){
+                d2 = EntryDirection.DOWN;
+            }
+        }
+        
+        logger.debug(d1 + " " + d2);
+        
+        if ((d1 == d2)
+                || (d1 == EntryDirection.UP && d2 == EntryDirection.LEFT)
+                || (d2 == EntryDirection.UP && d1 == EntryDirection.LEFT)
+                || (d1 == EntryDirection.DOWN && d2 == EntryDirection.RIGHT)
+                || (d2 == EntryDirection.DOWN && d1 == EntryDirection.RIGHT)) {
+            return true;
+        }
+        return false;
+    }
+    
     public void processPlayerMove(MovePlayer movePlayer, String playerName) {
         if(state != GameState.IN_PROGRESS){
             return;
@@ -404,6 +456,15 @@ public class Game {
             addMessage(new ChatMessage("You cannot leave this way.", "Game"));
             logger.debug("Can't leave from " + map.getTile(from.getX(), from.getY()) + " on " + from + " this way. Can't move.");
             return;
+        }
+        
+        if(currentPlayer.status == PlayerStatus.CHASM){
+            if(correctChasmExit(currentPlayer.getPreviousPosition(), from, to)){
+                currentPlayer.status = PlayerStatus.NONE;
+            }else{
+                addMessage(new ChatMessage("You can't reach another side of the room.", "Game"));
+                return;
+            }
         }
         
         //check whether there is something on that tile already
@@ -918,6 +979,11 @@ public class Game {
         addMessage(new ChatMessage("This room is filled with darkness - you can't see where you're going!", "Game"));
         currentPlayer.status = PlayerStatus.DARKNESS;
     }    
+
+    public void processChasmTile() {
+        addMessage(new ChatMessage("An impassable rift separates this room in half.", "Game"));
+        currentPlayer.status = PlayerStatus.CHASM;
+    }
     
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){

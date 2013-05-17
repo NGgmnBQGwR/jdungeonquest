@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import jdungeonquest.effects.BottomlessPit;
 import jdungeonquest.effects.CaveInTile;
 import jdungeonquest.effects.ChamberOfDarkness;
+import jdungeonquest.effects.Chasm;
 import jdungeonquest.effects.CorridorTile;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.effects.TrapTile;
@@ -38,6 +39,7 @@ public class Tile {
     private static BufferedImage corridorIcon;
     private static BufferedImage bottomlessIcon;
     private static BufferedImage darknessIcon;
+    private static BufferedImage chasmIcon;
 
     {
         try {
@@ -48,6 +50,7 @@ public class Tile {
             corridorIcon = ImageIO.read(getClass().getResourceAsStream("/corridor.png"));
             bottomlessIcon = ImageIO.read(getClass().getResourceAsStream("/bpit.png"));
             darknessIcon = ImageIO.read(getClass().getResourceAsStream("/darkness.png"));
+            chasmIcon = ImageIO.read(getClass().getResourceAsStream("/chasm.png"));
         } catch (IOException ex) {
             Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -282,11 +285,15 @@ public class Tile {
             if(e instanceof BottomlessPit){
                 g.drawImage(bottomlessIcon, wh/2-20, wh/2-20, null);
                 break;
-            }            
+            }
             if(e instanceof ChamberOfDarkness){
                 g.drawImage(darknessIcon, wh/2-20, wh/2-20, null);
                 break;
-            }         
+            }
+            if(e instanceof Chasm){
+                g.drawImage(chasmIcon, wh/2-20, wh/2-20, null);
+                break;
+            }
         }
         g.dispose();        
     }    
