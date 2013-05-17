@@ -21,7 +21,7 @@ public class Player {
     public String turnsSkipReason = "";
     public PlayerStatus status = PlayerStatus.NONE;
     
-    public int agility = 5;
+    public int agility = 7;
     public int armor = 5;
     
     private boolean moved = false;
