@@ -268,7 +268,7 @@ public class NetworkServer implements Runnable {
             return;
         }
         for(Message m : game.messageQueue){
-            if(m instanceof GuessNumber || m instanceof StartBattle || m instanceof BattleAction){
+            if(m instanceof GuessNumber || m instanceof StartBattle || m instanceof EndBattle || m instanceof BattleAction){
                 String curPlayer = game.getCurrentPlayer();
                 int id = -1;
                 for(int key : clientPlayersMap.keySet()){

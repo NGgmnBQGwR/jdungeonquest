@@ -223,7 +223,9 @@ public class ClientGUI extends JPanel{
     }
 
     void hideBattleDialog(){
-        di.dispose();
+        if(di != null){
+            di.dispose();
+        }
     }
     
     void showBattleDialog() {
