@@ -451,6 +451,9 @@ public class Game {
     }
     
     public void endTurn(String player) {
+        if(state != GameState.IN_PROGRESS){
+            return;
+        }
         if(!currentPlayer.getName().equals(player)){
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
             return;
