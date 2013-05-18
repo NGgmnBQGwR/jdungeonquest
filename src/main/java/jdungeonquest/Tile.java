@@ -78,44 +78,6 @@ public class Tile {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + (this.entryDirection != null ? this.entryDirection.hashCode() : 0);
-        hash = 19 * hash + Objects.hashCode(this.walls);
-        hash = 19 * hash + (this.isSearchable ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Tile other = (Tile)obj;
-        if(!this.isSearchable == other.isSearchable){
-            return false;
-        }
-        if(!this.getEntryDirection().equals(other.getEntryDirection())){
-            return false;
-        }       
-        if(!this.getWalls().equals(other.getWalls())){
-            return false;        
-        }
-        if(this.getEffects().size() != other.getEffects().size()){
-            return false;        
-        }
-        for(int i = 0; i < this.getEffects().size(); i++){
-            if(!(this.getEffects().get(i).getClass() == other.getEffects().get(i).getClass())){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("[");

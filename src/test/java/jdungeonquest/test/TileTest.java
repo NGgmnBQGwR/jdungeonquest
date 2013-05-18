@@ -275,23 +275,4 @@ public class TileTest {
         assertTrue(t1.getWalls()!= t2.getWalls());
         assertTrue(t1 != t2);
     }
-    
-    @Test
-    public void DistinctTileNotEqual(){
-        Yaml yaml = new Yaml();
-        Tile t1 = (Tile) yaml.load(distinctTileYaml1);
-        Tile t2 = (Tile) yaml.load(distinctTileYaml2);
-        Tile t3 = (Tile) yaml.load(distinctTileYaml3);
-        Tile t4 = (Tile) yaml.load(distinctTileYaml1);
-        
-        assertTrue(!t1.equals(t2));
-        assertTrue(!t2.equals(t3));
-        assertTrue(!t1.equals(t3));
-        assertTrue(!t3.equals(t1));
-        assertTrue(!t3.equals(t2));
-        assertTrue(!t2.equals(t1));
-        
-        assertTrue(t1.equals(t4));
-        assertTrue(t4.equals(t1));
-    }
 }
