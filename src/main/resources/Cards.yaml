@@ -239,6 +239,31 @@
  - !!jdungeonquest.effects.Shuffle {type: Trap}
 
 #Search (15)
+
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.GiantCentipede {}
+
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+ 
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Search}
+ 
 - !!jdungeonquest.Card
  description: Nothing Found!
  deckType: Search
@@ -250,6 +275,18 @@
  deckType: Search
  effects:
  - !!jdungeonquest.effects.Empty {}
+
+- !!jdungeonquest.Card
+ description: Nothing Found!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+
+- !!jdungeonquest.Card
+ description: Found Secret Door!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.SecretDoor {}
 
 - !!jdungeonquest.Card
  description: Found Secret Door!
@@ -286,6 +323,12 @@
  deckType: Search
  effects:
  - !!jdungeonquest.effects.GiveGold {amount: 200}
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Search
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 90}
 
 #Room
 
