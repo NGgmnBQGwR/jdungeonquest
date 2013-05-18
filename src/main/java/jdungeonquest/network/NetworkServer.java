@@ -45,6 +45,7 @@ public class NetworkServer implements Runnable {
             @Override
             public void connected(Connection connection) {
                 logger.debug("Client '" + connection + "' " + connection.getID() + " connected");
+                connection.setTimeout(0);
             }
 
             @Override
