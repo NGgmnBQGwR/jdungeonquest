@@ -1115,15 +1115,15 @@ public class Game {
         logger.debug("Shuffling Deck " + type);
         switch(type){
             default:
-            case Corpse: cardHolder.corpseDeck.shuffle(); break;
-            case Crypt: cardHolder.cryptDeck.shuffle(); break;
-            case Door: cardHolder.doorDeck.shuffle(); break;
-            case Dragon: cardHolder.dragonDeck.shuffle(); break;
+            case Corpse: cardHolder.corpseDeck.shuffle(); processDrawCorpseCard(); break;
+            case Crypt: cardHolder.cryptDeck.shuffle(); processDrawCryptCard(); break;
+            case Door: cardHolder.doorDeck.shuffle(); processDrawDoorCard(); break;
+            case Dragon: cardHolder.dragonDeck.shuffle(); processDrawDragonCard(); break;
             case Monster: cardHolder.monsterDeck.shuffle(); break;
-            case Room: cardHolder.roomDeck.shuffle(); break;
-            case Search: cardHolder.searchDeck.shuffle(); break;
-            case Trap: cardHolder.trapDeck.shuffle(); break;
-            case Treasure: cardHolder.treasureDeck.shuffle(); break;
+            case Room: cardHolder.roomDeck.shuffle(); processDrawRoomCard(); break;
+            case Search: cardHolder.searchDeck.shuffle(); processDrawSearchCard(); break;
+            case Trap: cardHolder.trapDeck.shuffle(); processDrawTrapCard(); break;
+            case Treasure: cardHolder.treasureDeck.shuffle(); processDrawTreasureCard(); break;
         }
     }
 
