@@ -23,4 +23,9 @@ public class PlaceTile extends Message {
         this.rotate = rotate;
         msgType = NetworkMessageType.PlaceTile;
     }
+
+    @Override
+    public String toString() {
+        return "PlaceTile{" + "tile=" + tile + ", rotate=" + rotate + ", x=" + x + ", y=" + y + '}';
+    }
 }
