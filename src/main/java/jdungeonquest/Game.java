@@ -247,7 +247,7 @@ public class Game {
         tile.rotate(rotation);
         logger.debug("Placing tile " + tileNumber + " " + tile + " at " + x + ":" + y);
         map.setTile(x, y, tile);
-        addMessage( new PlaceTile(x, y, tileNumber, rotation));
+        addMessage( new PlaceTile(x, y, tileNumber, tile.getRotate()));
     }
 
     private void movePlayer(Position p, Player pl) {
