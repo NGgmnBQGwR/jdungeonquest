@@ -1041,6 +1041,15 @@ public class Game {
                 addMessage(new ChatMessage("..But you fall back into it. You skip your turn.", "Game"));
                 currentPlayer.setMoved(true);
             }
+        } else if (currentPlayer.status == PlayerStatus.NO_TORCH) {
+            addMessage(new ChatMessage("You try to re-lit your torch..", "Game"));
+            if (diceRoll(1, 6, 0) >= 3 ) {
+                addMessage(new ChatMessage("..And succeed!", "Game"));
+                currentPlayer.status = PlayerStatus.NONE;
+            } else {
+                addMessage(new ChatMessage("..But fail. Skip your turn.", "Game"));
+                currentPlayer.setMoved(true);
+            }
         }
     }
 
@@ -1113,7 +1122,12 @@ public class Game {
             addMessage(new ChatMessage("Gas wasn't strong enough to knock you out.", "Game"));
         }
     }
-
+    
+    public void effectTorchGoesOut() {
+        addMessage(new ChatMessage("Your torch goes out! You're left in a complete darkness!", "Game"));
+        currentPlayer.status = PlayerStatus.NO_TORCH;
+    }
+    
     public void ShuffleDeck(DeckType type) {
         logger.debug("Shuffling Deck " + type);
         switch(type){

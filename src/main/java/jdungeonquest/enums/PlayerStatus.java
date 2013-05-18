@@ -6,5 +6,6 @@ public enum PlayerStatus {
     IN_PIT,
     BOTTOMLESS_PIT,
     DARKNESS,
-    CHASM;
+    CHASM,
+    NO_TORCH;
 }
