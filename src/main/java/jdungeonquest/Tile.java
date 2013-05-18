@@ -131,8 +131,8 @@ public class Tile {
     public void rotate(int turn){
         this.rotate += turn;
         this.rotate = this.rotate % 4;
-        
         rotateCounterClockwise(turn);
+        refreshImage();
     }
     
     private void rotateCounterClockwise(int turn){
@@ -149,8 +149,6 @@ public class Tile {
         RoomWallType firstWall = walls.get(3);
         walls.remove(3);
         walls.add(0, firstWall);
-        
-        refreshImage();
         
         this.rotateCounterClockwise(turn -1 );
     }
