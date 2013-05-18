@@ -236,7 +236,98 @@
  effects:
  - !!jdungeonquest.effects.Shuffle {type: Corpse}
 
-#Crypt
+#Crypt (15)
+
+- !!jdungeonquest.Card
+ description: Potion
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+ 
+- !!jdungeonquest.Card
+ description: Potion
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+
+- !!jdungeonquest.Card
+ description: Potion
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+
+- !!jdungeonquest.Card
+ description: Gold
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 250}
+
+- !!jdungeonquest.Card
+ description: Gold
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 50}
+
+- !!jdungeonquest.Card
+ description: Gold
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 120}
+
+- !!jdungeonquest.Card
+ description: Gold
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 100}
+
+- !!jdungeonquest.Card
+ description: Empty corpse
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty corpse
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty corpse
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty corpse
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Skeleton
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.Skeleton {}
+
+- !!jdungeonquest.Card
+ description: Trap
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.CryptTrap {}
+
+- !!jdungeonquest.Card
+ description: Trap
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.CryptTrap {}
+
+- !!jdungeonquest.Card
+ description: Shuffle
+ deckType: Crypt
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Crypt}
+
 #Trap (15)
 
 - !!jdungeonquest.Card

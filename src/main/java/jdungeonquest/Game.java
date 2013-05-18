@@ -1174,6 +1174,31 @@ public class Game {
         }
     }    
     
+    public void effectCryptTrap() {
+        addMessage(new ChatMessage("As you touch the coffin, you activate a hidden trap!", "Game"));
+        switch(random.nextInt(2)){
+            default:
+            //TRAP d6-3
+            case 0:
+                hurtPlayer(currentPlayer, diceRoll(1, 6, -3), "A poisoned dart hits you!");
+                break;
+            //TRAP d12-3-Luck
+            case 1:
+                hurtPlayer(currentPlayer, diceRoll(1, 12, -3-currentPlayer.luck), "Poisoned spiders were hiding inside!");
+                break;
+        }
+    }
+    
+    public void effectSkeleton() {
+        addMessage(new ChatMessage("You examine the skeleton remains, but find nothing of value.", "Game"));
+    }
+
+    public void effectCrypt() {
+        currentPlayerState = PlayerState.yesNoQueryWaitCrypt;
+        addMessage(new ChatMessage("You found a crypt. Do you want to search the coffin?", "Game"));
+        addMessage( new YesNoQuery());
+    }
+    
     public void effectDeadAdventurer() {
         currentPlayerState = PlayerState.yesNoQueryWaitCorpse;
         addMessage(new ChatMessage("<html>You found the body of a dead adventurer.<br>Do you want to search his remains?</html>", "Game"));
