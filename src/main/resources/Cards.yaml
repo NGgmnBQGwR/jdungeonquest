@@ -519,6 +519,237 @@
  deckType: Room
  effects:
  - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+- !!jdungeonquest.Card
+ description: Empty room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Empty {}
+
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+ 
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+ 
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+ 
+- !!jdungeonquest.Card
+ description: Found a crypt
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Crypt {}
+
+- !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.DeadAdventurer {}
+
+- !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.DeadAdventurer {}
+ 
+- !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.DeadAdventurer {}
+ 
+- !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.DeadAdventurer {}
+
+- !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.DeadAdventurer {}
 
 - !!jdungeonquest.Card
  description: Cave-In!
@@ -527,11 +758,46 @@
  - !!jdungeonquest.effects.CaveIn {}
 
 - !!jdungeonquest.Card
+ description: Found dead body
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.CrossfireTrap {}
+
+- !!jdungeonquest.Card
+ description: Found some gold!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Trapdoor {}
+ 
+- !!jdungeonquest.Card
  description: You've met a Goblin!
  deckType: Room
  effects:
  - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
 
+- !!jdungeonquest.Card
+ description: You've met a Goblin!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
+
+- !!jdungeonquest.Card
+ description: You've met a Goblin!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
+
+- !!jdungeonquest.Card
+ description: You've met a Goblin!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
+
+- !!jdungeonquest.Card
+ description: You've met a Goblin!
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.MeetMonster {type: GOBLIN}
 
 - !!jdungeonquest.Card
  description: Found some gold!
@@ -546,10 +812,58 @@
  - !!jdungeonquest.effects.GiveGold {amount: 30}
 
 - !!jdungeonquest.Card
- description: Found some gold!
+ description: Wizard
  deckType: Room
  effects:
- - !!jdungeonquest.effects.Trapdoor {}
+ - !!jdungeonquest.effects.WizardCurse {}
+
+- !!jdungeonquest.Card
+ description: VampireBats
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.VampireBats {}
+
+- !!jdungeonquest.Card
+ description: VampireBats
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.VampireBats {}
+
+- !!jdungeonquest.Card
+ description: VampireBats
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.VampireBats {}
+
+- !!jdungeonquest.Card
+ description: Empty Room
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+
+- !!jdungeonquest.Card
+ description: Shuffle
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Room}
+
+- !!jdungeonquest.Card
+ description: Torch
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.TorchGoesOut {}
+
+- !!jdungeonquest.Card
+ description: Torch
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.TorchGoesOut {}
+
+- !!jdungeonquest.Card
+ description: Torch
+ deckType: Room
+ effects:
+ - !!jdungeonquest.effects.TorchGoesOut {}
 
 #Treasure (32)
 
