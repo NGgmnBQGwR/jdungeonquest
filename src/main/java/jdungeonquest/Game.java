@@ -1021,8 +1021,7 @@ public class Game {
         if(!rotatedRooms.contains(pos)){
             rotatedRooms.add(pos);
             addMessage(new ChatMessage("As you step into this room, it starts to move!", "Game"));
-            Tile t = map.getTile(pos);
-            placeTile(pos, t, 2);
+            placeTile(pos, map.getTile(pos), 2);
         }else{
             addMessage(new ChatMessage("You can't find anything special here.", "Game"));
         }
