@@ -55,6 +55,7 @@ public class TileTest {
 
         assertTrue(holder.getTotalSize() > 0);
         assertTrue(holder.getSize() > 0);
+        assertEquals(114, holder.getSize());
     }    
     
     @Test

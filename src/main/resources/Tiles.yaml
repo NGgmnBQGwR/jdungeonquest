@@ -1,87 +1,733 @@
+
 - !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
- walls: [DOOR, DOOR, DOOR, DOOR]
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CaveInTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.Chasm {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, DOOR, EXIT, EXIT]
+ effects: []
 
 - !!jdungeonquest.Tile
  entryDirection: UP
- isSearchable: true
+ isSearchable: True
+ walls: [EXIT, EXIT, DOOR, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, WALL, DOOR, WALL]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
  walls: [EXIT, EXIT, EXIT, EXIT]
- 
+ effects: 
+ - !!jdungeonquest.effects.CaveInTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.Chasm {}
+
 - !!jdungeonquest.Tile
  entryDirection: UP
- isSearchable: false
- walls: [EXIT, WALL, EXIT, WALL]
-  
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
 - !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
- walls: [EXIT, WALL, EXIT, WALL]
- 
+ entryDirection: DOWN
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
 - !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: false
+ entryDirection: LEFT
+ isSearchable: True
  walls: [EXIT, EXIT, WALL, WALL]
- 
+ effects: []
+
 - !!jdungeonquest.Tile
  entryDirection: UP
- isSearchable: true
- walls: [EXIT, EXIT, WALL, WALL]
- 
-- !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
- walls: [EXIT, WALL, WALL, EXIT]
- 
-- !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: false
- walls: [EXIT, WALL, WALL, EXIT]
- 
-- !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
+ isSearchable: True
  walls: [EXIT, EXIT, WALL, EXIT]
- 
+ effects: []
+
 - !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
+ entryDirection: RIGHT
+ isSearchable: True
  walls: [EXIT, EXIT, EXIT, EXIT]
- effects:
- - !!jdungeonquest.effects.CaveInTile {}
- 
+ effects: []
+
 - !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
- walls: [EXIT, EXIT, EXIT, EXIT]
- effects:
- - !!jdungeonquest.effects.CaveInTile {}
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [DOOR, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, DOOR]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, DOOR, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, DOOR, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [DOOR, DOOR, EXIT, DOOR]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [DOOR, EXIT, EXIT, EXIT]
+ effects: []
 
 - !!jdungeonquest.Tile
  entryDirection: UP
- isSearchable: true
- walls: [EXIT, WALL, EXIT, WALL]
- effects:
-  - !!jdungeonquest.effects.CaveInTile {}
-
- 
-- !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: true
- walls: [EXIT, WALL, EXIT, WALL]
- effects:
- - !!jdungeonquest.effects.CaveInTile {}
-   
-- !!jdungeonquest.Tile
- entryDirection: UP
- isSearchable: false
- walls: [DOOR, DOOR, DOOR, DOOR]
- effects:
+ isSearchable: True
+ walls: [DOOR, WALL, EXIT, WALL]
+ effects: 
  - !!jdungeonquest.effects.TrapTile {}
 
 - !!jdungeonquest.Tile
  entryDirection: UP
- isSearchable: false
- walls: [EXIT, EXIT, EXIT, EXIT]
- effects:
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [DOOR, WALL, EXIT, WALL]
+ effects: 
  - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, DOOR, EXIT, DOOR]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, DOOR, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, DOOR, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, DOOR, WALL, DOOR]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [DOOR, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, DOOR, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, WALL, DOOR, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [DOOR, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, DOOR, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, DOOR, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, DOOR]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, WALL, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.ChamberOfDarkness {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [WALL, WALL, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.ChamberOfDarkness {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.ChamberOfDarkness {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, WALL, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.ChamberOfDarkness {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [WALL, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: False
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, WALL, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: False
+ walls: [WALL, EXIT, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [EXIT, WALL, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, EXIT, WALL, WALL]
+ effects: 
+ - !!jdungeonquest.effects.CorridorTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [WALL, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: False
+ walls: [WALL, WALL, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.RotatingRoom {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [WALL, WALL, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.RotatingRoom {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, WALL, WALL, WALL]
+ effects: 
+ - !!jdungeonquest.effects.RotatingRoom {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: False
+ walls: [WALL, WALL, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.RotatingRoom {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, WALL, WALL, WALL]
+ effects: 
+ - !!jdungeonquest.effects.RotatingRoom {}
+
+- !!jdungeonquest.Tile
+ entryDirection: DOWN
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, WALL, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: True
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CaveInTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: RIGHT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: True
+ walls: [WALL, EXIT, WALL, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.CaveInTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: True
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: []
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: LEFT
+ isSearchable: False
+ walls: [EXIT, EXIT, EXIT, EXIT]
+ effects: 
+ - !!jdungeonquest.effects.TrapTile {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.BottomlessPit {}
+
+- !!jdungeonquest.Tile
+ entryDirection: UP
+ isSearchable: False
+ walls: [EXIT, WALL, EXIT, WALL]
+ effects: 
+ - !!jdungeonquest.effects.BottomlessPit {}
