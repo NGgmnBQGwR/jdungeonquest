@@ -41,6 +41,14 @@ public class TileTest {
             + " walls: [EXIT, WALL, EXIT, WALL]\n"
             + " effects: []\n";
     
+    final String rotatingTileYaml =
+            "!!jdungeonquest.Tile\n"
+            + " entryDirection: UP\n"
+            + " isSearchable: false\n"
+            + " walls: [EXIT, WALL, WALL, WALL]\n"
+            + " effects:\n"
+            + " - !!jdungeonquest.effects.RotatingRoom {}";
+
     @Test
     public void TileHolderInitializedSuccessfully(){
         TileHolder holder = new TileHolder();
@@ -94,7 +102,7 @@ public class TileTest {
         assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.EXIT,RoomWallType.WALL,RoomWallType.WALL} ) , t1.getWalls());
     }    
 
-
+    @Test
     public void TileRotate2and2(){
         Tile t1 = new Tile();
         t1.setEntryDirection(EntryDirection.UP);
@@ -113,6 +121,23 @@ public class TileTest {
         assertEquals( t1Walls, t1.getWalls());
         assertEquals(0, t1.getRotate());
     }        
+    
+    @Test
+    public void TileRotate1and2(){
+        Yaml yaml = new Yaml();
+        Tile t1 = (Tile)yaml.load(rotatingTileYaml);
+        
+        t1.rotate(1);
+        
+        assertEquals(EntryDirection.LEFT, t1.getEntryDirection());
+        assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.EXIT,RoomWallType.WALL,RoomWallType.WALL} ), t1.getWalls());
+
+        t1.rotate(2);
+        
+        assertEquals(EntryDirection.RIGHT, t1.getEntryDirection());
+        assertEquals( Arrays.asList( new RoomWallType[]{RoomWallType.WALL,RoomWallType.WALL,RoomWallType.WALL,RoomWallType.EXIT} ), t1.getWalls());
+        assertEquals(3, t1.getRotate());
+    }
     
     @Test
     public void MapIsEmpty(){
