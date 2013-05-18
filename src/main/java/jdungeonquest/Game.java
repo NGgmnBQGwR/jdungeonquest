@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import jdungeonquest.effects.BottomlessPit;
+import jdungeonquest.effects.CorridorTile;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.DeckType;
 import jdungeonquest.enums.EntryDirection;
@@ -1207,6 +1208,31 @@ public class Game {
         addMessage(new ChatMessage("<html>You found the body of a dead adventurer.<br>Do you want to search his remains?</html>", "Game"));
         addMessage( new YesNoQuery());
     }
+    
+    public void effectWizardCurse() {
+        addMessage(new ChatMessage("Suddenly, the walls began to move! The dungeon is changing!", "Game"));
+        int rotate = random.nextInt(3) + 1;
+        logger.debug("Rotating all Corridor Tiles by " + rotate);
+        //iterate over all map positions
+        for (int x = 0; x < GameMap.MAX_X - 1; x++) {
+            for (int y = 0; y < GameMap.MAX_Y - 1; y++) {
+                //if there is a tile
+                if (!map.isFree(x, y)) {
+                    Tile t = map.getTile(x, y);
+                    if (t.getEffects().isEmpty()) {
+                        continue;
+                    }
+                    //check if it's a corridor
+                    for (Effect e : t.getEffects()) {
+                        if (e instanceof CorridorTile) {
+                            //if it is - rotate it
+                            placeTile(x, y, t, rotate);
+                        }
+                    }
+                }
+            }
+        }
+    } 
     
     private void processSun() {
         for(Player p : players){
