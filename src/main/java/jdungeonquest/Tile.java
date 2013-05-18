@@ -30,6 +30,7 @@ public class Tile {
     private List<RoomWallType> walls;
     private boolean isSearchable;
     private List<Effect> effects;
+    private int id;    
     
     private BufferedImage image;
     private int rotate;
@@ -72,6 +73,7 @@ public class Tile {
         this.isSearchable = another.isSearchable; //boolean
         this.entryDirection = another.entryDirection; //enum
         this.rotate = another.rotate; //int
+        this.id = another.id; //int
         this.walls = new ArrayList(another.walls);
         this.effects = new ArrayList(another.effects);
         this.refreshImage();
@@ -350,4 +352,12 @@ public class Tile {
     public void setEffects(List<Effect> effects) {
         this.effects = effects;
     }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
 }

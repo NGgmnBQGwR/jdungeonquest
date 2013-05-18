@@ -14,7 +14,7 @@ public class TileHolder {
 
     List<Tile> allTiles = new ArrayList<>();
     List<Tile> usedTiles = new ArrayList<>();
-    Map<Integer, Tile> tileMap = new HashMap<>();
+    List<Tile> tileMap = new ArrayList<>();
 
     Tile startingTile;
     Tile dragonTileLeft;
@@ -81,23 +81,33 @@ public class TileHolder {
         
         int currentTile = 0;
         for (Tile tile : allTiles) {
-            tileMap.put(currentTile, tile);
+            tileMap.add(tile);
+            tile.setId(currentTile);
             currentTile++;
         }
-        tileMap.put(currentTile++, startingTile);
-        tileMap.put(currentTile++, dragonTileLeft);
-        tileMap.put(currentTile++, dragonTileRight);
+        tileMap.add(startingTile);
+        startingTile.setId(currentTile);
+        currentTile++;
+        
+        tileMap.add(dragonTileLeft);
+        dragonTileLeft.setId(currentTile);
+        currentTile++;
+        
+        tileMap.add(dragonTileRight);
+        dragonTileRight.setId(currentTile);
+        currentTile++;
         
         Collections.shuffle(allTiles);
     }
 
     int getTileNumber(Tile tile) {
-        for (Entry<Integer, Tile> entry : tileMap.entrySet()) {
-            if (tile.equals(entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        throw new IllegalArgumentException();
+        return tile.getId();
+//        for (Entry<Integer, Tile> entry : tileMap.entrySet()) {
+//            if (tile.equals(entry.getValue())) {
+//                return entry.getKey();
+//            }
+//        }
+//        throw new IllegalArgumentException();
     }
 
     public int getSize() {
