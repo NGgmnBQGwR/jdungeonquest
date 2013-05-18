@@ -217,6 +217,7 @@ public class Game {
             changePlayerAttribute(player, PlayerAttributes.Gold, 0);
         }
         
+        addMessage(new ChatMessage("Current sun position: " + sunPosition + "/" + sunMaxPosition, "Game"));
         addMessage(new ChatMessage("Current player: " + currentPlayer.getName(), "Game"));
         addMessage(new NewTurn(currentPlayer.getName()));
     }
