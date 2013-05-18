@@ -135,7 +135,10 @@ public class Game {
 //        if(playerClasses.get(playerClass)){
 //            return false;
 //        }
-        
+        if(players.size() == 4){
+            addMessage(new ChatMessage("Maximum of 4 players reached.", "Game"));
+            return false;
+        }
         Player newPlayer = new Player();
         newPlayer.setName(playerName);
         newPlayer.setClassname(playerClass);

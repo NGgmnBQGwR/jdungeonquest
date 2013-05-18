@@ -213,6 +213,7 @@ public class NetworkServer implements Runnable {
         } else {
             conn.sendTCP(new RegistrationRequest("", ""));
         }
+        processMessageQueue();
         logger.debug("Registering player " + playerName + " - " + result);
     }
 
