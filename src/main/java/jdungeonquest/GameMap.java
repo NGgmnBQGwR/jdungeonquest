@@ -7,7 +7,7 @@ public class GameMap {
     public final static int MAX_X = 10;
     public final static int MAX_Y = 13;
 
-    private Tile[][] tiles =  new Tile[10][13];
+    private Tile[][] tiles =  new Tile[MAX_X][MAX_Y];
     
     public GameMap(){
         
