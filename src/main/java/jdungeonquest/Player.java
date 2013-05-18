@@ -23,6 +23,7 @@ public class Player {
     
     public int agility = 7;
     public int armor = 5;
+    public int luck = 7;
     
     private boolean moved = false;
     private boolean placedTile = false;

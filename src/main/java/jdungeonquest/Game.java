@@ -599,12 +599,18 @@ public class Game {
         card.activate(this);
     }
     
+    private void processDrawDoorCard(){
+            Card card = cardHolder.doorDeck.takeCard();
+            logger.debug("Activating " + card + " card");
+            card.activate(this);
+    }
+    
     private void processDrawDoorCards(){
         //"If only one card says 'Door Opens', you must follow instructions on the other card"
         if(doorsToOpen == 2){
             Card card = cardHolder.doorDeck.takeCard();
             logger.debug("Activating " + card + " card");
-            card.activate(this);
+            processDrawDoorCard();
             if(doorsToOpen == 2){ //first card said something else, not 'Door Opens'
                 return;
             }
@@ -612,7 +618,7 @@ public class Game {
         if (doorsToOpen == 1){ // Either first one opened or there was one door to begin with
             Card card = cardHolder.doorDeck.takeCard();
             logger.debug("Activating " + card + " card");
-            card.activate(this);
+            processDrawDoorCard();
         }
     }
     
@@ -1136,6 +1142,25 @@ public class Game {
         ShuffleDeck(DeckType.Dragon);
     }
 
+    public void effectDoorTrap() {
+        addMessage(new ChatMessage("As you touch the door, you activate a hidden trap!", "Game"));
+        switch(random.nextInt(3)){
+            default:
+            //TRAP d6
+            case 0:
+                hurtPlayer(currentPlayer, diceRoll(1, 6, 0), "A poisoned dart hits you!");
+                break;
+            //TRAP d6+3-Luck
+            case 1:
+                hurtPlayer(currentPlayer, diceRoll(1, 6, -currentPlayer.luck), "The doorknob is covered in spikes!");
+                break;
+            //TRAP d12-Luck
+            case 2:
+                hurtPlayer(currentPlayer, diceRoll(1, 12, -currentPlayer.luck), "A spear springs from below your feet!");
+                break;
+        }
+    }    
+    
     private void processSun() {
         for(Player p : players){
             if(p.isDead()){

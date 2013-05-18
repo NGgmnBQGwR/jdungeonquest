@@ -57,6 +57,42 @@
  description: Door opens
  deckType: Door
  effects:
+ - !!jdungeonquest.effects.DoorTrap {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorTrap {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorTrap {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorOpens {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorOpens {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorOpens {}
+
+- !!jdungeonquest.Card
+ description: Door opens
+ deckType: Door
+ effects:
  - !!jdungeonquest.effects.DoorOpens {}
 
 - !!jdungeonquest.Card
@@ -76,6 +112,36 @@
  deckType: Door
  effects:
  - !!jdungeonquest.effects.DoorJams {}
+
+- !!jdungeonquest.Card
+ description: Door jams
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+
+- !!jdungeonquest.Card
+ description: Door jams
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+ 
+- !!jdungeonquest.Card
+ description: Door jams
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+
+- !!jdungeonquest.Card
+ description: Door jams
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.DoorJams {}
+
+- !!jdungeonquest.Card
+ description: Shuffle
+ deckType: Door
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Door}
 
 
 #Corpse
