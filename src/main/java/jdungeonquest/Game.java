@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import jdungeonquest.effects.BottomlessPit;
 import jdungeonquest.effects.Effect;
 import jdungeonquest.enums.DeckType;
@@ -56,6 +58,7 @@ public class Game {
     private int monsterHP = 0;
     private boolean usingSecretDoor = false;
     private int doorsToOpen = 0;
+    Set<Position> rotatedRooms = new HashSet<>();
     
     public List<Message> messageQueue;
     
@@ -990,6 +993,17 @@ public class Game {
         currentPlayer.setMoved(false);
     }
     
+    public void processRotatingRoomTile() {
+        Position pos = currentPlayer.getPosition();
+        if(!rotatedRooms.contains(pos)){
+            rotatedRooms.add(pos);
+            addMessage(new ChatMessage("As you step into this room, it starts to move!", "Game"));
+            Tile t = map.getTile(pos);
+            placeTile(pos, t, 2);
+        }else{
+            addMessage(new ChatMessage("You can't find anything special here.", "Game"));
+        }
+    }
     
     private void processCurrentPlayerStatus() {
         if(currentPlayer.turnsToSkip > 0){
