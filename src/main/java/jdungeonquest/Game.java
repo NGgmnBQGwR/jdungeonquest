@@ -1219,7 +1219,7 @@ public class Game {
     
     public void effectDeadAdventurer() {
         currentPlayerState = PlayerState.yesNoQueryWaitCorpse;
-        addMessage(new ChatMessage("<html>You found the body of a dead adventurer.<br>Do you want to search his remains?</html>", "Game"));
+        addMessage(new ChatMessage("You found the body of a dead adventurer.<br>Do you want to search his remains?", "Game"));
         addMessage( new YesNoQuery());
     }
     
