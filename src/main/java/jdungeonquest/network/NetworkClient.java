@@ -252,6 +252,15 @@ public class NetworkClient implements Runnable {
                             gui.endGame((EndGame)object);
                             state = ClientState.GAME_END;
                             break;
+
+                        case YesNoQuery:
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run () {
+                                    int answer = gui.askForYesNo();
+                                    sendMessage(new YesNoQuery(answer));
+                                }});
+                            break;                    
                     }
                 } else if (object instanceof com.esotericsoftware.kryonet.FrameworkMessage.KeepAlive) {
                 }

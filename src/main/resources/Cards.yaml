@@ -144,7 +144,98 @@
  - !!jdungeonquest.effects.Shuffle {type: Door}
 
 
-#Corpse
+#Corpse (15)
+
+- !!jdungeonquest.Card
+ description: Rope
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.FoundRope {}
+
+- !!jdungeonquest.Card
+ description: Rope
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.FoundRope {}
+
+- !!jdungeonquest.Card
+ description: Rope
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.FoundRope {}
+
+- !!jdungeonquest.Card
+ description: Empty Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Empty Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.EmptyCorpse {}
+
+- !!jdungeonquest.Card
+ description: Gold on Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 20}
+
+- !!jdungeonquest.Card
+ description: Gold on Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 60}
+
+- !!jdungeonquest.Card
+ description: Gold on Corpse
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.GiveGold {amount: 150}
+
+- !!jdungeonquest.Card
+ description: Scorpion
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.Scorpion {}
+
+- !!jdungeonquest.Card
+ description: Scorpion
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.Scorpion {}
+
+- !!jdungeonquest.Card
+ description: Potion
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.FoundPotion {}
+
+- !!jdungeonquest.Card
+ description: Shuffle
+ deckType: Corpse
+ effects:
+ - !!jdungeonquest.effects.Shuffle {type: Corpse}
+
 #Crypt
 #Trap (15)
 

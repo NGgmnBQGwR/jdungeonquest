@@ -148,6 +148,11 @@ public class NetworkServer implements Runnable {
                             game.processPlayerSearchRoom();
                             processMessageQueue();
                             break;                            
+
+                        case YesNoQuery:
+                            game.processYesNoAnswer((YesNoQuery)object);
+                            processMessageQueue();
+                            break;
                             
                         default:
                             logger.debug("Unhandled message found: " + object);
@@ -269,7 +274,7 @@ public class NetworkServer implements Runnable {
             return;
         }
         for(Message m : game.messageQueue){
-            if(m instanceof GuessNumber || m instanceof StartBattle || m instanceof EndBattle || m instanceof BattleAction){
+            if(m instanceof GuessNumber || m instanceof StartBattle || m instanceof EndBattle || m instanceof BattleAction || m instanceof YesNoQuery){
                 String curPlayer = game.getCurrentPlayer();
                 int id = -1;
                 for(int key : clientPlayersMap.keySet()){

@@ -32,6 +32,7 @@ import jdungeonquest.network.MovePlayer;
 import jdungeonquest.network.NewTurn;
 import jdungeonquest.network.PlaceTile;
 import jdungeonquest.network.StartBattle;
+import jdungeonquest.network.YesNoQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -599,6 +600,18 @@ public class Game {
         card.activate(this);
     }
     
+    private void processDrawCorpseCard(){
+            Card card = cardHolder.corpseDeck.takeCard();
+            logger.debug("Activating " + card + " card");
+            card.activate(this);
+    }
+    
+    private void processDrawCryptCard(){
+            Card card = cardHolder.cryptDeck.takeCard();
+            logger.debug("Activating " + card + " card");
+            card.activate(this);
+    }
+    
     private void processDrawDoorCard(){
             Card card = cardHolder.doorDeck.takeCard();
             logger.debug("Activating " + card + " card");
@@ -1161,6 +1174,12 @@ public class Game {
         }
     }    
     
+    public void effectDeadAdventurer() {
+        currentPlayerState = PlayerState.yesNoQueryWaitCorpse;
+        addMessage(new ChatMessage("<html>You found the body of a dead adventurer.<br>Do you want to search his remains?</html>", "Game"));
+        addMessage( new YesNoQuery());
+    }
+    
     private void processSun() {
         for(Player p : players){
             if(p.isDead()){
@@ -1173,6 +1192,22 @@ public class Game {
                     && !p.getPosition().equals(startingDownRightPosition)) {
                 killPlayer(p, "With the sunlight gone, so is any hope of escaping.");
             }
+        }
+    }
+
+    public void processYesNoAnswer(YesNoQuery yesNoQuery) {
+        logger.debug("Recieved YesNoAnswer = " + yesNoQuery.answer + " status = " + currentPlayerState);
+        if(yesNoQuery.answer == 1){
+            currentPlayerState = PlayerState.idle;
+            addMessage(new ChatMessage("You leave the remains alone.", "Game"));
+            return;
+        }
+        if(currentPlayerState == PlayerState.yesNoQueryWaitCorpse){
+            currentPlayerState = PlayerState.idle;
+            processDrawCorpseCard();
+        }else if(currentPlayerState == PlayerState.yesNoQueryWaitCrypt){
+            currentPlayerState = PlayerState.idle;
+            processDrawCryptCard();
         }
     }
 }

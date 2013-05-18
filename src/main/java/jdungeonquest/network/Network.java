@@ -30,6 +30,7 @@ public class Network {
         kryo.register(EndBattle.class);
         kryo.register(BattleAction.class);
         kryo.register(SearchRoom.class);
+        kryo.register(YesNoQuery.class);
         
         kryo.register(String.class);
         kryo.register(String[].class);

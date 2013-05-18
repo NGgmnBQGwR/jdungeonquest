@@ -193,6 +193,10 @@ public class GUI extends JFrame {
         return clientGUI.askForNumber();
     }
 
+    public int askForYesNo() {
+        return clientGUI.askForYesNo();
+    }
+    
     public void killPlayer(KillPlayer killPlayer) {
         clientGUI.killPlayer(killPlayer);
     }

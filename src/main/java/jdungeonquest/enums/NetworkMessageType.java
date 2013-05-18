@@ -17,5 +17,6 @@ public enum NetworkMessageType {
     StartBattle,
     BattleAction,
     EndBattle,
-    SearchRoom;
+    SearchRoom,
+    YesNoQuery;
 }

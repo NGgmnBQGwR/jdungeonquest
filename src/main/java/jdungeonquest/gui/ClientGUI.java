@@ -221,6 +221,10 @@ public class ClientGUI extends JPanel{
         }
         return value;
     }
+    
+    int askForYesNo() {
+        return JOptionPane.showConfirmDialog(this, "Do you want to search the remains?", "Make your choice", JOptionPane.YES_NO_OPTION);
+    }
 
     void hideBattleDialog(){
         if(di != null){
