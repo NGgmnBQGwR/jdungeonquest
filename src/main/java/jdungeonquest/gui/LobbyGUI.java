@@ -145,7 +145,7 @@ class LobbyGUI extends JPanel{
         HeroPanel h = new HeroPanel(this);
         heroHolder.add(h, "wrap");
 
-        parent.pack();
+        revalidate();
     }
 
     void removeLocalPlayer(String playerName) {
@@ -156,14 +156,14 @@ class LobbyGUI extends JPanel{
                 }
             }
         }        
-        parent.pack();
+        revalidate();
     }
     
     void addRemotePlayer(String newPlayer) {
         JLabel l = new JLabel(newPlayer);
         heroHolder.add(l, "wrap");
 
-        parent.pack();
+        revalidate();
     }
 
     void removeRemotePlayers() {
@@ -172,7 +172,7 @@ class LobbyGUI extends JPanel{
                 heroHolder.remove(c);
             }
         }
-        parent.pack();
+        revalidate();
     }
 
     /**
