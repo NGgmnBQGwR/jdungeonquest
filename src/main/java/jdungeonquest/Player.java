@@ -17,7 +17,7 @@ public class Player {
     private Position position = new Position();
 
     public int searchInRow = 0; //player may search a room only 2 times in a row
-    public int turnsToSkip = 0;
+    public int turnsToSkip = -1;
     public String turnsSkipReason = "";
     public PlayerStatus status = PlayerStatus.NONE;
     

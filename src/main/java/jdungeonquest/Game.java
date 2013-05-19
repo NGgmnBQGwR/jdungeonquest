@@ -1040,6 +1040,9 @@ public class Game {
             addMessage(new ChatMessage(currentPlayer.turnsSkipReason + " You skip your turn.", "Game"));
             currentPlayer.turnsToSkip--;
             currentPlayer.setMoved(true);
+        }else if(currentPlayer.turnsToSkip == 0){
+            addMessage(new ChatMessage("You can move now.", "Game"));
+            currentPlayer.turnsToSkip = -1;
         }else if(currentPlayer.status == PlayerStatus.IN_PIT){
             addMessage(new ChatMessage("You try to escape from the pit..", "Game"));
             if(testPlayerAgility(12)){
