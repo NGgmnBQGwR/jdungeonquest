@@ -214,7 +214,7 @@ class LobbyGUI extends JPanel{
                 }
             });
             
-            add(nameField);
+            add(nameField, "w :100:");
 //            add(heroComboBox);
             add(addHero);
         }
@@ -236,7 +236,7 @@ class LobbyGUI extends JPanel{
             remove(nameLabel);
             remove(removeHero);
             
-            add(nameField);
+            add(nameField, "w :100:");
 //            add(heroComboBox);
             add(addHero);
             revalidate();
