@@ -648,8 +648,7 @@ public class Game {
             logger.debug("Current player is:" + currentPlayer.getName() + " so " + player +" can't do anyting now.");
             return;
         }
-        //todo: implement ability for player to end his turn volunarily
-        if( !currentPlayer.isMoved() && !currentPlayer.isSearched()){
+        if( !currentPlayer.isDead() && (!currentPlayer.isMoved() && !currentPlayer.isSearched())){
             //can't skip turns in some special rooms
             if( map.getTile(currentPlayer.getPosition()).getEffects().size() > 0){
                  for(Effect e : map.getTile(currentPlayer.getPosition()).getEffects()){
